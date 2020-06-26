@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     default: 'male'
   },
   phone: {
-    type: Number,
+    type: String,
     default: null
   },
   address: {
@@ -29,34 +29,48 @@ const userSchema = new mongoose.Schema({
     email: {
       type: String,
       trim: true,
-      required: true
+      defalt: null
     },
     password: {
       type: String,
-      required: true
+      defalt: null
     },
     isActive: {
       type: Boolean,
       default: false
     },
-    verifyToken: String
+    verifyToken: {
+      type: String,
+      defalt: null
+    }
   },
   facebook: {
-    uid: String,
-    token: String,
+    uid: {
+      type: String,
+      defalt: null
+    },
+    token: {
+      type: String,
+      defalt: null
+    },
     email: {
       type: String,
       trim: true,
-      required: true
+      defalt: null
     }
   },
   google: {
-    uid: String,
-    token: String,
+    uid: {
+      type: String,
+      defalt: null
+    },
+    token: {
+      type: String,
+      defalt: null
+    },
     email: {
       type: String,
-      trim: true,
-      required: true
+      trim: true
     }
   },
   createdAt: {
