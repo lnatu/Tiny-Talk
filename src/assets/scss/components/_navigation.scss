@@ -1,0 +1,83 @@
+@import './../abstract/variables';
+@import './../abstract/mixins';
+
+.navigation {
+  @include flex-center(column);
+
+  flex: 0 0 $navigation-width;
+  height: 100%;
+
+  padding: 20px 0;
+
+  background: $theme-color;
+
+  .logo__icon {
+    width: 35px;
+    height: 35px;
+    fill: $theme-color;
+  }
+
+  .logo__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px;
+    border-radius: 5px;
+
+    background-color: $white-color;
+  }
+
+  &-list {
+    @include flex-center(column);
+
+    flex: 1;
+
+    list-style: none;
+  }
+
+  &-item + &-item {
+    margin-top: 40px;
+  }
+
+  &-item {
+    &__icon {
+      @include svg-icon(25px, $white-color);
+
+      transition: fill 0.2s;
+    }
+  }
+
+  &-link {
+    @include flex-center(row);
+
+    width: 40px;
+    height: 40px;
+
+    display: inline-flex;
+
+    border-radius: 5px;
+
+    transition: all 0.2s;
+
+    &:not(.active) .navigation-item__icon {
+      fill: $inactive-color;
+    }
+
+    &.active {
+      background: $white-color;
+    }
+
+    &.active .navigation-item__icon {
+      fill: $theme-color;
+    }
+
+    &:hover {
+      background: $white-color;
+    }
+
+    &:hover .navigation-item__icon {
+      fill: $theme-color;
+    }
+  }
+}
