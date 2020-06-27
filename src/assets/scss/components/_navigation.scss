@@ -4,7 +4,7 @@
 .navigation {
   @include flex-center(column);
 
-  width: $navigation-width;
+  flex: 0 0 $navigation-width;
   height: 100%;
 
   padding: 20px 0;

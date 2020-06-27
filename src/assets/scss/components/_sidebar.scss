@@ -1,0 +1,29 @@
+@import './../abstract/variables';
+@import './../abstract/mixins';
+@import './../base/utilities';
+
+.sidebar {
+  flex: 0 0 420px;
+
+  background-color: $danger-color;
+
+  &-header {
+    padding: 20px 10px;
+
+    background: $white-color;
+
+    &__nav {
+      li {
+        display: flex;
+        align-items: center;
+        a {
+          display: inline-flex;
+          align-items: center;
+          svg {
+            @include svg-icon(20px, $light-color);
+          }
+        }
+      }
+    }
+  }
+}

@@ -12,7 +12,6 @@ export default {};
 @import '@/assets/scss/init';
 
 #app {
-  background: gold;
   height: $full-screen-height;
 }
 </style>
