@@ -29,6 +29,35 @@
 /**
  * Margins
  */
+.mt-1 {
+  margin-top: 10px !important;
+}
+
 .mr-2 {
   margin-right: 20px !important;
+}
+
+/**
+* Borders
+*/
+.border-left-0 {
+  border-left: 0 !important;
+}
+
+.border-right-0 {
+  border-right: 0 !important;
+}
+
+/*
+* Backgrounds
+*/
+.bg-transparent {
+  background: transparent !important;
+}
+
+/*
+*
+*/
+.cursor-pointer {
+  cursor: pointer !important;
 }

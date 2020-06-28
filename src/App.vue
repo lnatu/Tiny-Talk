@@ -13,5 +13,7 @@ export default {};
 
 #app {
   height: $full-screen-height;
+
+  overflow-y: hidden;
 }
 </style>

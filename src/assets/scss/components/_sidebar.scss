@@ -3,14 +3,25 @@
 @import './../base/utilities';
 
 .sidebar {
-  flex: 0 0 420px;
+  width: 420px;
 
-  background-color: $danger-color;
+  flex-grow: 0;
+
+  //overflow-x: hidden;
+
+  border-right: 1px solid #e5e9f2;
 
   &-header {
     padding: 20px 10px;
 
+    border-bottom: 1px solid $border-light-color;
+
     background: $white-color;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 1020;
 
     &__nav {
       li {
@@ -24,6 +35,141 @@
           }
         }
       }
+    }
+  }
+}
+
+.search-form {
+  flex: 1;
+
+  input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  svg {
+    @include svg-icon(20px, $light-color);
+  }
+}
+
+.contact {
+  &-list {
+    height: 100%;
+
+    background: #f8f9fa;
+
+    padding: 2rem;
+
+    overflow-y: auto;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &-item + &-item {
+    margin-top: 20px;
+  }
+
+  &-avatar {
+    width: 5rem;
+    height: 5rem;
+    min-width: 4rem;
+
+    position: relative;
+
+    &__pic {
+      width: 100%;
+      height: 100%;
+
+      border-radius: 50%;
+
+      object-fit: cover;
+    }
+  }
+
+  &-avatar::after {
+    content: '';
+
+    display: block;
+
+    width: 15px;
+    height: 15px;
+
+    border: 3px solid $white-color;
+    border-radius: 50%;
+
+    position: absolute;
+    top: -2px;
+    right: 0;
+  }
+
+  &-avatar.online::after {
+    background: $success-color;
+  }
+
+  &-avatar.offline::after {
+    background: $danger-color;
+  }
+
+  &-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 2rem;
+
+    text-decoration: none;
+    color: $text-color;
+
+    border: 1px solid $border-light-color;
+    border-radius: 5px;
+
+    transition: border 0.2s;
+
+    &:hover {
+      border-color: $theme-color;
+    }
+  }
+
+  &-content {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  &-info {
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 1.4rem;
+    line-height: 1;
+
+    .chat-time {
+      color: #b1b9c1;
+    }
+  }
+
+  &-name {
+    flex: 1;
+
+    font-size: inherit;
+  }
+
+  &-text {
+    font-size: 1.5rem;
+    color: #adb5bd;
+
+    margin-top: 10px;
+
+    p {
+      overflow: hidden;
+
+      line-height: 1;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }
