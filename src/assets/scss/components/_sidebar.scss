@@ -3,16 +3,13 @@
 @import './../base/utilities';
 
 .sidebar {
+  flex: 0 0 420px;
   width: 420px;
 
-  flex-grow: 0;
-
-  //overflow-x: hidden;
-
-  border-right: 1px solid #e5e9f2;
+  border-right: 1px solid $border-light-color;
 
   &-header {
-    padding: 20px 10px;
+    padding: 20px;
 
     border-bottom: 1px solid $border-light-color;
 
