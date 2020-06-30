@@ -41,6 +41,10 @@
   margin-right: 20px !important;
 }
 
+.ml-1 {
+  margin-left: 10px !important;
+}
+
 /**
 * Borders
 */
@@ -57,6 +61,21 @@
 */
 .bg-transparent {
   background: transparent !important;
+}
+
+.bg-light {
+  background: $bg-light-color !important;
+}
+
+.bg-theme {
+  background: $theme-color !important;
+}
+
+/*
+* Typography
+*/
+.text-white {
+  color: $white-color !important;
 }
 
 /*
