@@ -9,6 +9,8 @@
   border-right: 1px solid $border-light-color;
 
   &-header {
+    height: 120px;
+
     padding: 20px;
 
     border-bottom: 1px solid $border-light-color;
@@ -51,7 +53,7 @@
 
 .contact {
   &-list {
-    height: 100%;
+    height: calc(100% - 120px);
 
     background: #f8f9fa;
 

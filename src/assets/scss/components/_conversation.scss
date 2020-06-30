@@ -3,13 +3,14 @@
 
 .chats {
   display: flex;
+
+  width: 100%;
 }
 
 .conversation {
-  flex: 0 0 700px;
+  flex: 0 0 70%;
 
   border-right: 1px solid $border-light-color;
-  //background: gold;
 
   &-header {
     display: flex;
@@ -21,6 +22,19 @@
     padding: 10px 40px;
 
     border-bottom: 1px solid $border-light-color;
+  }
+
+  &-content {
+    height: calc(100% - 151px);
+
+    overflow: auto;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 
@@ -91,4 +105,10 @@
       @include svg-icon(20px, $light-color);
     }
   }
+}
+
+.conversation-footer {
+  height: 80px;
+
+  border-top: 1px solid $border-light-color;
 }

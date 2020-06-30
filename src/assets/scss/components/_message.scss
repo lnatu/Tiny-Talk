@@ -1,0 +1,138 @@
+.message {
+  &-content {
+    display: inline-block;
+
+    max-width: 40rem;
+
+    line-height: 1.2;
+    text-align: left;
+
+    padding: 2rem 4.25rem;
+
+    color: #8094ae;
+
+    border-radius: 20px;
+  }
+
+  &-day {
+    padding: 2rem 4rem;
+  }
+
+  &-options {
+    display: flex;
+
+    color: $light-color;
+
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+
+    & > * {
+      margin: 0 6px;
+    }
+  }
+
+  &-avatar {
+    width: 35px;
+    height: 35px;
+
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: -1.5rem;
+
+    img {
+      width: 100%;
+      height: 100%;
+
+      box-shadow: 0 0 0 0.7rem $white-color;
+
+      object-fit: cover;
+
+      border-radius: 50%;
+    }
+  }
+
+  &.self {
+    text-align: right;
+  }
+
+  &.self &-options {
+    flex-direction: row-reverse;
+  }
+}
+
+.message + .message {
+  margin-top: 40px;
+}
+
+.message-media {
+  margin-top: 10px;
+
+  &__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+
+    width: 100%;
+
+    margin: 0 - 5px;
+  }
+
+  &__popup {
+    height: 100px;
+
+    flex: 0 0 100px;
+
+    padding: 5px;
+
+    img {
+      width: 100%;
+      height: 100%;
+
+      border-radius: 5px;
+
+      object-fit: cover;
+    }
+  }
+}
+
+.document {
+  display: flex;
+
+  &__left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+    background: $theme-color;
+  }
+
+  &__right {
+    padding-left: 10px;
+  }
+
+  &__icon {
+    @include svg-icon(20px, #fff);
+  }
+
+  &__name {
+    font-size: 1.6rem;
+    font-weight: 500;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+
+  &-info {
+    display: flex;
+
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: $light-color-2;
+  }
+}
