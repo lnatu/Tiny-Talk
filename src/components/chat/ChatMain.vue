@@ -837,14 +837,14 @@
         </form>
       </div>
     </div>
-    <div class="contact h-100 hide-scrollbar">
+    <div class="contact h-100">
       <div class="contact-header">
         <h5>Profile Details</h5>
         <svg class="icon-svg--2x cursor-pointer">
           <use xlink:href="@/assets/img/icons/sprites.svg#icon-clearclose" />
         </svg>
       </div>
-      <div class="contact-body">
+      <div class="contact-body hide-scrollbar">
         <div class="profile">
           <div class="profile-avatar">
             <img src="@/assets/img/users/girl.png" alt="girl" />

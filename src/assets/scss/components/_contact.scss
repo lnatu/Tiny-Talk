@@ -1,7 +1,7 @@
 .contact {
   flex: 0 0 350px;
 
-  overflow-y: auto;
+  overflow-y: hidden;
 
   &-header {
     display: flex;
@@ -19,6 +19,12 @@
     border-bottom: 1px solid $border-light-color;
 
     padding: 0 20px;
+  }
+
+  &-body {
+    height: calc(100% - 70px);
+
+    overflow-y: auto;
   }
 }
 
