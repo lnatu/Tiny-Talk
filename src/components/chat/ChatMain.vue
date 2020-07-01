@@ -55,7 +55,57 @@
                     <img src="@/assets/img/users/girl.png" alt="girl" />
                   </div>
                   <div class="message-date ml-1">9:12am</div>
-                  <div class="message-date">---</div>
+                  <div class="message-date d-flex align-items-center">
+                    <svg
+                      class="media-nav__icon cursor-pointer dropdown-button no-style"
+                    >
+                      <use
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-keyboard-control"
+                      />
+                    </svg>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-content-copy"
+                          />
+                        </svg>
+                        <span class="ml-1">Copy</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-left"
+                          />
+                        </svg>
+                        <span class="ml-1">Reply</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-right"
+                          />
+                        </svg>
+                        <span class="ml-1">Forward</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-star-o"
+                          />
+                        </svg>
+                        <span class="ml-1">Favourite</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon icon-danger">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-trash-o"
+                          />
+                        </svg>
+                        <span class="ml-1 text-danger">Delete</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -72,7 +122,57 @@
                     <img src="@/assets/img/users/girl.png" alt="girl" />
                   </div>
                   <div class="message-date ml-1">9:12am</div>
-                  <div class="message-date">---</div>
+                  <div class="message-date d-flex align-items-center">
+                    <svg
+                      class="media-nav__icon cursor-pointer dropdown-button no-style"
+                    >
+                      <use
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-keyboard-control"
+                      />
+                    </svg>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-content-copy"
+                          />
+                        </svg>
+                        <span class="ml-1">Copy</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-left"
+                          />
+                        </svg>
+                        <span class="ml-1">Reply</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-right"
+                          />
+                        </svg>
+                        <span class="ml-1">Forward</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-star-o"
+                          />
+                        </svg>
+                        <span class="ml-1">Favourite</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon icon-danger">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-trash-o"
+                          />
+                        </svg>
+                        <span class="ml-1 text-danger">Delete</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -91,7 +191,57 @@
                     <img src="@/assets/img/users/girl.png" alt="girl" />
                   </div>
                   <div class="message-date ml-1">9:12am</div>
-                  <div class="message-date">---</div>
+                  <div class="message-date d-flex align-items-center">
+                    <svg
+                      class="media-nav__icon cursor-pointer dropdown-button no-style"
+                    >
+                      <use
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-keyboard-control"
+                      />
+                    </svg>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-content-copy"
+                          />
+                        </svg>
+                        <span class="ml-1">Copy</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-left"
+                          />
+                        </svg>
+                        <span class="ml-1">Reply</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-right"
+                          />
+                        </svg>
+                        <span class="ml-1">Forward</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-star-o"
+                          />
+                        </svg>
+                        <span class="ml-1">Favourite</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon icon-danger">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-trash-o"
+                          />
+                        </svg>
+                        <span class="ml-1 text-danger">Delete</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -108,7 +258,57 @@
                     <img src="@/assets/img/users/girl.png" alt="girl" />
                   </div>
                   <div class="message-date ml-1">9:12am</div>
-                  <div class="message-date">---</div>
+                  <div class="message-date d-flex align-items-center">
+                    <svg
+                      class="media-nav__icon cursor-pointer dropdown-button no-style"
+                    >
+                      <use
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-keyboard-control"
+                      />
+                    </svg>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-content-copy"
+                          />
+                        </svg>
+                        <span class="ml-1">Copy</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-left"
+                          />
+                        </svg>
+                        <span class="ml-1">Reply</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-right"
+                          />
+                        </svg>
+                        <span class="ml-1">Forward</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-star-o"
+                          />
+                        </svg>
+                        <span class="ml-1">Favourite</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon icon-danger">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-trash-o"
+                          />
+                        </svg>
+                        <span class="ml-1 text-danger">Delete</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -133,7 +333,57 @@
                     <img src="@/assets/img/users/girl.png" alt="girl" />
                   </div>
                   <div class="message-date ml-1">9:12am</div>
-                  <div class="message-date">---</div>
+                  <div class="message-date d-flex align-items-center">
+                    <svg
+                      class="media-nav__icon cursor-pointer dropdown-button no-style"
+                    >
+                      <use
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-keyboard-control"
+                      />
+                    </svg>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-content-copy"
+                          />
+                        </svg>
+                        <span class="ml-1">Copy</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-left"
+                          />
+                        </svg>
+                        <span class="ml-1">Reply</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-right"
+                          />
+                        </svg>
+                        <span class="ml-1">Forward</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-star-o"
+                          />
+                        </svg>
+                        <span class="ml-1">Favourite</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon icon-danger">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-trash-o"
+                          />
+                        </svg>
+                        <span class="ml-1 text-danger">Delete</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -168,7 +418,57 @@
                     <img src="@/assets/img/users/girl.png" alt="girl" />
                   </div>
                   <div class="message-date ml-1">9:12am</div>
-                  <div class="message-date">---</div>
+                  <div class="message-date d-flex align-items-center">
+                    <svg
+                      class="media-nav__icon cursor-pointer dropdown-button no-style"
+                    >
+                      <use
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-keyboard-control"
+                      />
+                    </svg>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-content-copy"
+                          />
+                        </svg>
+                        <span class="ml-1">Copy</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-left"
+                          />
+                        </svg>
+                        <span class="ml-1">Reply</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-right"
+                          />
+                        </svg>
+                        <span class="ml-1">Forward</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-star-o"
+                          />
+                        </svg>
+                        <span class="ml-1">Favourite</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon icon-danger">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-trash-o"
+                          />
+                        </svg>
+                        <span class="ml-1 text-danger">Delete</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -185,7 +485,57 @@
                     <img src="@/assets/img/users/girl.png" alt="girl" />
                   </div>
                   <div class="message-date ml-1">9:12am</div>
-                  <div class="message-date">---</div>
+                  <div class="message-date d-flex align-items-center">
+                    <svg
+                      class="media-nav__icon cursor-pointer dropdown-button no-style"
+                    >
+                      <use
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-keyboard-control"
+                      />
+                    </svg>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-content-copy"
+                          />
+                        </svg>
+                        <span class="ml-1">Copy</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-left"
+                          />
+                        </svg>
+                        <span class="ml-1">Reply</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-right"
+                          />
+                        </svg>
+                        <span class="ml-1">Forward</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-star-o"
+                          />
+                        </svg>
+                        <span class="ml-1">Favourite</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon icon-danger">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-trash-o"
+                          />
+                        </svg>
+                        <span class="ml-1 text-danger">Delete</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -210,7 +560,57 @@
                     <img src="@/assets/img/users/girl.png" alt="girl" />
                   </div>
                   <div class="message-date ml-1">9:12am</div>
-                  <div class="message-date">---</div>
+                  <div class="message-date d-flex align-items-center">
+                    <svg
+                      class="media-nav__icon cursor-pointer dropdown-button no-style"
+                    >
+                      <use
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-keyboard-control"
+                      />
+                    </svg>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-content-copy"
+                          />
+                        </svg>
+                        <span class="ml-1">Copy</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-left"
+                          />
+                        </svg>
+                        <span class="ml-1">Reply</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-right"
+                          />
+                        </svg>
+                        <span class="ml-1">Forward</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-star-o"
+                          />
+                        </svg>
+                        <span class="ml-1">Favourite</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon icon-danger">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-trash-o"
+                          />
+                        </svg>
+                        <span class="ml-1 text-danger">Delete</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -251,7 +651,57 @@
                     <img src="@/assets/img/users/girl.png" alt="girl" />
                   </div>
                   <div class="message-date ml-1">9:12am</div>
-                  <div class="message-date">---</div>
+                  <div class="message-date d-flex align-items-center">
+                    <svg
+                      class="media-nav__icon cursor-pointer dropdown-button no-style"
+                    >
+                      <use
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-keyboard-control"
+                      />
+                    </svg>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-content-copy"
+                          />
+                        </svg>
+                        <span class="ml-1">Copy</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-left"
+                          />
+                        </svg>
+                        <span class="ml-1">Reply</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-right"
+                          />
+                        </svg>
+                        <span class="ml-1">Forward</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-star-o"
+                          />
+                        </svg>
+                        <span class="ml-1">Favourite</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon icon-danger">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-trash-o"
+                          />
+                        </svg>
+                        <span class="ml-1 text-danger">Delete</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -269,7 +719,57 @@
                     <img src="@/assets/img/users/girl.png" alt="girl" />
                   </div>
                   <div class="message-date ml-1">9:12am</div>
-                  <div class="message-date">---</div>
+                  <div class="message-date d-flex align-items-center">
+                    <svg
+                      class="media-nav__icon cursor-pointer dropdown-button no-style"
+                    >
+                      <use
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-keyboard-control"
+                      />
+                    </svg>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-content-copy"
+                          />
+                        </svg>
+                        <span class="ml-1">Copy</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-left"
+                          />
+                        </svg>
+                        <span class="ml-1">Reply</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-right"
+                          />
+                        </svg>
+                        <span class="ml-1">Forward</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-star-o"
+                          />
+                        </svg>
+                        <span class="ml-1">Favourite</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon icon-danger">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-trash-o"
+                          />
+                        </svg>
+                        <span class="ml-1 text-danger">Delete</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -281,11 +781,37 @@
           <div class="typing-area">
             <div class="typing-box media">
               <div class="media-options">
-                <a href="#">
+                <a class="media-options__cta" href="#">
                   <svg class="media-options__icon">
                     <use xlink:href="@/assets/img/icons/sprites.svg#icon-add" />
                   </svg>
                 </a>
+                <div class="media-popup">
+                  <a class="media-popup__item" href="#">
+                    <svg class="media-popup__icon">
+                      <use
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-files"
+                      />
+                    </svg>
+                    <span class="ml-1">Files</span>
+                  </a>
+                  <a class="media-popup__item" href="#">
+                    <svg class="media-popup__icon">
+                      <use
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-mic"
+                      />
+                    </svg>
+                    <span class="ml-1">Audio</span>
+                  </a>
+                  <a class="media-popup__item" href="#">
+                    <svg class="media-popup__icon">
+                      <use
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-piechart"
+                      />
+                    </svg>
+                    <span class="ml-1">Poll</span>
+                  </a>
+                </div>
               </div>
             </div>
             <div class="typing-box prepare-message">
@@ -297,9 +823,180 @@
                 placeholder="Your message..."
               />
             </div>
-            <div class="typing-box"></div>
+            <div class="typing-box cta">
+              <a
+                class="cta-send d-flex align-items-center justify-content-center"
+                href="#"
+              >
+                <svg class="cta-send__icon">
+                  <use xlink:href="@/assets/img/icons/sprites.svg#icon-send" />
+                </svg>
+              </a>
+            </div>
           </div>
         </form>
+      </div>
+    </div>
+    <div class="contact h-100 hide-scrollbar">
+      <div class="contact-header">
+        <h5>Profile Details</h5>
+        <svg class="icon-svg--2x cursor-pointer">
+          <use xlink:href="@/assets/img/icons/sprites.svg#icon-clearclose" />
+        </svg>
+      </div>
+      <div class="contact-body">
+        <div class="profile">
+          <div class="profile-avatar">
+            <img src="@/assets/img/users/girl.png" alt="girl" />
+          </div>
+          <div class="profile-text">
+            <h4 class="text-medium">Demi Lovato</h4>
+            <p
+              class="text-light d-flex align-items-center justify-content-center mt-1 text-small"
+            >
+              <svg class="icon-svg--1x cursor-pointer mr-sm">
+                <use xlink:href="@/assets/img/icons/sprites.svg#icon-map-pin" />
+              </svg>
+              <span>San Fransisco, CA</span>
+            </p>
+          </div>
+          <div class="profile-actions">
+            <a class="profile-actions__item border-light bg-white" href="#">
+              <svg class="icon-svg--2x cursor-pointer">
+                <use
+                  xlink:href="@/assets/img/icons/sprites.svg#icon-user-plus"
+                />
+              </svg>
+            </a>
+            <a class="profile-actions__item bg-theme" href="#">
+              <svg class="icon-svg--2x icon-svg--white cursor-pointer">
+                <use xlink:href="@/assets/img/icons/sprites.svg#icon-heart-o" />
+              </svg>
+            </a>
+            <a class="profile-actions__item bg-danger" href="#">
+              <svg class="icon-svg--2x icon-svg--white cursor-pointer">
+                <use xlink:href="@/assets/img/icons/sprites.svg#icon-slash" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="user-info">
+          <div class="user-info__header">
+            <h5>User Information</h5>
+            <svg class="icon-svg--1x cursor-pointer">
+              <use xlink:href="@/assets/img/icons/sprites.svg#icon-info" />
+            </svg>
+          </div>
+          <div class="user-info__content">
+            <h6 class="info-label">Phone</h6>
+            <p class="info-text">+01-222-364522</p>
+          </div>
+          <div class="user-info__content">
+            <h6 class="info-label">Email</h6>
+            <p class="info-text">catherine.richardson@gmail.com</p>
+          </div>
+          <div class="user-info__content">
+            <h6 class="info-label">Address</h6>
+            <p class="info-text">
+              1134 Ridder Park Road, San Fransisco, CA 94851
+            </p>
+          </div>
+        </div>
+        <div class="user-info">
+          <div class="user-info__header">
+            <h5>Shared Media</h5>
+            <svg class="icon-svg--1x cursor-pointer">
+              <use xlink:href="@/assets/img/icons/sprites.svg#icon-picture" />
+            </svg>
+          </div>
+          <div class="shared-media">
+            <a class="shared-media__item" href="#">
+              <img src="@/assets/img/files/f1.png" alt="file 1" />
+            </a>
+            <a class="shared-media__item" href="#">
+              <img src="@/assets/img/files/f2.png" alt="file 2" />
+            </a>
+            <a class="shared-media__item" href="#">
+              <img src="@/assets/img/files/f3.png" alt="file 3" />
+            </a>
+          </div>
+        </div>
+        <div class="user-info p-0 pt-2">
+          <div class="user-info__header px-2">
+            <h5>Shared Files</h5>
+            <svg class="icon-svg--1x cursor-pointer">
+              <use xlink:href="@/assets/img/icons/sprites.svg#icon-file" />
+            </svg>
+          </div>
+          <div class="shared-media">
+            <div
+              class="document d-flex align-items-center line-height-1 border-bottom p-2 px-2 w-100"
+            >
+              <div class="document__left">
+                <svg class="document__icon">
+                  <use
+                    xlink:href="@/assets/img/icons/sprites.svg#icon-file-text"
+                  />
+                </svg>
+              </div>
+              <div class="document__right">
+                <h6 class="document__name">
+                  <a href="#" title="global-warming-data-2020.xlxs"
+                    >global-warming-data-2020.xlxs</a
+                  >
+                </h6>
+                <div class="document-info mt-sm">
+                  <span class="document-info__text">79.2 KB</span>
+                  <span class="document-info__text ml-1">XLXS</span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="document d-flex align-items-center line-height-1 border-bottom p-2 px-2 w-100"
+            >
+              <div class="document__left">
+                <svg class="document__icon">
+                  <use
+                    xlink:href="@/assets/img/icons/sprites.svg#icon-file-text"
+                  />
+                </svg>
+              </div>
+              <div class="document__right">
+                <h6 class="document__name">
+                  <a href="#" title="global-warming-data-2020.xlxs"
+                    >global-warming-data-2020.xlxs</a
+                  >
+                </h6>
+                <div class="document-info mt-sm">
+                  <span class="document-info__text">79.2 KB</span>
+                  <span class="document-info__text ml-1">XLXS</span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="document d-flex align-items-center line-height-1 border-bottom p-2 px-2 w-100"
+            >
+              <div class="document__left">
+                <svg class="document__icon">
+                  <use
+                    xlink:href="@/assets/img/icons/sprites.svg#icon-file-text"
+                  />
+                </svg>
+              </div>
+              <div class="document__right">
+                <h6 class="document__name">
+                  <a href="#" title="global-warming-data-2020.xlxs"
+                    >global-warming-data-2020.xlxs</a
+                  >
+                </h6>
+                <div class="document-info mt-sm">
+                  <span class="document-info__text">79.2 KB</span>
+                  <span class="document-info__text ml-1">XLXS</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -315,4 +1012,5 @@ export default {
 @import '@/assets/scss/components/_conversation';
 @import '@/assets/scss/components/_message';
 @import '@/assets/scss/components/_typing';
+@import '@/assets/scss/components/_contact';
 </style>
