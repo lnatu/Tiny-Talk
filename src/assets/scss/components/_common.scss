@@ -125,3 +125,12 @@ button {
   border: 1px solid #ced4da;
   border-radius: 0 5px 5px 0;
 }
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
