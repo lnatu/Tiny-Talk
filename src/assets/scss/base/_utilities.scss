@@ -37,6 +37,14 @@
   margin-top: 10px !important;
 }
 
+.mr-sm {
+  margin-right: 5px !important;
+}
+
+.mr-1 {
+  margin-right: 10px !important;
+}
+
 .mr-2 {
   margin-right: 20px !important;
 }
@@ -76,6 +84,36 @@
 */
 .text-white {
   color: $white-color !important;
+}
+
+.text-danger {
+  color: $danger-color !important;
+}
+
+.text-light {
+  color: $light-color-3 !important;
+}
+
+.text-small {
+  font-size: 1.5rem;
+}
+
+.text-medium {
+  font-size: 2rem;
+}
+
+/*
+* Icons
+*/
+.icon-danger {
+  fill: $danger-color !important;
+}
+
+.icon-svg {
+  fill: #000;
+  &--2x {
+    @include svg-icon(20px, $light-color-3);
+  }
 }
 
 /*

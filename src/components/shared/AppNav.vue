@@ -9,7 +9,7 @@
       <li class="navigation-item">
         <a class="navigation-link active" href="#">
           <svg class="navigation-item__icon">
-            <use xlink:href="@/assets/img/icons/sprites.svg#icon-bubble" />
+            <use xlink:href="@/assets/img/icons/sprites.svg#icon-comments-o" />
           </svg>
         </a>
       </li>

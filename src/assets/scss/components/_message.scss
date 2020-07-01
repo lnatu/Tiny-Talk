@@ -65,6 +65,25 @@
   margin-top: 40px;
 }
 
+.message-action {
+  &__item {
+    display: flex;
+    align-items: center;
+
+    padding: 1rem 1.5rem;
+
+    color: $light-color-3;
+  }
+
+  &__icon {
+    @include svg-icon(20px, $light-color-3);
+  }
+}
+
+.message-date {
+  position: relative;
+}
+
 .message-media {
   margin-top: 10px;
 
