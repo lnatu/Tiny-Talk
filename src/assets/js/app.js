@@ -2,6 +2,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const dropdownBtn = document.querySelectorAll('.dropdown-button');
   const dropdownMenu = document.querySelectorAll('.dropdown-menu');
 
+  if (dropdownBtn.length === 0 || dropdownMenu.length === 0) {
+    return;
+  }
+
   dropdownBtn.forEach(btn => {
     btn.addEventListener('click', function(e) {
       e.preventDefault();

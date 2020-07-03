@@ -2,10 +2,52 @@
   height: 100% !important;
 }
 
-.w-100 {
-  width: 100% !important;
+.h-max {
+  height: $full-screen-height;
 }
 
+@for $i from 1 through 4 {
+  .w-#{100 / $i} {
+    width: (100% / $i) !important;
+  }
+}
+
+/**
+ * Brands
+ */
+.brand-sm {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+/**
+ * Buttons
+ */
+.social-opt-btn {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2rem;
+  line-height: 1;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: $text-color;
+
+  background-color: #fff;
+
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+
+  padding: 2rem 4rem !important;
+
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+
+  outline: none;
+}
+
+/**
+ * List
+ */
 .list-style-none {
   list-style: none !important;
 }
@@ -13,9 +55,12 @@
 /**
  * Display
  */
-
 .d-flex {
   display: flex !important;
+}
+
+.d-inline-flex {
+  display: inline-flex !important;
 }
 
 .align-items-center {
@@ -37,26 +82,42 @@
   margin-top: 5px !important;
 }
 
-.mt-1 {
-  margin-top: 10px !important;
+.mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+@for $n from 0 through 10 {
+  .mt-#{$n} {
+    margin-top: ($n * 10px) !important;
+  }
 }
 
 .mr-sm {
   margin-right: 5px !important;
 }
 
-.mr-1 {
-  margin-right: 10px !important;
+@for $n from 0 through 10 {
+  .mr-#{$n} {
+    margin-right: ($n * 10px) !important;
+  }
 }
 
-.mr-2 {
-  margin-right: 20px !important;
+@for $n from 0 through 10 {
+  .mb-#{$n} {
+    margin-bottom: ($n * 10px) !important;
+  }
 }
 
-.ml-1 {
-  margin-left: 10px !important;
+@for $n from 0 through 10 {
+  .ml-#{$n} {
+    margin-left: ($n * 10px) !important;
+  }
 }
 
+/**
+ * Paddings
+ */
 .p-0 {
   padding: 0 !important;
 }
@@ -75,21 +136,28 @@
   padding-right: 20px !important;
 }
 
-.pt-0 {
-  padding-top: 0 !important;
+@for $n from 0 through 10 {
+  .pt-#{$n} {
+    padding-top: ($n * 10px) !important;
+  }
 }
 
-
-.pt-2 {
-  padding-top: 20px !important;
+@for $n from 0 through 10 {
+  .pr-#{$n} {
+    padding-right: ($n * 10px) !important;
+  }
 }
 
-.pb-0 {
-  padding-bottom: 0 !important;
+@for $n from 0 through 10 {
+  .pb-#{$n} {
+    padding-bottom: ($n * 10px) !important;
+  }
 }
 
-.pb-2 {
-  padding-bottom: 20px !important;
+@for $n from 0 through 10 {
+  .pl-#{$n} {
+    padding-left: ($n * 10px) !important;
+  }
 }
 
 /**
@@ -133,6 +201,10 @@
   line-height: 1 !important;
 }
 
+.text-center {
+  text-align: center !important;
+}
+
 .text-white {
   color: $white-color !important;
 }
@@ -152,6 +224,10 @@
 .text-medium {
   font-size: 2rem;
   font-weight: 400;
+}
+
+.text-dec-none {
+  text-decoration: none;
 }
 
 /*

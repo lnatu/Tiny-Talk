@@ -22,6 +22,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '@/assets/scss/init';
 .layout {
   height: 100%;
   display: flex;

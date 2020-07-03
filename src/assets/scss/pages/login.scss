@@ -1,0 +1,44 @@
+.login {
+  &-left {
+    flex: 0 0 50%;
+
+    background-image: url('./../../assets/img/bg/login-bg-2.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  &-right {
+    flex: 1;
+
+    background-image: linear-gradient(to top, #946cc5, #aa64bd, #bd5cb2, #ce54a4, #db4c94, #e75087, #f0577b, #f6616e, #fc7667, #ff8c64, #ffa165, #feb56b);
+  }
+
+  &-input {
+    padding: 3rem 2rem;
+
+    font-size: 1.7rem;
+    color: $text-color;
+
+    border: none;
+
+    &::-webkit-input-placeholder {
+      color: $light-color;
+    }
+  }
+
+  &-submit {
+    display: block;
+
+    padding: 2rem 0;
+
+    color: $white-color;
+    font-size: 2rem;
+    line-height: 1;
+    text-decoration: none;
+    text-align: center;
+
+    background: $theme-color;
+
+    border-radius: 10px;
+  }
+}

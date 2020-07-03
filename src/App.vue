@@ -8,11 +8,9 @@
 export default {};
 </script>
 
-<style lang="scss">
-@import '@/assets/scss/init';
-
+<style lang="scss" scoped>
 #app {
-  height: $full-screen-height;
+  height: 100vh;
 
   overflow-y: hidden;
 }

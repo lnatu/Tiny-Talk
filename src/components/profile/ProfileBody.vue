@@ -152,5 +152,3 @@ export default {
   name: 'ProfileBody'
 };
 </script>
-
-<style scoped></style>
