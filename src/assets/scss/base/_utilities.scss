@@ -6,9 +6,9 @@
   height: $full-screen-height;
 }
 
-@for $i from 1 through 4 {
-  .w-#{100 / $i} {
-    width: (100% / $i) !important;
+@for $i from 0 through 4 {
+  .w-#{100 - ($i * 25)} {
+    width: (100% - ($i * 25)) !important;
   }
 }
 
@@ -16,18 +16,71 @@
  * Brands
  */
 .brand-sm {
-  width: 40px !important;
-  height: 40px !important;
+  width: 25px !important;
+  height: 25px !important;
 }
 
 /**
  * Buttons
  */
-.social-opt-btn {
-  font-family: 'Roboto', sans-serif;
-  font-size: 2rem;
+.btn {
+  display: inline-block;
+
+  font-weight: 400;
+  color: $text-color;
+
+  text-align: center;
+  vertical-align: middle;
+
+  cursor: pointer;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  background-color: transparent;
+
+  border: 1px solid transparent;
+
+  padding: 1rem;
+
+  font-size: 1.2rem;
   line-height: 1;
-  letter-spacing: 2.5px;
+  border-radius: 5px;
+
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, opacity 0.15s ease-in-out;
+}
+
+.btn.disabled,
+.btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+a.btn.disabled,
+fieldset:disabled a.btn {
+  pointer-events: none;
+}
+
+button:not(:disabled),
+[type='button']:not(:disabled),
+[type='reset']:not(:disabled),
+[type='submit']:not(:disabled) {
+  cursor: pointer;
+}
+
+.btn-submit {
+  background: $theme-color;
+  color: $white-color;
+}
+
+.social-opt-btn {
+  text-decoration: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: 1px;
   font-weight: 500;
   color: $text-color;
 
@@ -35,14 +88,19 @@
 
   border: none;
   border-radius: 45px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 
-  padding: 2rem 4rem !important;
+  padding: 1rem 2rem !important;
 
   transition: all 0.3s ease 0s;
   cursor: pointer;
 
   outline: none;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 /**
@@ -61,6 +119,16 @@
 
 .d-inline-flex {
   display: inline-flex !important;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+@for $i from 1 through 10 {
+  .flex-#{$i * 10} {
+    flex: $i * 10%;
+  }
 }
 
 .align-items-center {
@@ -85,6 +153,11 @@
 .mx-auto {
   margin-left: auto !important;
   margin-right: auto !important;
+}
+
+.mx-sm-reverse {
+  margin-left: -10px;
+  margin-right: -10px;
 }
 
 @for $n from 0 through 10 {
@@ -129,6 +202,10 @@
 .px-0 {
   padding-left: 0 !important;
   padding-right: 0 !important;
+}
+.px-sm {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .px-2 {
@@ -197,6 +274,10 @@
 /*
 * Typography
 */
+.fs-sm {
+  font-size: 1.1rem;
+}
+
 .line-height-1 {
   line-height: 1 !important;
 }
@@ -260,6 +341,13 @@
 
 .border-bottom {
   border-bottom: 1px solid $border-light-color;
+}
+
+/**
+ * Positions
+ */
+.position-relative {
+  position: relative;
 }
 
 /*
