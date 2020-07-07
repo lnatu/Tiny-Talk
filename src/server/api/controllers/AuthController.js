@@ -4,6 +4,7 @@ const UserModel = require('./../models/UserModel');
 const catchError = require('./../../utils/catchError');
 const token = require('./../../helpers/token');
 const AppError = require('./../../utils/appError');
+const Email = require('./../../helpers/mailer');
 
 exports.protect = catchError(async (req, res, next) => {
   // 1. Checking token
@@ -16,9 +17,6 @@ exports.protect = catchError(async (req, res, next) => {
   } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
   }
-
-  console.log(req.cookies);
-  console.log(req);
 
   if (!token) {
     return next(new AppError('Please log in to continue', 401));
@@ -54,6 +52,10 @@ exports.signup = catchError(async (req, res, next) => {
     email: req.body.email,
     password: req.body.password
   });
+
+  const url = `${req.protocol}://${req.get('host')}/me`;
+  await new Email(user, url).sendWelcome();
+  console.log(user);
 
   token.createSendToken(user._id, 201, res);
 });
