@@ -100,20 +100,24 @@
       </p>
     </div>
     <div class="signup-right h-100"></div>
+    <loader v-if="SHOW_LOADER" />
   </div>
 </template>
 
 <script>
 import { required, email } from 'vuelidate/lib/validators';
-import { mapActions } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 import Error from '@/components/error/Error';
+import Loader from '@/components/shared/Loader';
 
 export default {
   name: 'SignupPage',
   components: {
-    Error
+    Error,
+    Loader
   },
   computed: {
+    ...mapGetters(['SHOW_LOADER']),
     isFormValid() {
       return this.$v.signUpObj.$invalid;
     }
@@ -146,10 +150,18 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['toggleLoader']),
     ...mapActions(['signUp']),
     async signUpAction() {
-      const res = await this.signUp(this.signUpObj);
-      console.log(res);
+      try {
+        this.toggleLoader(true);
+        const res = await this.signUp(this.signUpObj);
+        console.log(res);
+      } catch (err) {
+        this.toggleLoader(false);
+        console.log(err.response);
+        console.log(err.response.data.message);
+      }
     }
   }
 };
