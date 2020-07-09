@@ -11,6 +11,11 @@ const routes = [
     component: Home
   },
   {
+    path: '/account/activate/:token',
+    name: 'AccountActivate',
+    component: () => import('@/views/auth/ActivateAccount.vue')
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/auth/Login.vue')

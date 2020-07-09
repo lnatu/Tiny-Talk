@@ -1,0 +1,19 @@
+@import '../abstract/variables';
+@import '../abstract/variables';
+
+.activate {
+  background: url('../../assets/img/bg/activate-bg.jpg') no-repeat;
+  background-size: cover;
+
+  &-card {
+    max-width: 500px;
+    width: 100%;
+    min-height: 500px;
+
+    padding: 40px 20px;
+
+    border-radius: 5px;
+
+    background: rgba($white-color, .8);
+  }
+}

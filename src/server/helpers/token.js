@@ -1,9 +1,29 @@
+const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
 const signToken = id =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN
   });
+
+/* eslint-disable */
+exports.createVerifyToken = async (TokenModel, userId) => {
+  const token = crypto.randomBytes(32).toString('hex');
+  const tokenExpireAt = Date.now() + 10 * 60 * 1000;
+
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(token)
+    .digest('hex');
+
+  await TokenModel.create({
+    token: hashedToken,
+    tokenExpireAt,
+    user: userId
+  });
+
+  return token;
+};
 
 exports.createSendToken = (signature, statusCode, res) => {
   const token = signToken(signature);
