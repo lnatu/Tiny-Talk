@@ -23,6 +23,10 @@
 /**
  * Buttons
  */
+a.btn {
+  text-decoration: none;
+}
+
 .btn {
   display: inline-block;
 
@@ -76,6 +80,12 @@ button:not(:disabled),
   color: $white-color;
 }
 
+.btn-activate {
+  background: $theme-color;
+  color: $white-color;
+  font-size: 22px;
+}
+
 .social-opt-btn {
   text-decoration: none;
   font-size: 1.5rem;
@@ -123,6 +133,10 @@ button:not(:disabled),
 
 .flex-1 {
   flex: 1;
+}
+
+.flex-column {
+  flex-direction: column;
 }
 
 @for $i from 1 through 10 {
@@ -294,12 +308,20 @@ button:not(:disabled),
   color: $danger-color !important;
 }
 
+.text-success {
+  color: $success-color !important;
+}
+
 .text-light {
   color: $light-color-2 !important;
 }
 
 .text-small {
   font-size: 1.3rem;
+}
+
+.text-lg {
+  font-size: 4rem;
 }
 
 .text-medium {

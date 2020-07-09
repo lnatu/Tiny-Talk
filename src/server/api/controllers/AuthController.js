@@ -60,7 +60,8 @@ exports.signup = catchError(async (req, res, next) => {
     user._id
   );
 
-  const url = `${req.protocol}://${req.get('host')}/activate/${verifyToken}`;
+  // const url = `${req.protocol}://${req.get('host')}/activate/${verifyToken}`;
+  const url = `http://localhost:8080/account/activate/${verifyToken}`;
   await new Email(user, url).sendWelcome();
 
   token.createSendToken(user._id, 201, res);
