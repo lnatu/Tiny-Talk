@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '@/views/Home.vue';
+import store from '@/store';
 
 Vue.use(VueRouter);
 
@@ -8,7 +9,8 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: { requiresAuth: true }
   },
   {
     path: '/account/activate/:token',
@@ -24,6 +26,11 @@ const routes = [
     path: '/signup',
     name: 'Signup',
     component: () => import('@/views/auth/Signup.vue')
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('@/views/profile/ProfileMain.vue')
   }
   /* {
     path: '/about',
@@ -40,6 +47,27 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.getters.GET_LOGIN_STATUS) {
+      return next({
+        name: 'Login'
+      });
+    }
+
+    return next();
+  }
+
+  if (
+    (store.getters.GET_LOGIN_STATUS && to.name === 'Login') ||
+    (store.getters.GET_LOGIN_STATUS && to.name === 'Signup')
+  ) {
+    return next({ name: 'Home' });
+  }
+
+  next();
 });
 
 export default router;

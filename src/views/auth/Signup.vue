@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex h-max">
+  <div class="d-flex w-100 h-max">
     <div
       class="signup-left h-100 d-flex align-items-center justify-content-center position-relative"
     >
@@ -108,24 +108,20 @@
       </p>
     </div>
     <div class="signup-right h-100"></div>
-    <loader v-if="SHOW_LOADER" />
   </div>
 </template>
 
 <script>
 import { required, email } from 'vuelidate/lib/validators';
-import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { mapMutations, mapActions } from 'vuex';
 import Error from '@/components/error/Error';
-import Loader from '@/components/shared/Loader';
 
 export default {
   name: 'SignupPage',
   components: {
-    Error,
-    Loader
+    Error
   },
   computed: {
-    ...mapGetters(['SHOW_LOADER']),
     isFormValid() {
       return this.$v.signUpObj.$invalid;
     }

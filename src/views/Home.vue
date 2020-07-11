@@ -1,20 +1,17 @@
 <template>
-  <div class="layout">
-    <app-nav />
+  <div class="d-flex">
     <app-sidebar />
     <app-main />
   </div>
 </template>
 
 <script>
-import AppNav from '@/components/shared/AppNav';
 import AppSidebar from '@/components/shared/AppSidebar';
 import AppMain from '@/components/AppMain';
 
 export default {
   name: 'Home',
   components: {
-    AppNav,
     AppSidebar,
     AppMain
   }
@@ -23,8 +20,4 @@ export default {
 
 <style lang="scss">
 @import '@/assets/scss/init';
-.layout {
-  height: 100%;
-  display: flex;
-}
 </style>

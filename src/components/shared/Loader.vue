@@ -29,7 +29,9 @@ export default {
 <style lang="scss" scoped>
 #loader {
   position: fixed;
-  z-index: 99;
+  top: 0;
+  left: 0;
+  z-index: 1050;
 
   width: 100%;
   height: 100vh;

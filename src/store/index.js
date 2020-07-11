@@ -7,7 +7,10 @@ import auth from './auth/init';
 
 export default new Vuex.Store({
   state: {
-    showLoader: false
+    showLoader: false,
+    globalError: {
+      message: ''
+    }
   },
   getters: {
     /**
@@ -15,11 +18,20 @@ export default new Vuex.Store({
      */
     SHOW_LOADER(state) {
       return state.showLoader;
+    },
+    /**
+     * @return {string}
+     */
+    GET_GLOBAL_ERROR_MESSAGE(state) {
+      return state.globalError.message;
     }
   },
   mutations: {
     toggleLoader(state, payload) {
       state.showLoader = payload;
+    },
+    SET_GLOBAL_ERROR_MESSAGE(state, payload) {
+      state.globalError.message = payload;
     }
   },
   actions: {},

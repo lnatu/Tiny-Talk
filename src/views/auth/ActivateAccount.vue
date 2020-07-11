@@ -1,5 +1,5 @@
 <template>
-  <div class="activate h-max d-flex align-items-center justify-content-center">
+  <div class="activate w-100 h-max d-flex align-items-center justify-content-center">
     <div
       class="activate-card text-center d-flex flex-column justify-content-between"
     >
