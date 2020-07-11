@@ -1,5 +1,5 @@
 <template>
-  <section class="login d-flex h-max">
+  <section class="login d-flex w-100 h-max">
     <div class="login-left h-100"></div>
     <div class="login-right h-100 d-flex align-items-center">
       <div class="login-form w-100">
@@ -21,34 +21,23 @@
           <div class="form-group">
             <input
               v-model="userInfo.email"
-              @input="$v.userInfo.email.$touch()"
               type="email"
               class="form-control login-input"
               placeholder="Email"
-            />
-            <error
-              :vuelidate="$v"
-              :validateObj="'userInfo'"
-              :validateKey="'email'"
-              :validateType="['required', 'email']"
             />
           </div>
           <div class="form-group mt-2">
             <input
               v-model="userInfo.password"
-              @input="$v.userInfo.password.$touch()"
               type="password"
               class="form-control login-input"
               placeholder="Password"
             />
-            <error
-              :vuelidate="$v"
-              :validateObj="'userInfo'"
-              :validateKey="'password'"
-              :validateType="['required']"
-            />
+            <div v-if="GET_GLOBAL_ERROR_MESSAGE" class="text-danger">
+              {{ GET_GLOBAL_ERROR_MESSAGE }}
+            </div>
           </div>
-          <a class="login-submit mt-5" href="#" @click.prevent="signUpAction">
+          <a class="login-submit mt-3" href="#" @click.prevent="loginAction">
             Sign in
           </a>
         </form>
@@ -58,14 +47,13 @@
 </template>
 
 <script>
-import { required, email } from 'vuelidate/lib/validators';
-import { mapActions } from 'vuex';
-import Error from '@/components/error/Error';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { localKeys } from '@/config';
 
 export default {
   name: 'LoginPage',
-  components: {
-    Error
+  computed: {
+    ...mapGetters(['GET_GLOBAL_ERROR_MESSAGE'])
   },
   data() {
     return {
@@ -75,22 +63,21 @@ export default {
       }
     };
   },
-  validations: {
-    userInfo: {
-      email: {
-        email,
-        required
-      },
-      password: {
-        required
-      }
-    }
-  },
   methods: {
-    ...mapActions(['signUp']),
-    async signUpAction() {
-      const res = await this.signUp(this.userInfo);
-      console.log(res);
+    ...mapMutations(['toggleLoader', 'SET_LOCAL_USER']),
+    ...mapActions(['login']),
+    async loginAction() {
+      this.toggleLoader(true);
+      try {
+        const res = await this.login(this.userInfo);
+        const { user } = res.data.data;
+        this.SET_LOCAL_USER(user);
+        localStorage.setItem(localKeys.USER_KEY, JSON.stringify(user));
+        this.toggleLoader(false);
+        this.$router.push({ name: 'Home' });
+      } catch {
+        this.toggleLoader(false);
+      }
     }
   }
 };

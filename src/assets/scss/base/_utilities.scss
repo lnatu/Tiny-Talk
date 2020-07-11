@@ -6,6 +6,11 @@
   height: $full-screen-height;
 }
 
+.layout {
+  height: 100%;
+  display: flex;
+}
+
 @for $i from 0 through 4 {
   .w-#{100 - ($i * 25)} {
     width: (100% - ($i * 25)) !important;

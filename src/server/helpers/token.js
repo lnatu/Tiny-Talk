@@ -25,8 +25,8 @@ exports.createVerifyToken = async (TokenModel, userId) => {
   return token;
 };
 
-exports.createSendToken = (signature, statusCode, res) => {
-  const token = signToken(signature);
+exports.createSendToken = (user, statusCode, res) => {
+  const token = signToken(user._id);
 
   const cookieOptions = {
     expires: new Date(
@@ -43,8 +43,13 @@ exports.createSendToken = (signature, statusCode, res) => {
 
   res.cookie('jwt', token, cookieOptions);
 
+  user.password = undefined;
+
   res.status(statusCode).json({
     status: 'success',
-    token
+    token,
+    data: {
+      user
+    }
   });
 };

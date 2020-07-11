@@ -64,8 +64,37 @@ exports.signup = catchError(async (req, res, next) => {
   const url = `http://localhost:8080/account/activate/${verifyToken}`;
   await new Email(user, url).sendWelcome();
 
-  token.createSendToken(user._id, 201, res);
+  token.createSendToken(user, 201, res);
 });
+
+exports.login = catchError(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return next(new AppError('Please provide email and password', 400));
+  }
+
+  const user = await UserModel.findOne({ email }).select('+password');
+
+  if (
+    !user ||
+    !user.isActive ||
+    !(await user.comparePassword(password, user.password))
+  ) {
+    return next(new AppError('Email or password is not correct', 401));
+  }
+
+  token.createSendToken(user, 200, res);
+});
+
+exports.logout = (req, res, next) => {
+  res.cookie('jwt', 'logged out', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true
+  });
+
+  res.status(200).json({ status: 'success' });
+};
 
 exports.activateAccount = catchError(async (req, res, next) => {
   // 1. Get user from token

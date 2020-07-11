@@ -2,11 +2,34 @@ const axios = require('axios');
 const config = require('@/config');
 
 const state = {
-  isLoggedIn: false
+  local: {
+    user: JSON.parse(localStorage.getItem(config.localKeys.USER_KEY)) || ''
+  }
+};
+
+const getters = {
+  GET_LOCAL_USER(state) {
+    return state.local.user;
+  },
+  GET_LOGIN_STATUS(state) {
+    return !!state.local.user;
+  }
+};
+
+const mutations = {
+  SET_LOCAL_USER(state, payload) {
+    state.local.user = payload;
+  }
 };
 
 const actions = {
   /* eslint-disable no-unused-vars */
+  async login({ commit }, payload) {
+    return await axios.post(config.api.auth.login, payload);
+  },
+  async logout() {
+    return await axios.get(config.api.auth.logout);
+  },
   async signUp({ commit }, payload) {
     return await axios.post(config.api.auth.signup, payload);
   },
@@ -21,5 +44,7 @@ const actions = {
 
 export default {
   state,
+  getters,
+  mutations,
   actions
 };
