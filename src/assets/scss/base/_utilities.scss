@@ -128,6 +128,14 @@ button:not(:disabled),
 /**
  * Display
  */
+.d-block {
+  display: block !important;
+}
+
+.d-inline-block {
+  display: inline-block !important;
+}
+
 .d-flex {
   display: flex !important;
 }
@@ -152,6 +160,10 @@ button:not(:disabled),
 
 .align-items-center {
   align-items: center !important;
+}
+
+.align-self-end {
+  align-self: flex-end !important;
 }
 
 .justify-content-between {
@@ -193,6 +205,10 @@ button:not(:disabled),
   .mr-#{$n} {
     margin-right: ($n * 10px) !important;
   }
+}
+
+.mb-sm {
+  margin-bottom: 5px !important;
 }
 
 @for $n from 0 through 10 {
@@ -282,6 +298,10 @@ button:not(:disabled),
   background: $bg-light-color !important;
 }
 
+.bg-light-2 {
+  background: $bg-light-color-2 !important;
+}
+
 .bg-theme {
   background: $theme-color !important;
 }
@@ -305,6 +325,10 @@ button:not(:disabled),
   text-align: center !important;
 }
 
+.text-right {
+  text-align: right !important;
+}
+
 .text-white {
   color: $white-color !important;
 }
@@ -318,7 +342,7 @@ button:not(:disabled),
 }
 
 .text-light {
-  color: $light-color-2 !important;
+  color: $light-color-5 !important;
 }
 
 .text-small {
@@ -386,4 +410,14 @@ button:not(:disabled),
 
 .no-resize {
   resize: none !important;
+}
+
+.title-small {
+  font-weight: 400;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+
+.text-a {
+  font-size: 1.4rem;
 }

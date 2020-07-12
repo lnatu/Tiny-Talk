@@ -73,11 +73,11 @@ button {
   display: block;
 
   width: 100%;
-  height: calc(1.5em + 1rem + 2px);
+  height: 35px;
 
   padding: 0.375rem 1rem;
 
-  font-size: 1.5rem;
+  font-size: 12px;
   font-weight: 400;
   color: $text-color;
 
@@ -135,4 +135,94 @@ button {
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  height: $app-header-height;
+
+  background: $white-color;
+  border-bottom: 1px solid $border-light-color;
+
+  padding: 0 15px;
+
+  p {
+    color: $light-color-5;
+    font-size: 1.3rem;
+  }
+}
+
+.section-body {
+  padding: 20px;
+}
+
+.tt-card {
+  border-radius: 5px;
+  border: 1px solid $border-light-color;
+
+  &-header {
+    padding: 15px;
+
+    border-bottom: 1px solid $border-light-color;
+
+    background: $bg-light-color-2;
+  }
+
+  &-title {
+    color: $text-color;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+
+  &-sub-title {
+    color: $light-color-6;
+    font-size: 1.2rem;
+  }
+
+  &-body {
+    padding: 20px 15px;
+  }
+
+  &-footer {
+    padding: 15px;
+
+    border-top: 1px solid $border-light-color;
+
+    background: $bg-light-color-2;
+  }
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+.form-row + .form-row {
+  margin-top: 10px;
+}
+
+.form-group label {
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: $text-color;
+}
+
+/**
+ * Grid system
+ */
+@for $i from 1 through 12 {
+  .col-#{$i} {
+    flex: 0 0 $i * (100 / 12) * 1%;
+  }
+}
+
+[class*='col-'] {
+  padding-left: 10px;
+  padding-right: 10px;
 }
