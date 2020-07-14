@@ -1,0 +1,24 @@
+@import './../../abstract/variables';
+@import './../../abstract/mixins';
+@import './../../base/utilities';
+
+.profile-setting {
+  flex: 1;
+}
+
+.privacy-item + .privacy-item {
+  margin-top: 20px;
+}
+
+.privacy-item .dropdown .dropdown-menu {
+  font-size: 1.7rem;
+
+  a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  & > * {
+    font-size: inherit;
+  }
+}
