@@ -157,6 +157,10 @@ button {
 
 .section-body {
   padding: 20px;
+
+  height: calc(100vh - #{$app-header-height});
+
+  overflow-y: auto;
 }
 
 .tt-card {

@@ -85,6 +85,11 @@ button:not(:disabled),
   color: $white-color;
 }
 
+.btn-danger {
+  background: $danger-color;
+  color: $white-color;
+}
+
 .btn-activate {
   background: $theme-color;
   color: $white-color;

@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema({
     trim: true,
     required: [true, 'Please enter your last name']
   },
+  birthday: {
+    type: Date,
+    default: null
+  },
   email: {
     type: String,
     trim: true,
@@ -33,6 +37,10 @@ const userSchema = new mongoose.Schema({
     default: null
   },
   address: {
+    type: String,
+    default: null
+  },
+  website: {
     type: String,
     default: null
   },

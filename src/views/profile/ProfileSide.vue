@@ -10,7 +10,7 @@
           <img class="d-block" src="@/assets/img/users/girl.png" alt="test" />
         </div>
         <figcaption class="mt-2">
-          Demi Lovato
+          {{ `${GET_LOCAL_USER.lastName} ${GET_LOCAL_USER.firstName}` }}
         </figcaption>
         <button class="upload-profile-pic" type="button">
           <svg class="icon-svg--2x icon-svg--white">
@@ -38,7 +38,7 @@
           >
             <div class="personal-info__left">
               <p class="title-small text-light">Birthday</p>
-              <p class="text-a mt-sm">20/11/1992</p>
+              <p class="text-a mt-sm">{{ GET_LOCAL_USER.birthday || '---' }}</p>
             </div>
             <div class="personal-info__right text-right">
               <svg class="icon-svg--2x">
@@ -53,7 +53,7 @@
           >
             <div class="personal-info__left">
               <p class="title-small text-light">Phone</p>
-              <p class="text-a mt-sm">+01-222-364522</p>
+              <p class="text-a mt-sm">{{ GET_LOCAL_USER.phone || '---' }}</p>
             </div>
             <div class="personal-info__right text-right">
               <svg class="icon-svg--2x">
@@ -66,7 +66,7 @@
           >
             <div class="personal-info__left">
               <p class="title-small text-light">Email</p>
-              <p class="text-a mt-sm">catherine.richardson@gmail.com</p>
+              <p class="text-a mt-sm">{{ GET_LOCAL_USER.email }}</p>
             </div>
             <div class="personal-info__right text-right">
               <svg class="icon-svg--2x">
@@ -81,7 +81,7 @@
           >
             <div class="personal-info__left">
               <p class="title-small text-light">Website</p>
-              <p class="text-a mt-sm">www.catherichardson.com</p>
+              <p class="text-a mt-sm">{{ GET_LOCAL_USER.website || '---' }}</p>
             </div>
             <div class="personal-info__right text-right">
               <svg class="icon-svg--2x">
@@ -95,7 +95,7 @@
             <div class="personal-info__left">
               <p class="title-small text-light">Address</p>
               <p class="text-a mt-sm">
-                1134 Ridder Park Road, San Fransisco, CA 94851
+                {{ GET_LOCAL_USER.address || '---' }}
               </p>
             </div>
             <div class="personal-info__right text-right">
@@ -113,7 +113,9 @@
           >
             <div class="personal-info__left">
               <p class="title-small text-light">Facebook</p>
-              <p class="text-a mt-sm">10:25 PM</p>
+              <p class="text-a mt-sm">
+                {{ GET_LOCAL_USER.facebooks || '---' }}
+              </p>
             </div>
             <div class="personal-info__right text-right">
               <svg class="icon-svg--2x">
@@ -128,7 +130,7 @@
           >
             <div class="personal-info__left">
               <p class="title-small text-light">Twitter</p>
-              <p class="text-a mt-sm">20/11/1992</p>
+              <p class="text-a mt-sm">{{ GET_LOCAL_USER.twitter || '---' }}</p>
             </div>
             <div class="personal-info__right text-right">
               <svg class="icon-svg--2x">
@@ -141,7 +143,9 @@
           >
             <div class="personal-info__left">
               <p class="title-small text-light">Instagram</p>
-              <p class="text-a mt-sm">+01-222-364522</p>
+              <p class="text-a mt-sm">
+                {{ GET_LOCAL_USER.instagram || '---' }}
+              </p>
             </div>
             <div class="personal-info__right text-right">
               <svg class="icon-svg--2x">
@@ -156,7 +160,7 @@
           >
             <div class="personal-info__left">
               <p class="title-small text-light">Linkedin</p>
-              <p class="text-a mt-sm">catherine.richardson@gmail.com</p>
+              <p class="text-a mt-sm">{{ GET_LOCAL_USER.linkedin || '---' }}</p>
             </div>
             <div class="personal-info__right text-right">
               <svg class="icon-svg--2x">
@@ -173,8 +177,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
-  name: 'ProfileSide'
+  name: 'ProfileSide',
+  computed: {
+    ...mapGetters(['GET_LOCAL_USER'])
+  }
 };
 </script>
 
