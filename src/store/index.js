@@ -8,6 +8,7 @@ import auth from './auth/init';
 export default new Vuex.Store({
   state: {
     showLoader: false,
+    showSaveImage: false,
     globalError: {
       message: ''
     }
@@ -18,6 +19,15 @@ export default new Vuex.Store({
      */
     SHOW_LOADER(state) {
       return state.showLoader;
+    },
+    /**
+     *
+     * @param state
+     * @returns {boolean}
+     * @constructor
+     */
+    GET_SHOW_SAVE_IMAGE(state) {
+      return state.showSaveImage;
     },
     /**
      * @return {string}
@@ -32,6 +42,9 @@ export default new Vuex.Store({
     },
     SET_GLOBAL_ERROR_MESSAGE(state, payload) {
       state.globalError.message = payload;
+    },
+    SET_SHOW_SAVE_IMAGE(state, payload) {
+      state.showSaveImage = payload;
     }
   },
   actions: {},

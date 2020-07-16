@@ -7,15 +7,34 @@
     <div class="profile-side-body hide-scrollbar">
       <figure class="profile-picture position-relative">
         <div class="picture-holder">
-          <img class="d-block" src="@/assets/img/users/girl.png" alt="test" />
+          <img
+            class="d-block"
+            :src="require(`@/assets/img/users/${GET_LOCAL_USER.avatar}`)"
+            alt="test"
+          />
         </div>
         <figcaption class="mt-2">
           {{ `${GET_LOCAL_USER.lastName} ${GET_LOCAL_USER.firstName}` }}
         </figcaption>
-        <button class="upload-profile-pic" type="button">
+        <label for="upload" class="upload-profile-pic" type="button">
           <svg class="icon-svg--2x icon-svg--white">
             <use xlink:href="@/assets/img/icons/sprites.svg#icon-camera" />
           </svg>
+        </label>
+        <input
+          id="upload"
+          ref="uploadPhoto"
+          v-show="false"
+          type="file"
+          accept="image/*"
+          @change="SET_SHOW_SAVE_IMAGE(true)"
+        />
+        <button
+          v-if="GET_SHOW_SAVE_IMAGE"
+          class="btn btn-submit align-self-end mr-2"
+          @click="uploadHandler"
+        >
+          Save change
         </button>
       </figure>
       <div class="personal-info mt-3">
@@ -177,11 +196,20 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
   name: 'ProfileSide',
   computed: {
-    ...mapGetters(['GET_LOCAL_USER'])
+    ...mapGetters(['GET_LOCAL_USER', 'GET_SHOW_SAVE_IMAGE'])
+  },
+  methods: {
+    ...mapMutations(['SET_SHOW_SAVE_IMAGE']),
+    ...mapActions(['updateAvatar']),
+    async uploadHandler() {
+      const fd = new FormData();
+      fd.append('photo', this.$refs.uploadPhoto.files[0]);
+      await this.updateAvatar(fd);
+    }
   }
 };
 </script>
