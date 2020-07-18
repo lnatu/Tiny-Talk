@@ -57,7 +57,9 @@
           >
             <div class="personal-info__left">
               <p class="title-small text-light">Birthday</p>
-              <p class="text-a mt-sm">{{ GET_LOCAL_USER.birthday || '---' }}</p>
+              <p class="text-a mt-sm">
+                {{ formatDate(GET_LOCAL_USER.birthday) || '---' }}
+              </p>
             </div>
             <div class="personal-info__right text-right">
               <svg class="icon-svg--2x">
@@ -100,7 +102,9 @@
           >
             <div class="personal-info__left">
               <p class="title-small text-light">Website</p>
-              <p class="text-a mt-sm">{{ GET_LOCAL_USER.website || '---' }}</p>
+              <a :href="GET_LOCAL_USER.website || '#'" class="text-a mt-sm">{{
+                GET_LOCAL_USER.website || '---'
+              }}</a>
             </div>
             <div class="personal-info__right text-right">
               <svg class="icon-svg--2x">
@@ -197,8 +201,11 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
+import mixin from '@/mixins/global';
+
 export default {
   name: 'ProfileSide',
+  mixins: [mixin],
   computed: {
     ...mapGetters(['GET_LOCAL_USER', 'GET_SHOW_SAVE_IMAGE'])
   },

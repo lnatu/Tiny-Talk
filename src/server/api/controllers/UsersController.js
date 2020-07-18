@@ -46,13 +46,14 @@ exports.resizeImage = (req, res, next) => {
 };
 exports.uploadUserPhoto = upload.single('photo');
 
-exports.updateMe = catchError(async (req, res, next) => {
+exports.updateAvatar = catchError(async (req, res, next) => {
   if (req.file) {
     req.body.avatar = req.file.filename;
   }
 
   const updatedUser = await UserModel.findByIdAndUpdate(req.user.id, req.body, {
-    new: true
+    new: true,
+    runValidators: true
   });
 
   res.status(200).json({
@@ -63,4 +64,5 @@ exports.updateMe = catchError(async (req, res, next) => {
   });
 });
 
+exports.updateAccountInfo = factory.updateOne(UserModel);
 exports.createUser = factory.createOne(UserModel);
