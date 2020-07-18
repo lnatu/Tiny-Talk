@@ -3,12 +3,14 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import Vuelidate from 'vuelidate';
+import VueAlertify from 'vue-alertify';
 
 require('@/assets/js/app');
 
 Vue.config.productionTip = false;
 
 Vue.use(Vuelidate);
+Vue.use(VueAlertify);
 
 new Vue({
   router,

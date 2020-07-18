@@ -6,7 +6,8 @@ exports.api = {
     logout: `${version}users/logout`,
     signup: `${version}users/signup`,
     activateAccount: `${version}users/activate/token`,
-    updateAvatar: `${version}users/updateAvatar`
+    updateAvatar: `${version}users/updateAvatar`,
+    updateAccountInfo: `${version}users/updateAvatar`
   }
 };
 

@@ -65,6 +65,9 @@ const actions = {
       console.log(err);
       commit('toggleLoader', false);
     }
+  },
+  async updateAccountInfo({ commit }, payload) {
+    return await axios.patch(config.api.auth.updateAccountInfo, payload);
   }
 };
 
