@@ -15,37 +15,84 @@
             <div class="form-row">
               <div class="form-group col-6">
                 <label for="firstName">First name</label>
-                <input id="firstName" class="form-control" type="text" />
+                <input
+                  id="firstName"
+                  class="form-control"
+                  type="text"
+                  :value="GET_LOCAL_USER.firstName"
+                />
               </div>
               <div class="form-group col-6">
                 <label for="lastName">Last name</label>
-                <input id="lastName" class="form-control" type="text" />
+                <input
+                  id="lastName"
+                  class="form-control"
+                  type="text"
+                  :value="GET_LOCAL_USER.lastName"
+                />
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-6">
                 <label for="mobile">Mobile number</label>
-                <input id="mobile" class="form-control" type="text" />
+                <input
+                  id="mobile"
+                  class="form-control"
+                  type="text"
+                  :value="GET_LOCAL_USER.phone || ''"
+                />
               </div>
               <div class="form-group col-6">
                 <label for="birthday">Birthday</label>
-                <input id="birthday" class="form-control" type="date" />
+                <input
+                  id="birthday"
+                  class="form-control"
+                  type="date"
+                  :value="formatDate(GET_LOCAL_USER.birthday)"
+                />
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-6">
                 <label for="email">Email</label>
-                <input id="email" class="form-control" type="email" />
+                <input
+                  id="email"
+                  class="form-control"
+                  type="email"
+                  :value="GET_LOCAL_USER.email || ''"
+                />
               </div>
               <div class="form-group col-6">
                 <label for="website">Website</label>
-                <input id="website" class="form-control" type="text" />
+                <input
+                  id="website"
+                  class="form-control"
+                  type="text"
+                  :value="GET_LOCAL_USER.website || ''"
+                />
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group col-12">
+              <div class="form-group col-6">
+                <label for="gender">Gender</label>
+                <select
+                  name="gender"
+                  id="gender"
+                  class="form-control"
+                  :value="GET_LOCAL_USER.gender || ''"
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+              <div class="form-group col-6">
                 <label for="address">Address</label>
-                <input id="address" class="form-control" type="text" />
+                <input
+                  id="address"
+                  class="form-control"
+                  type="text"
+                  :value="GET_LOCAL_USER.address || ''"
+                />
               </div>
             </div>
           </form>
@@ -150,8 +197,15 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import mixin from '@/mixins/global';
+
 export default {
-  name: 'ProfileSetting'
+  name: 'ProfileSetting',
+  mixins: [mixin],
+  computed: {
+    ...mapGetters(['GET_LOCAL_USER'])
+  }
 };
 </script>
 

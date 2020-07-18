@@ -11,6 +11,9 @@ const getters = {
   GET_LOCAL_USER(state) {
     return state.local.user;
   },
+  /**
+   * @return {boolean}
+   */
   GET_LOGIN_STATUS(state) {
     return !!state.local.user;
   }
@@ -39,6 +42,29 @@ const actions = {
       payload
     );
     return await axios.get(activateApi);
+  },
+  async updateAvatar({ commit }, payload) {
+    commit('toggleLoader', true);
+    commit('SET_SHOW_SAVE_IMAGE', false);
+    try {
+      const res = await axios.patch(config.api.auth.updateAvatar, payload, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      setTimeout(function() {
+        commit('SET_LOCAL_USER', res.data.data.user);
+        localStorage.setItem(
+          config.localKeys.USER_KEY,
+          JSON.stringify(res.data.data.user)
+        );
+        commit('toggleLoader', false);
+      }, 500);
+    } catch (err) {
+      console.log(err);
+      commit('toggleLoader', false);
+    }
   }
 };
 

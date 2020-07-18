@@ -17,7 +17,7 @@ body {
   box-sizing: border-box;
 }
 
-input {
+input, select {
   &:focus {
     outline: none;
   }
