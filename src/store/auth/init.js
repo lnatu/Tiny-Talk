@@ -60,7 +60,7 @@ const actions = {
           JSON.stringify(res.data.data.user)
         );
         commit('toggleLoader', false);
-      }, 500);
+      }, 1000);
     } catch (err) {
       console.log(err);
       commit('toggleLoader', false);
@@ -68,6 +68,9 @@ const actions = {
   },
   async updateAccountInfo({ commit }, payload) {
     return await axios.patch(config.api.auth.updateAccountInfo, payload);
+  },
+  async updatePassword({ commit }, payload) {
+    return await axios.patch(config.api.auth.updatePassword, payload);
   }
 };
 

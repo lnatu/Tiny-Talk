@@ -18,5 +18,6 @@ router.patch(
   UserController.updateAvatar
 );
 router.patch('/updateAccountInfo', UserController.updateAccountInfo);
+router.patch('/updatePassword', AuthController.updatePassword);
 
 module.exports = router;

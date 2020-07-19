@@ -210,23 +210,57 @@
               <div class="form-group col-12">
                 <label for="currentPassword">Current password</label>
                 <input
+                  v-model="accountPassword.currentPassword"
                   id="currentPassword"
                   class="form-control"
                   type="password"
+                  @input="
+                    triggerFieldValidation('accountPassword', 'currentPassword')
+                  "
+                />
+                <error
+                  :vuelidate="$v"
+                  :validateObj="'accountPassword'"
+                  :validateKey="'currentPassword'"
+                  :validateType="['required']"
                 />
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-6">
                 <label for="newPassword">New password</label>
-                <input id="newPassword" class="form-control" type="password" />
+                <input
+                  v-model="accountPassword.newPassword"
+                  id="newPassword"
+                  class="form-control"
+                  type="password"
+                  @input="
+                    triggerFieldValidation('accountPassword', 'newPassword')
+                  "
+                />
+                <error
+                  :vuelidate="$v"
+                  :validateObj="'accountPassword'"
+                  :validateKey="'newPassword'"
+                  :validateType="['required']"
+                />
               </div>
               <div class="form-group col-6">
                 <label for="newPasswordConfirm">Confirm new password</label>
                 <input
+                  v-model="accountPassword.confirmPassword"
                   id="newPasswordConfirm"
                   class="form-control"
                   type="password"
+                  @input="
+                    triggerFieldValidation('accountPassword', 'confirmPassword')
+                  "
+                />
+                <error
+                  :vuelidate="$v"
+                  :validateObj="'accountPassword'"
+                  :validateKey="'confirmPassword'"
+                  :validateType="['required']"
                 />
               </div>
             </div>
@@ -237,7 +271,8 @@
           <button
             class="btn btn-submit"
             type="button"
-            @click="updateAccountInfoAction"
+            :disabled="isFormValid('accountPassword')"
+            @click="updatePasswordAction"
           >
             Save changes
           </button>
@@ -248,38 +283,68 @@
 </template>
 
 <script>
-import axios from 'axios';
-import config from '@/config';
+import { required, minLength, sameAs } from 'vuelidate/lib/validators';
 import { mapGetters, mapMutations, mapActions } from 'vuex';
+import Error from '@/components/error/Error';
 import mixin from '@/mixins/global';
 
 export default {
   name: 'ProfileSetting',
   mixins: [mixin],
+  components: {
+    Error
+  },
   computed: {
     ...mapGetters(['GET_LOCAL_USER'])
   },
   data() {
     return {
-      accountInfo: {}
+      accountInfo: {},
+      accountPassword: {
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+      }
     };
+  },
+  validations: {
+    accountPassword: {
+      currentPassword: {
+        required
+      },
+      newPassword: {
+        required,
+        minLength: minLength(4)
+      },
+      confirmPassword: {
+        required,
+        sameAsPassword: sameAs('newPassword')
+      }
+    }
   },
   methods: {
     ...mapMutations(['toggleLoader', 'SET_LOCAL_USER']),
-    ...mapActions(['updateAccountInfo']),
+    ...mapActions(['updateAccountInfo', 'updatePassword']),
     async updateAccountInfoAction() {
       this.toggleLoader(true);
       try {
-        const res = await axios.patch(
-          config.api.auth.updateAccountInfo,
-          this.accountInfo
-        );
+        const res = await this.updateAccountInfo(this.accountInfo);
         this.saveUser(res.data.data.user);
         this.toggleLoader(false);
         this.alert('success', 'Update account information successful!');
       } catch (err) {
+        this.alert('error', err.response.data.message);
+      }
+    },
+    async updatePasswordAction() {
+      this.toggleLoader(true);
+      try {
+        const res = await this.updatePassword(this.accountPassword);
+        console.log(res);
         this.toggleLoader(false);
-        this.alert('success', err.response.data.message);
+        this.alert('success', 'Update password successfully');
+      } catch (err) {
+        this.alert('error', err.response.data.message);
       }
     }
   },

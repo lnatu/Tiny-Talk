@@ -2,6 +2,16 @@ const { mapMutations } = require('vuex');
 const config = require('@/config');
 
 const mixin = {
+  computed: {
+    isFormValid() {
+      return validObj => this.$v[validObj].$invalid;
+    }
+  },
+  data() {
+    return {
+      validObj: ''
+    };
+  },
   methods: {
     ...mapMutations(['SET_LOCAL_USER']),
     formatDate(date) {
@@ -32,6 +42,9 @@ const mixin = {
     saveUser(userObj) {
       this.SET_LOCAL_USER(userObj);
       localStorage.setItem(config.localKeys.USER_KEY, JSON.stringify(userObj));
+    },
+    triggerFieldValidation(obj, key) {
+      this.$v[obj][key].$touch();
     },
     /* ALERTS */
     alert: function(type, message) {

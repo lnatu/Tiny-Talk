@@ -118,3 +118,20 @@ exports.activateAccount = catchError(async (req, res, next) => {
 
   token.createSendToken(registerToken.user._id, 201, res);
 });
+
+exports.updatePassword = catchError(async (req, res, next) => {
+  const user = await UserModel.findById(req.user.id).select('+password');
+
+  if (!user) {
+    return next(new AppError('User not found', 403));
+  }
+
+  if (!(await user.comparePassword(req.body.currentPassword, user.password))) {
+    return next(new AppError('Your password is not correct', 401));
+  }
+
+  user.password = req.body.newPassword;
+  await user.save({ validateBeforeSave: true });
+
+  token.createSendToken(user, 200, res);
+});

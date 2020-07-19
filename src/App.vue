@@ -9,10 +9,12 @@
 </template>
 
 <script>
+/* eslint-disable */
 import axios from 'axios';
 import { mapGetters, mapMutations } from 'vuex';
 import AppNav from '@/components/shared/AppNav';
 import Loader from '@/components/shared/Loader';
+import mixin from '@/mixins/global';
 
 export default {
   name: 'AppHome',
@@ -24,8 +26,9 @@ export default {
     ...mapGetters(['SHOW_LOADER', 'GET_LOGIN_STATUS'])
   },
   methods: {
-    ...mapMutations(['SET_GLOBAL_ERROR_MESSAGE'])
+    ...mapMutations(['toggleLoader', 'SET_GLOBAL_ERROR_MESSAGE'])
   },
+  mixins: [mixin],
   created() {
     /* axios.interceptors.response.use(undefined, function(err) {
       return new Promise(function(resolve, reject) {
@@ -38,7 +41,9 @@ export default {
     axios.interceptors.response.use(
       response => response,
       error => {
+        this.toggleLoader(false);
         this.SET_GLOBAL_ERROR_MESSAGE(error.response.data.message);
+        throw error;
       }
     );
   }
