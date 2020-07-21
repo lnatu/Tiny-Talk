@@ -50,6 +50,9 @@ const mixin = {
     alert: function(type, message) {
       this.$alertify[type](message);
     }
+  },
+  created() {
+    console.log(this.$v)
   }
 };
 
