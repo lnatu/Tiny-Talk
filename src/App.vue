@@ -9,7 +9,6 @@
 </template>
 
 <script>
-/* eslint-disable */
 import axios from 'axios';
 import { mapGetters, mapMutations } from 'vuex';
 import AppNav from '@/components/shared/AppNav';
@@ -30,14 +29,6 @@ export default {
   },
   mixins: [mixin],
   created() {
-    /* axios.interceptors.response.use(undefined, function(err) {
-      return new Promise(function(resolve, reject) {
-        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
-          this.$store.dispatch(logout);
-        }
-        throw err;
-      });
-    }); */
     axios.interceptors.response.use(
       response => response,
       error => {

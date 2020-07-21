@@ -32,6 +32,7 @@
                   :vuelidate="$v"
                   :validateObj="'signUpObj'"
                   :validateKey="'firstName'"
+                  :validateName="'First name'"
                   :validateType="['required']"
                 />
               </div>
@@ -47,6 +48,7 @@
                   :vuelidate="$v"
                   :validateObj="'signUpObj'"
                   :validateKey="'lastName'"
+                  :validateName="'Last name'"
                   :validateType="['required']"
                 />
               </div>
@@ -63,6 +65,7 @@
                 :vuelidate="$v"
                 :validateObj="'signUpObj'"
                 :validateKey="'email'"
+                :validateName="'Email'"
                 :validateType="['required', 'email']"
               />
             </div>
@@ -78,6 +81,7 @@
                 :vuelidate="$v"
                 :validateObj="'signUpObj'"
                 :validateKey="'password'"
+                :validateName="'Password'"
                 :validateType="['required']"
               />
             </div>
@@ -176,7 +180,7 @@ export default {
       } catch (err) {
         this.toggleLoader(false);
         this.signUpInfo.error.status = !this.signUpInfo.error.status;
-        this.signUpInfo.error.message = err.response.data.message;
+        this.signUpInfo.error.message = 'Email is already in use';
       }
     }
   }

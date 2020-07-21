@@ -222,6 +222,7 @@
                   :vuelidate="$v"
                   :validateObj="'accountPassword'"
                   :validateKey="'currentPassword'"
+                  :validateName="'Password'"
                   :validateType="['required']"
                 />
               </div>
@@ -242,7 +243,8 @@
                   :vuelidate="$v"
                   :validateObj="'accountPassword'"
                   :validateKey="'newPassword'"
-                  :validateType="['required']"
+                  :validateName="'Password'"
+                  :validateType="['required', 'minLength']"
                 />
               </div>
               <div class="form-group col-6">
@@ -260,7 +262,8 @@
                   :vuelidate="$v"
                   :validateObj="'accountPassword'"
                   :validateKey="'confirmPassword'"
-                  :validateType="['required']"
+                  :validateName="'Password'"
+                  :validateType="['required', 'sameAsPassword']"
                 />
               </div>
             </div>
@@ -314,7 +317,7 @@ export default {
       },
       newPassword: {
         required,
-        minLength: minLength(4)
+        minLength: minLength(8)
       },
       confirmPassword: {
         required,

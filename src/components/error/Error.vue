@@ -9,8 +9,24 @@
       <span
         v-if="!vuelidate[validateObj][validateKey][item] && item === 'required'"
       >
-        {{ validateKey.charAt(0).toUpperCase() + validateKey.slice(1) }} is
+        {{ validateName }} is
         {{ item }}
+      </span>
+      <span
+        v-if="
+          !vuelidate[validateObj][validateKey][item] && item === 'minLength'
+        "
+      >
+        {{ validateName }} must at least
+        {{ vuelidate[validateObj][validateKey].$params.minLength.min }}
+      </span>
+      <span
+        v-if="
+          !vuelidate[validateObj][validateKey][item] &&
+            item === 'sameAsPassword'
+        "
+      >
+        Password is not correct
       </span>
     </div>
   </div>
@@ -28,6 +44,10 @@ export default {
       required: true
     },
     validateKey: {
+      type: String,
+      required: true
+    },
+    validateName: {
       type: String,
       required: true
     },

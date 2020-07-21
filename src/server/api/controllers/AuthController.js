@@ -127,11 +127,11 @@ exports.updatePassword = catchError(async (req, res, next) => {
   }
 
   if (!(await user.comparePassword(req.body.currentPassword, user.password))) {
-    return next(new AppError('Your password is not correct', 401));
+    return next(new AppError('Your current password is not correct', 401));
   }
 
   user.password = req.body.newPassword;
-  await user.save({ validateBeforeSave: true });
+  await user.save();
 
   token.createSendToken(user, 200, res);
 });
