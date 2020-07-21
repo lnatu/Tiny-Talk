@@ -1,5 +1,19 @@
+const { mapMutations } = require('vuex');
+const config = require('@/config');
+
 const mixin = {
+  computed: {
+    isFormValid() {
+      return validObj => this.$v[validObj].$invalid;
+    }
+  },
+  data() {
+    return {
+      validObj: ''
+    };
+  },
   methods: {
+    ...mapMutations(['SET_LOCAL_USER']),
     formatDate(date) {
       const d = new Date(date);
       let month = '' + (d.getMonth() + 1);
@@ -14,6 +28,27 @@ const mixin = {
       }
 
       return [year, month, day].join('-');
+    },
+    filterObj(obj, ...allowedFields) {
+      const newObj = {};
+      Object.keys(obj).forEach(key => {
+        if (allowedFields.includes(key)) {
+          newObj[key] = obj[key];
+        }
+      });
+
+      return newObj;
+    },
+    saveUser(userObj) {
+      this.SET_LOCAL_USER(userObj);
+      localStorage.setItem(config.localKeys.USER_KEY, JSON.stringify(userObj));
+    },
+    triggerFieldValidation(obj, key) {
+      this.$v[obj][key].$touch();
+    },
+    /* ALERTS */
+    alert: function(type, message) {
+      this.$alertify[type](message);
     }
   }
 };

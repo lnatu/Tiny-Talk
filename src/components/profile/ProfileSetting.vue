@@ -16,19 +16,19 @@
               <div class="form-group col-6">
                 <label for="firstName">First name</label>
                 <input
+                  v-model="accountInfo.firstName"
                   id="firstName"
                   class="form-control"
                   type="text"
-                  :value="GET_LOCAL_USER.firstName"
                 />
               </div>
               <div class="form-group col-6">
                 <label for="lastName">Last name</label>
                 <input
+                  v-model="accountInfo.lastName"
                   id="lastName"
                   class="form-control"
                   type="text"
-                  :value="GET_LOCAL_USER.lastName"
                 />
               </div>
             </div>
@@ -36,19 +36,19 @@
               <div class="form-group col-6">
                 <label for="mobile">Mobile number</label>
                 <input
+                  v-model="accountInfo.phone"
                   id="mobile"
                   class="form-control"
                   type="text"
-                  :value="GET_LOCAL_USER.phone || ''"
                 />
               </div>
               <div class="form-group col-6">
                 <label for="birthday">Birthday</label>
                 <input
+                  v-model="accountInfo.birthday"
                   id="birthday"
                   class="form-control"
                   type="date"
-                  :value="formatDate(GET_LOCAL_USER.birthday)"
                 />
               </div>
             </div>
@@ -56,19 +56,20 @@
               <div class="form-group col-6">
                 <label for="email">Email</label>
                 <input
+                  v-model="accountInfo.email"
                   id="email"
                   class="form-control"
                   type="email"
-                  :value="GET_LOCAL_USER.email || ''"
+                  disabled
                 />
               </div>
               <div class="form-group col-6">
                 <label for="website">Website</label>
                 <input
+                  v-model="accountInfo.website"
                   id="website"
                   class="form-control"
                   type="text"
-                  :value="GET_LOCAL_USER.website || ''"
                 />
               </div>
             </div>
@@ -76,10 +77,10 @@
               <div class="form-group col-6">
                 <label for="gender">Gender</label>
                 <select
+                  v-model="accountInfo.gender"
                   name="gender"
                   id="gender"
                   class="form-control"
-                  :value="GET_LOCAL_USER.gender || ''"
                 >
                   <option value="male">Male</option>
                   <option value="female">Female</option>
@@ -88,10 +89,10 @@
               <div class="form-group col-6">
                 <label for="address">Address</label>
                 <input
+                  v-model="accountInfo.address"
                   id="address"
                   class="form-control"
                   type="text"
-                  :value="GET_LOCAL_USER.address || ''"
                 />
               </div>
             </div>
@@ -99,7 +100,13 @@
         </div>
         <div class="tt-card-footer text-right">
           <button class="btn btn-danger mr-1" type="button">Cancel</button>
-          <button class="btn btn-submit" type="button">Save changes</button>
+          <button
+            class="btn btn-submit"
+            type="button"
+            @click="updateAccountInfoAction"
+          >
+            Save changes
+          </button>
         </div>
       </div>
       <div class="tt-card mt-2">
@@ -192,19 +199,170 @@
           <button class="btn btn-submit" type="button">Save changes</button>
         </div>
       </div>
+      <div class="tt-card mt-2">
+        <div class="tt-card-header line-height-1">
+          <h5 class="tt-card-title mb-sm">Password</h5>
+          <p class="tt-card-sub-title">Manage your password</p>
+        </div>
+        <div class="tt-card-body">
+          <form action="#">
+            <div class="form-row">
+              <div class="form-group col-12">
+                <label for="currentPassword">Current password</label>
+                <input
+                  v-model="accountPassword.currentPassword"
+                  id="currentPassword"
+                  class="form-control"
+                  type="password"
+                  @input="
+                    triggerFieldValidation('accountPassword', 'currentPassword')
+                  "
+                />
+                <error
+                  :vuelidate="$v"
+                  :validateObj="'accountPassword'"
+                  :validateKey="'currentPassword'"
+                  :validateType="['required']"
+                />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label for="newPassword">New password</label>
+                <input
+                  v-model="accountPassword.newPassword"
+                  id="newPassword"
+                  class="form-control"
+                  type="password"
+                  @input="
+                    triggerFieldValidation('accountPassword', 'newPassword')
+                  "
+                />
+                <error
+                  :vuelidate="$v"
+                  :validateObj="'accountPassword'"
+                  :validateKey="'newPassword'"
+                  :validateType="['required']"
+                />
+              </div>
+              <div class="form-group col-6">
+                <label for="newPasswordConfirm">Confirm new password</label>
+                <input
+                  v-model="accountPassword.confirmPassword"
+                  id="newPasswordConfirm"
+                  class="form-control"
+                  type="password"
+                  @input="
+                    triggerFieldValidation('accountPassword', 'confirmPassword')
+                  "
+                />
+                <error
+                  :vuelidate="$v"
+                  :validateObj="'accountPassword'"
+                  :validateKey="'confirmPassword'"
+                  :validateType="['required']"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="tt-card-footer text-right">
+          <button class="btn btn-danger mr-1" type="button">Cancel</button>
+          <button
+            class="btn btn-submit"
+            type="button"
+            :disabled="isFormValid('accountPassword')"
+            @click="updatePasswordAction"
+          >
+            Save changes
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { required, minLength, sameAs } from 'vuelidate/lib/validators';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import Error from '@/components/error/Error';
 import mixin from '@/mixins/global';
 
 export default {
   name: 'ProfileSetting',
   mixins: [mixin],
+  components: {
+    Error
+  },
   computed: {
     ...mapGetters(['GET_LOCAL_USER'])
+  },
+  data() {
+    return {
+      accountInfo: {},
+      accountPassword: {
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+      }
+    };
+  },
+  validations: {
+    accountPassword: {
+      currentPassword: {
+        required
+      },
+      newPassword: {
+        required,
+        minLength: minLength(4)
+      },
+      confirmPassword: {
+        required,
+        sameAsPassword: sameAs('newPassword')
+      }
+    }
+  },
+  methods: {
+    ...mapMutations(['toggleLoader', 'SET_LOCAL_USER']),
+    ...mapActions(['updateAccountInfo', 'updatePassword']),
+    async updateAccountInfoAction() {
+      this.toggleLoader(true);
+      try {
+        const res = await this.updateAccountInfo(this.accountInfo);
+        this.saveUser(res.data.data.user);
+        this.toggleLoader(false);
+        this.alert('success', 'Update account information successful!');
+      } catch (err) {
+        this.alert('error', err.response.data.message);
+      }
+    },
+    async updatePasswordAction() {
+      this.toggleLoader(true);
+      try {
+        const res = await this.updatePassword(this.accountPassword);
+        console.log(res);
+        this.toggleLoader(false);
+        this.alert('success', 'Update password successfully');
+      } catch (err) {
+        this.alert('error', err.response.data.message);
+      }
+    }
+  },
+  mounted() {
+    this.GET_LOCAL_USER.birthday = this.formatDate(
+      this.GET_LOCAL_USER.birthday
+    );
+    this.accountInfo = this.filterObj(
+      { ...this.GET_LOCAL_USER },
+      'firstName',
+      'lastName',
+      'phone',
+      'birthday',
+      'email',
+      'website',
+      'gender',
+      'address'
+    );
   }
 };
 </script>

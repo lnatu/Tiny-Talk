@@ -17,6 +17,7 @@ router.patch(
   UserController.resizeImage,
   UserController.updateAvatar
 );
-router.patch('/updateAccountInfo/:id', UserController.updateAccountInfo);
+router.patch('/updateAccountInfo', UserController.updateAccountInfo);
+router.patch('/updatePassword', AuthController.updatePassword);
 
 module.exports = router;

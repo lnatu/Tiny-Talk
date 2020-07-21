@@ -63,10 +63,14 @@ exports.createOne = Model =>
 
 exports.updateOne = Model =>
   catchError(async (req, res, next) => {
-    const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
-    });
+    const doc = await Model.findByIdAndUpdate(
+      req.params.id || req.user.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true
+      }
+    );
 
     if (!doc) {
       return next(new AppError(`No data found with id ${req.params.id}`, 404));

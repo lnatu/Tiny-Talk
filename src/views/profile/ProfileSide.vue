@@ -102,9 +102,16 @@
           >
             <div class="personal-info__left">
               <p class="title-small text-light">Website</p>
-              <a :href="GET_LOCAL_USER.website || '#'" class="text-a mt-sm">{{
-                GET_LOCAL_USER.website || '---'
-              }}</a>
+              <div>
+                <a
+                  v-if="GET_LOCAL_USER.website"
+                  :href="GET_LOCAL_USER.website || '#'"
+                  class="text-a mt-sm"
+                >
+                  {{ GET_LOCAL_USER.website }}
+                </a>
+                <p v-else>---</p>
+              </div>
             </div>
             <div class="personal-info__right text-right">
               <svg class="icon-svg--2x">
