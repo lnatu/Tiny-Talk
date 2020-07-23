@@ -17,8 +17,22 @@ body {
   box-sizing: border-box;
 }
 
-input, select {
+input,
+select {
   &:focus {
     outline: none;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: $dark-color;
+
+  &:active {
+    color: currentColor;
+  }
+
+  &:focus {
+    color: currentColor;
   }
 }

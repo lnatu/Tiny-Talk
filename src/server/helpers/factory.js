@@ -4,12 +4,18 @@ const catchError = require('./../utils/catchError');
 
 exports.getAll = Model =>
   catchError(async (req, res, next) => {
-    let filter = {};
-    if (req.params.tourId) {
-      filter = { tour: req.params.tourId };
+    let searchObj = {};
+    if (req.query.search) {
+      const keyword = req.query.search;
+      const regex = new RegExp(keyword, 'i');
+      searchObj = {
+        _id: { $nin: [req.user.id] },
+        $text: { $search: regex }
+      };
     }
+
     // Execute query
-    const features = new APIFeatures(Model.find(filter), req.query)
+    const features = new APIFeatures(Model.find(searchObj), req.query)
       .filter()
       .sort()
       .limitFields()

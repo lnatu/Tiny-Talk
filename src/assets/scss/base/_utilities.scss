@@ -372,6 +372,10 @@ button:not(:disabled),
   text-decoration: none;
 }
 
+.fw-md {
+  font-weight: 500;
+}
+
 /*
 * Icons
 */
@@ -390,8 +394,16 @@ button:not(:disabled),
     @include svg-icon(20px, $message-text-color);
   }
 
+  &--3x {
+    @include svg-icon(30px, $message-text-color);
+  }
+
   &--white {
     fill: $white-color !important;
+  }
+
+  &--dark {
+    fill: $text-color !important;
   }
 }
 

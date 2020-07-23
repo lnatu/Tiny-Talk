@@ -10,7 +10,12 @@ router.get('/activate/:token', AuthController.activateAccount);
 
 router.use(AuthController.protect);
 
+router.route('/').get(UserController.findByKeyword);
+
 router.get('/logout', AuthController.logout);
+
+router.post('/addContact', UserController.addContact);
+
 router.patch(
   '/updateAvatar',
   UserController.uploadUserPhoto,

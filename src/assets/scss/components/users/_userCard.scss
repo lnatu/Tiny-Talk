@@ -1,0 +1,40 @@
+.user-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: $white-color;
+
+  border-radius: 5px;
+
+  padding: 20px;
+
+  &__avatar {
+    img {
+      width: 100px;
+      height: 100px;
+
+      object-fit: cover;
+
+      border-radius: 50%;
+
+      display: block;
+    }
+  }
+
+  &__cta {
+    &-b {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 40px;
+      height: 40px;
+
+      background: $light-color-7;
+
+      line-height: 1;
+      border-radius: 50%;
+    }
+  }
+}

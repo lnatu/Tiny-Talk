@@ -38,6 +38,7 @@
         <form class="search-form" action="#">
           <div class="input-group">
             <input
+              v-model="searchKeyword"
               type="text"
               class="form-control border-right-0"
               placeholder="Search users..."
@@ -45,6 +46,7 @@
             <div class="input-group-append">
               <div
                 class="input-group-text border-left-0 bg-transparent cursor-pointer"
+                @click="performSearch"
               >
                 <svg class="">
                   <use
@@ -68,6 +70,22 @@ export default {
   name: 'AppSidebar',
   components: {
     ContactList
+  },
+  data() {
+    return {
+      searchKeyword: ''
+    };
+  },
+  methods: {
+    performSearch() {
+      if (!this.searchKeyword) {
+        return;
+      }
+      this.$router.push({
+        name: 'SearchResult',
+        query: { q: this.searchKeyword }
+      });
+    }
   }
 };
 </script>
