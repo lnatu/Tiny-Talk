@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 import auth from './auth/init';
+import users from './users/init';
 
 export default new Vuex.Store({
   state: {
@@ -48,5 +49,5 @@ export default new Vuex.Store({
     }
   },
   actions: {},
-  modules: { auth }
+  modules: { auth, users }
 });

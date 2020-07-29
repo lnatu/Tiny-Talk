@@ -6,6 +6,11 @@ const contactSchema = new mongoose.Schema({
     ref: 'user',
     required: [true, 'contact must has user id']
   },
+  contactId: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'user',
+    required: [true, 'contact must have a reference']
+  },
   status: {
     type: Boolean,
     default: false

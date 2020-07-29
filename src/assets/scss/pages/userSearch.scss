@@ -1,0 +1,12 @@
+@import '../abstract/variables';
+@import '../components/users/userCard';
+@import '../components/users/userSearchResult';
+
+.user-search-content {
+  flex: 1;
+  background: #f0f2f5;
+
+  height: 100vh;
+
+  overflow-y: auto;
+}

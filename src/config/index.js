@@ -9,6 +9,11 @@ exports.api = {
     updateAvatar: `${version}users/updateAvatar`,
     updateAccountInfo: `${version}users/updateAvatar`,
     updatePassword: `${version}users/updatePassword`
+  },
+  users: {
+    addContact: `${version}users/addContact`,
+    cancelAddContact: `${version}users/cancelAddContact`,
+    findAll: `${version}users`
   }
 };
 

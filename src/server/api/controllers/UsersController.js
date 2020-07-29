@@ -1,6 +1,7 @@
 const multer = require('multer');
 const sharp = require('sharp');
 const UserModel = require('./../models/UserModel');
+const ContactModel = require('./../models/ContactModel');
 const AppError = require('./../../utils/appError');
 const catchError = require('./../../utils/catchError');
 const factory = require('./../../helpers/factory');
@@ -64,5 +65,82 @@ exports.updateAvatar = catchError(async (req, res, next) => {
   });
 });
 
+/**
+ *
+ * @param userId
+ * @param contactId
+ * @returns {Promise<*>}
+ */
+const checkBeforeAddContact = async (userId, contactId) => {
+  return !(await ContactModel.findOne({
+    $or: [
+      {
+        $and: [{ userId }, { contactId }]
+      },
+      {
+        $and: [{ userId: contactId }, { contactId: userId }]
+      }
+    ]
+  }));
+};
+
+/**
+ *
+ * @param userId
+ * @param contactId
+ * @returns {Promise<*>}
+ */
+const checkBeforeCancelAddContact = async (userId, contactId) => {
+  return await ContactModel.findOne({
+    $and: [{ userId }, { contactId }]
+  });
+};
+
+exports.addContact = catchError(async (req, res, next) => {
+  const check = await checkBeforeAddContact(req.user.id, req.body.contactId);
+  const contactExist = await UserModel.findById(req.body.contactId);
+
+  if (!contactExist) {
+    return next(new AppError('This contact is not found', 404));
+  }
+
+  if (!check) {
+    return next(new AppError("You've requested this", 400));
+  }
+
+  const contact = await ContactModel.create({
+    userId: req.user.id,
+    contactId: req.body.contactId
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      contact
+    }
+  });
+});
+
+exports.cancelAddContact = catchError(async (req, res, next) => {
+  const check = await checkBeforeCancelAddContact(
+    req.user.id,
+    req.body.contactId
+  );
+
+  if (!check) {
+    return next(new AppError("You've requested this", 400));
+  }
+
+  await ContactModel.findOneAndDelete({
+    userId: req.user.id,
+    contactId: req.body.contactId
+  });
+
+  res.status(204).json({
+    status: 'success'
+  });
+});
+
 exports.updateAccountInfo = factory.updateOne(UserModel);
 exports.createUser = factory.createOne(UserModel);
+exports.findByKeyword = factory.getAll(UserModel);
