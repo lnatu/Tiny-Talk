@@ -15,6 +15,7 @@ router.route('/').get(UserController.findByKeyword);
 router.get('/logout', AuthController.logout);
 
 router.post('/addContact', UserController.addContact);
+router.delete('/cancelAddContact', UserController.cancelAddContact);
 
 router.patch(
   '/updateAvatar',

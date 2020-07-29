@@ -11,6 +11,8 @@ exports.api = {
     updatePassword: `${version}users/updatePassword`
   },
   users: {
+    addContact: `${version}users/addContact`,
+    cancelAddContact: `${version}users/cancelAddContact`,
     findAll: `${version}users`
   }
 };

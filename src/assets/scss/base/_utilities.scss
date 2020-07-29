@@ -405,6 +405,10 @@ button:not(:disabled),
   &--dark {
     fill: $text-color !important;
   }
+
+  &--danger {
+    fill: $danger-color !important;
+  }
 }
 
 /* Borders */

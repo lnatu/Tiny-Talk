@@ -15,6 +15,16 @@ const actions = {
         search: q
       }
     });
+  },
+  async addContact({ commit }, { contactId }) {
+    return await axios.post(config.api.users.addContact, {
+      contactId
+    });
+  },
+  async cancelAddContact({ commit }, { contactId }) {
+    return await axios.delete(config.api.users.cancelAddContact, {
+      contactId
+    });
   }
 };
 
