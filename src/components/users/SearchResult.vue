@@ -91,6 +91,7 @@ export default {
         if (res.status === 200) {
           this.$set(this.users[contactId], 'friendRequestStatus', true);
         }
+        this.$socket.emit('friend-request-on', contactId);
         this.toggleLoader(false);
       } catch (err) {
         console.log(err);

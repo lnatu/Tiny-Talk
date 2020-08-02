@@ -1,0 +1,48 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba($dark-color, 0.4);
+
+  z-index: 1050;
+
+  &-dialog {
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+    background: $white-color;
+    border-radius: 5px;
+    max-height: calc(100% - 3.5rem);
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 3.5rem);
+    overflow: hidden;
+  }
+
+  &-header {
+    padding: 15px;
+    border-bottom: 1px solid $border-light-color;
+
+    &-title {
+      font-weight: 400;
+    }
+  }
+
+  &-body {
+    overflow-y: auto;
+    flex: 1;
+    padding: 15px;
+  }
+
+  &-footer {
+    padding: 15px;
+    border-top: 1px solid $border-light-color;
+  }
+}
