@@ -84,18 +84,6 @@ const checkBeforeAddContact = async (userId, contactId) => {
   }));
 };
 
-/**
- *
- * @param userId
- * @param contactId
- * @returns {Promise<*>}
- */
-const checkBeforeCancelAddContact = async (userId, contactId) => {
-  return await ContactModel.findOne({
-    $and: [{ userId }, { contactId }]
-  });
-};
-
 exports.addContact = catchError(async (req, res, next) => {
   const check = await checkBeforeAddContact(req.user.id, req.body.contactId);
   const contactExist = await UserModel.findById(req.body.contactId);
@@ -122,18 +110,8 @@ exports.addContact = catchError(async (req, res, next) => {
 });
 
 exports.cancelAddContact = catchError(async (req, res, next) => {
-  const check = await checkBeforeCancelAddContact(
-    req.user.id,
-    req.body.contactId
-  );
-
-  if (!check) {
-    return next(new AppError("You've requested this", 400));
-  }
-
   await ContactModel.findOneAndDelete({
-    userId: req.user.id,
-    contactId: req.body.contactId
+    $and: [{ userId: req.user.id }, { contactId: req.body.contactId }]
   });
 
   res.status(204).json({

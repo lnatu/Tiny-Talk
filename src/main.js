@@ -5,7 +5,7 @@ import store from './store';
 import Vuelidate from 'vuelidate';
 import VueAlertify from 'vue-alertify';
 
-require('@/assets/js/app');
+import '@/assets/js/app.js';
 
 Vue.config.productionTip = false;
 

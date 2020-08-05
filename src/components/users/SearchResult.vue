@@ -57,7 +57,6 @@
 
 <script>
 import { mapMutations, mapActions } from 'vuex';
-
 export default {
   name: 'SearchResult',
   data() {
@@ -105,6 +104,7 @@ export default {
         if (res.status === 204) {
           this.$set(this.users[contactId], 'friendRequestStatus', false);
         }
+        this.$socket.emit('friend-request-off', contactId);
         this.toggleLoader(false);
       } catch (err) {
         console.log(err);

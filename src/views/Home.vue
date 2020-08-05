@@ -20,6 +20,7 @@ export default {
     NotificationModal
   },
   created() {
+    /* eslint-disable */
     connect();
   }
 };

@@ -6,6 +6,7 @@ const UserModel = require('./../api/models/UserModel');
 class SocketHelper {
   constructor(io) {
     this.io = io;
+    this.clients = {};
   }
 
   addCookieParser(cookieParser) {
@@ -38,8 +39,17 @@ class SocketHelper {
   }
 
   connect() {
-    const _this = this;
     this.io.on('connection', socket => {
+      console.log('Socket connected');
+
+      const currentClientId = socket.request.user.id;
+
+      if (this.clients[currentClientId]) {
+        this.clients[currentClientId].push(socket.id);
+      } else {
+        this.clients[currentClientId] = [socket.id];
+      }
+
       socket.on('friend-request-on', data => {
         const { id, fullName, avatar } = socket.request.user;
         const currentUser = {
@@ -47,7 +57,39 @@ class SocketHelper {
           fullName,
           avatar
         };
-        _this.io.sockets.emit('friend-request-on-response', currentUser);
+
+        if (this.clients[data]) {
+          this.clients[data].forEach(socketId => {
+            this.io.sockets.connected[
+              socketId
+            ].emit('friend-request-on-response', { currentUser });
+          });
+        }
+      });
+
+      socket.on('friend-request-off', data => {
+        const { id } = socket.request.user;
+        const currentUser = {
+          id
+        };
+
+        if (this.clients[data]) {
+          this.clients[data].forEach(socketId => {
+            this.io.sockets.connected[
+              socketId
+            ].emit('friend-request-off-response', { currentUser });
+          });
+        }
+      });
+
+      socket.on('disconnect', () => {
+        this.clients[currentClientId] = this.clients[currentClientId].filter(
+          socketId => socketId !== socket.id
+        );
+
+        if (this.clients[currentClientId].length === 0) {
+          delete this.clients[currentClientId];
+        }
       });
 
       socket.on('user-logout', () => {

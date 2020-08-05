@@ -27,7 +27,6 @@
     "slugify": "^1.4.2",
     "socket.io": "^2.3.0",
     "socket.io-cookie": "0.0.1",
-    "socketio-jwt": "^4.6.2",
     "validator": "^13.1.1",
     "vue": "^2.6.11",
     "vue-alertify": "^1.1.0",
