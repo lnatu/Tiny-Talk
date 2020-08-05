@@ -23,7 +23,9 @@ const actions = {
   },
   async cancelAddContact({ commit }, { contactId }) {
     return await axios.delete(config.api.users.cancelAddContact, {
-      contactId
+      data: {
+        contactId
+      }
     });
   }
 };

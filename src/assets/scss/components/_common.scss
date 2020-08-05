@@ -230,3 +230,24 @@ button {
   padding-left: 10px;
   padding-right: 10px;
 }
+
+.float-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 15px;
+  height: 15px;
+
+  border-radius: 50%;
+
+  font-size: .9rem;
+  font-weight: 700;
+  line-height: 1;
+  background: $danger-color;
+  color: $white-color;
+
+  position: absolute;
+  top: -5px;
+  right: -8px;
+}

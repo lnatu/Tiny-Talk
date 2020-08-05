@@ -5,6 +5,8 @@ Vue.use(Vuex);
 
 import auth from './auth/init';
 import users from './users/init';
+import notifications from './notifications/init';
+import sockets from './sockets/init';
 
 export default new Vuex.Store({
   state: {
@@ -49,5 +51,5 @@ export default new Vuex.Store({
     }
   },
   actions: {},
-  modules: { auth, users }
+  modules: { auth, users, notifications, sockets }
 });

@@ -7,10 +7,15 @@
           class="sidebar-header__nav list-style-none d-flex align-items-center"
         >
           <li class="mr-2">
-            <a href="#">
+            <a
+              class="modal-toggle position-relative"
+              data-toggle="notificationModal"
+              href="#"
+            >
               <svg class="">
                 <use xlink:href="@/assets/img/icons/sprites.svg#icon-bell-o" />
               </svg>
+              <span class="float-label">2</span>
             </a>
           </li>
           <li>

@@ -1,5 +1,8 @@
+const cookieParser = require('socket.io-cookie');
+const socket = require('socket.io');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const SocketHelper = require('./helpers/socket');
 
 process.on('uncaughtException', err => {
   console.log('Uncaught Exception! Shutting down...');
@@ -30,6 +33,11 @@ const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
   console.log(`App running on port ${port}`);
 });
+const io = socket(server);
+const SocketService = new SocketHelper(io);
+SocketService.addCookieParser(cookieParser);
+SocketService.authentication();
+SocketService.connect();
 
 process.on('unhandledRejection', err => {
   console.log(err.name, err.message);
