@@ -15,7 +15,9 @@
               <svg class="">
                 <use xlink:href="@/assets/img/icons/sprites.svg#icon-bell-o" />
               </svg>
-              <span class="float-label">2</span>
+              <span v-if="GET_TOTAL_NOTIFICATIONS > 0" class="float-label">{{
+                GET_TOTAL_NOTIFICATIONS
+              }}</span>
             </a>
           </li>
           <li>
@@ -40,7 +42,7 @@
             <a class="dropdown-item" href="#">Archived</a>
           </div>
         </div>
-        <form class="search-form" action="#">
+        <form class="search-form" action="#" @submit.prevent="performSearch">
           <div class="input-group">
             <input
               v-model="searchKeyword"
@@ -51,7 +53,7 @@
             <div class="input-group-append">
               <div
                 class="input-group-text border-left-0 bg-transparent cursor-pointer"
-                @click="performSearch"
+                @click.enter="performSearch"
               >
                 <svg class="">
                   <use
@@ -69,12 +71,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import ContactList from '@/components/contact/ContactList';
 
 export default {
   name: 'AppSidebar',
   components: {
     ContactList
+  },
+  computed: {
+    ...mapGetters(['GET_TOTAL_NOTIFICATIONS'])
   },
   data() {
     return {

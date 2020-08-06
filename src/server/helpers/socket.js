@@ -1,107 +1,59 @@
-const { promisify } = require('util');
-const jwt = require('jsonwebtoken');
-const AppError = require('./../utils/appError');
-const UserModel = require('./../api/models/UserModel');
-
-class SocketHelper {
-  constructor(io) {
-    this.io = io;
-    this.clients = {};
+exports.pushClientsSocketId = (clients, userId, socketId) => {
+  if (clients[userId]) {
+    clients[userId].push(socketId);
+  } else {
+    clients[userId] = [socketId];
   }
+};
 
-  addCookieParser(cookieParser) {
-    this.io.use(cookieParser);
+exports.clearClientsSocketId = (clients, userId, socketId) => {
+  clients[userId] = clients[userId].filter(item => item !== socketId);
+
+  if (clients[userId].length === 0) {
+    delete clients[userId];
   }
+};
 
-  authentication() {
-    this.io.use(async (socket, next) => {
-      const token = socket.request.headers.cookie.jwt;
-      if (token) {
-        const decoded = await promisify(jwt.verify)(
-          token,
-          process.env.JWT_SECRET
-        );
+const responseToClients = (clients, userId, io, eventName, data) => {
+  clients[userId].forEach(socketId =>
+    io.sockets.connected[socketId].emit(eventName, data)
+  );
+};
 
-        const currentUser = await UserModel.findById(decoded.id);
+exports.responseToClients = responseToClients;
 
-        if (!currentUser) {
-          console.log('User not exists');
-          return next(new AppError('User not exists', 401));
-        }
+exports.openFriendRequest = (io, socket, clients, eventName) => {
+  socket.on(eventName, clientData => {
+    const { id, fullName, avatar } = socket.request.user;
+    const currentUser = {
+      id,
+      fullName,
+      avatar
+    };
 
-        socket.request.user = currentUser;
-        next();
-      } else {
-        console.log('Please log in to continue');
-        return next(new AppError('Please log in to continue', 401));
-      }
-    });
-  }
-
-  connect() {
-    this.io.on('connection', socket => {
-      console.log('Socket connected');
-
-      const currentClientId = socket.request.user.id;
-
-      if (this.clients[currentClientId]) {
-        this.clients[currentClientId].push(socket.id);
-      } else {
-        this.clients[currentClientId] = [socket.id];
-      }
-
-      socket.on('friend-request-on', data => {
-        const { id, fullName, avatar } = socket.request.user;
-        const currentUser = {
-          id,
-          fullName,
-          avatar
-        };
-
-        if (this.clients[data]) {
-          this.clients[data].forEach(socketId => {
-            this.io.sockets.connected[
-              socketId
-            ].emit('friend-request-on-response', { currentUser });
-          });
-        }
+    if (clients[clientData]) {
+      responseToClients(clients, clientData, io, 'friend-request-on-response', {
+        currentUser
       });
+    }
+  });
+};
 
-      socket.on('friend-request-off', data => {
-        const { id } = socket.request.user;
-        const currentUser = {
-          id
-        };
+exports.closeFriendRequest = (io, socket, clients, eventName) => {
+  socket.on(eventName, clientData => {
+    const { id } = socket.request.user;
+    const currentUser = {
+      id
+    };
 
-        if (this.clients[data]) {
-          this.clients[data].forEach(socketId => {
-            this.io.sockets.connected[
-              socketId
-            ].emit('friend-request-off-response', { currentUser });
-          });
-        }
-      });
-
-      socket.on('disconnect', () => {
-        this.clients[currentClientId] = this.clients[currentClientId].filter(
-          socketId => socketId !== socket.id
-        );
-
-        if (this.clients[currentClientId].length === 0) {
-          delete this.clients[currentClientId];
-        }
-      });
-
-      socket.on('user-logout', () => {
-        console.log('Disconnected');
-        this.disconnect(socket);
-      });
-    });
-  }
-
-  disconnect(socket) {
-    socket.disconnect();
-  }
-}
-
-module.exports = SocketHelper;
+    if (clients[clientData]) {
+      responseToClients(
+        clients,
+        clientData,
+        io,
+        'friend-request-off-response',
+        { currentUser }
+      );
+    }
+  });
+};
