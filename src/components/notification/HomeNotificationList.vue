@@ -6,9 +6,9 @@
     <ul v-else class="notification-list list-style-none">
       <home-notification-item
         v-for="item in GET_HOME_NOTIFICATIONS"
-        :key="item.id"
-        :avatar="item.avatar"
-        :fullName="item.fullName"
+        :key="item.sender.id"
+        :avatar="item.sender.avatar"
+        :fullName="item.sender.fullName"
       />
     </ul>
   </div>

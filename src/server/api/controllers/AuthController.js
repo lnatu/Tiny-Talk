@@ -3,6 +3,7 @@ const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const UserModel = require('./../models/UserModel');
 const RegisterTokenModel = require('./../models/RegisterTokenModel');
+const NotificationModel = require('./../models/NotificationModel');
 const catchError = require('./../../utils/catchError');
 const token = require('./../../helpers/token');
 const AppError = require('./../../utils/appError');
@@ -64,7 +65,7 @@ exports.signup = catchError(async (req, res, next) => {
   const url = `http://localhost:8080/account/activate/${verifyToken}`;
   // await new Email(user, url).sendWelcome();
 
-  token.createSendToken(user, 201, res);
+  token.createSendToken({ user }, 201, res);
 });
 
 exports.login = catchError(async (req, res, next) => {
@@ -84,7 +85,16 @@ exports.login = catchError(async (req, res, next) => {
     return next(new AppError('Email or password is not correct', 401));
   }
 
-  token.createSendToken(user, 200, res);
+  const notifications = await NotificationModel.find({
+    receiver: user.id
+  });
+
+  const userObj = {
+    user,
+    notifications
+  };
+
+  token.createSendToken(userObj, 200, res);
 });
 
 exports.logout = (req, res, next) => {
@@ -116,7 +126,7 @@ exports.activateAccount = catchError(async (req, res, next) => {
   // 3. Activate account and send token
   await UserModel.findByIdAndUpdate(registerToken.user._id, { isActive: true });
 
-  token.createSendToken(registerToken.user._id, 201, res);
+  token.createSendToken(registerToken, 201, res);
 });
 
 exports.updatePassword = catchError(async (req, res, next) => {
@@ -133,5 +143,5 @@ exports.updatePassword = catchError(async (req, res, next) => {
   user.password = req.body.newPassword;
   await user.save();
 
-  token.createSendToken(user, 200, res);
+  token.createSendToken({ user }, 200, res);
 });

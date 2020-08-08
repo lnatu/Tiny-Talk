@@ -5,6 +5,7 @@ const ContactModel = require('./../models/ContactModel');
 const AppError = require('./../../utils/appError');
 const catchError = require('./../../utils/catchError');
 const factory = require('./../../helpers/factory');
+const CONSTANTS = require('./../../config/constants');
 
 /* const storage = multer.diskStorage({
   destination(req, file, cb) {
@@ -96,17 +97,18 @@ exports.addContact = catchError(async (req, res, next) => {
     return next(new AppError("You've requested this", 400));
   }
 
-  const contact = await ContactModel.create({
+  await ContactModel.create({
     userId: req.user.id,
     contactId: req.body.contactId
   });
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      contact
-    }
-  });
+  req.notificationObj = {
+    sender: req.user.id,
+    receiver: req.body.contactId,
+    type: CONSTANTS.NOTIFICATION_TYPES.ADD_CONTACT
+  };
+
+  next();
 });
 
 exports.cancelAddContact = catchError(async (req, res, next) => {
@@ -114,9 +116,13 @@ exports.cancelAddContact = catchError(async (req, res, next) => {
     $and: [{ userId: req.user.id }, { contactId: req.body.contactId }]
   });
 
-  res.status(204).json({
-    status: 'success'
-  });
+  req.notificationObj = {
+    sender: req.user.id,
+    receiver: req.body.contactId,
+    type: CONSTANTS.NOTIFICATION_TYPES.ADD_CONTACT
+  };
+
+  next();
 });
 
 exports.updateAccountInfo = factory.updateOne(UserModel);

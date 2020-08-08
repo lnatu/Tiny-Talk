@@ -1,6 +1,7 @@
 const express = require('express');
 const AuthController = require('./../api/controllers/AuthController');
 const UserController = require('./../api/controllers/UsersController');
+const NotificationsController = require('./../api/controllers/NotificationsController');
 
 const router = express.Router();
 
@@ -13,9 +14,18 @@ router.use(AuthController.protect);
 router.route('/').get(UserController.findByKeyword);
 
 router.get('/logout', AuthController.logout);
+router.get('/notifications', NotificationsController.getUserNotification);
 
-router.post('/addContact', UserController.addContact);
-router.delete('/cancelAddContact', UserController.cancelAddContact);
+router.post(
+  '/addContact',
+  UserController.addContact,
+  NotificationsController.createNotification
+);
+router.delete(
+  '/cancelAddContact',
+  UserController.cancelAddContact,
+  NotificationsController.deleteNotification
+);
 
 router.patch(
   '/updateAvatar',

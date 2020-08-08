@@ -90,7 +90,9 @@ export default {
         if (res.status === 200) {
           this.$set(this.users[contactId], 'friendRequestStatus', true);
         }
-        this.$socket.emit('friend-request-on', contactId);
+
+        const notification = res.data.data.notification;
+        this.$socket.emit('friend-request-on', { contactId, notification });
         this.toggleLoader(false);
       } catch (err) {
         console.log(err);
@@ -101,10 +103,13 @@ export default {
       this.toggleLoader(true);
       try {
         const res = await this.cancelAddContact({ contactId });
-        if (res.status === 204) {
+        if (res.status === 200) {
           this.$set(this.users[contactId], 'friendRequestStatus', false);
         }
-        this.$socket.emit('friend-request-off', contactId);
+        this.$socket.emit('friend-request-off', {
+          contactId,
+          notificationId: res.data.data.deletedDoc
+        });
         this.toggleLoader(false);
       } catch (err) {
         console.log(err);

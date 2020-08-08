@@ -1,9 +1,13 @@
 /* eslint-disable */
 const axios = require('axios');
 const config = require('@/config');
+const helper = require('../helper');
+
+const storageHelper = new helper.StorageHelper();
 
 const state = {
-  homeNotification: {},
+  homeNotification:
+    JSON.parse(localStorage.getItem(config.localKeys.NOTIFICATIONS_KEY)) || {},
   totalNotifications: 0
 };
 
@@ -30,14 +34,25 @@ const getters = {
 
 const mutations = {
   PUSH_HOME_NOTIFICATIONS(state, payload) {
-    this._vm.$set(state.homeNotification, payload.id, payload);
+    this._vm.$set(state.homeNotification, payload._id, payload);
+    storageHelper.save(
+      config.localKeys.NOTIFICATIONS_KEY,
+      state.homeNotification
+    );
     state.totalNotifications++;
   },
   REMOVE_HOME_NOTIFICATIONS(state, payload) {
-    this._vm.$delete(state.homeNotification, payload.id);
+    this._vm.$delete(state.homeNotification, payload._id);
+    storageHelper.save(
+      config.localKeys.NOTIFICATIONS_KEY,
+      state.homeNotification
+    );
     if (state.totalNotifications > 0) {
       state.totalNotifications--;
     }
+  },
+  SET_HOME_NOTIFICATIONS(state, payload) {
+    state.homeNotification = payload;
   }
 };
 

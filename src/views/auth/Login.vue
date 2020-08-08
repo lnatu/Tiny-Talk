@@ -64,15 +64,28 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(['toggleLoader', 'SET_LOCAL_USER']),
+    ...mapMutations([
+      'toggleLoader',
+      'SET_LOCAL_USER',
+      'SET_HOME_NOTIFICATIONS'
+    ]),
     ...mapActions(['login']),
     async loginAction() {
       this.toggleLoader(true);
       try {
         const res = await this.login(this.userInfo);
-        const { user } = res.data.data;
+        const { user, notifications } = res.data.data;
+        const notificationsObj = {};
+        notifications.forEach(item => {
+          notificationsObj[item._id] = item;
+        });
         this.SET_LOCAL_USER(user);
+        this.SET_HOME_NOTIFICATIONS(notificationsObj);
         localStorage.setItem(localKeys.USER_KEY, JSON.stringify(user));
+        localStorage.setItem(
+          localKeys.NOTIFICATIONS_KEY,
+          JSON.stringify(notificationsObj)
+        );
         this.toggleLoader(false);
         this.$router.push({ name: 'Home' });
       } catch {
