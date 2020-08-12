@@ -1,5 +1,3 @@
-/* eslint-disable */
-const axios = require('axios');
 const config = require('@/config');
 const helper = require('../helper');
 
@@ -69,6 +67,20 @@ const mutations = {
   },
   SET_HOME_TOTAL_NOTIFICATIONS(state, payload) {
     state.totalNotifications = payload;
+  },
+  DECREASE_HOME_TOTAL_NOTIFICATIONS(state) {
+    state.totalNotifications -= 1;
+    storageHelper.save(
+      config.localKeys.TOTAL_NOTIFICATIONS_KEY,
+      state.totalNotifications
+    );
+  },
+  INCREASE_HOME_TOTAL_NOTIFICATIONS(state) {
+    state.totalNotifications += 1;
+    storageHelper.save(
+      config.localKeys.TOTAL_NOTIFICATIONS_KEY,
+      state.totalNotifications
+    );
   }
 };
 

@@ -1,6 +1,10 @@
 <template>
   <div class="user-search-result">
-    <div v-if="Object.keys(GET_USERS).length === 0 && GET_USERS.constructor === Object">
+    <div
+      v-if="
+        Object.keys(GET_USERS).length === 0 && GET_USERS.constructor === Object
+      "
+    >
       <h3 class="mb-3 line-height-1">Searching...</h3>
     </div>
     <div v-else>
@@ -41,7 +45,7 @@
             v-if="user.contact && GET_LOCAL_USER._id === user.contact.userId"
             class="user-card__cta-b"
             href="#"
-            @click.prevent="cancelAddContactAction(user._id)"
+            @click.prevent="cancelAddContactAction({ contactId: user._id })"
           >
             <svg class="icon-svg icon-svg--danger icon-svg--2x">
               <use
@@ -55,7 +59,7 @@
             <button class="btn btn-submit">Accept</button>
             <button
               class="btn btn-danger ml-1"
-              @click.prevent="cancelAddContactAction(user._id)"
+              @click.prevent="cancelAddContactAction({ contactId: user._id })"
             >
               Cancel
             </button>
@@ -68,6 +72,8 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
+import mixin from '@/mixins/global';
+
 export default {
   name: 'SearchResult',
   data() {
@@ -78,11 +84,13 @@ export default {
   computed: {
     ...mapGetters(['GET_LOCAL_USER', 'GET_USERS'])
   },
+  mixins: [mixin],
   methods: {
     ...mapMutations(['toggleLoader', 'SET_USERS']),
     ...mapActions(['findAllUser', 'addContact', 'cancelAddContact']),
     async performSearchFromQuery() {
       this.toggleLoader(true);
+      this.SET_USERS({});
       try {
         const res = await this.findAllUser(this.$route.query);
         const usersData = res.data.data.data;
@@ -110,23 +118,6 @@ export default {
           contactId,
           contact,
           notification
-        });
-        this.toggleLoader(false);
-      } catch (err) {
-        console.log(err);
-        console.log(err.response);
-      }
-    },
-    async cancelAddContactAction(contactId) {
-      this.toggleLoader(true);
-      try {
-        const res = await this.cancelAddContact({ contactId });
-
-        this.$set(this.GET_USERS[contactId], 'contact', null);
-
-        this.$socket.emit('friend-request-off', {
-          contactId,
-          notificationId: res.data.data.deletedDoc
         });
         this.toggleLoader(false);
       } catch (err) {

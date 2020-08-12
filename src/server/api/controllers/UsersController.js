@@ -87,14 +87,16 @@ const checkBeforeAddContact = async (userId, contactId) => {
 };
 
 exports.addContact = catchError(async (req, res, next) => {
-  const check = await checkBeforeAddContact(req.user.id, req.body.contactId);
-  const contactExist = await UserModel.findById(req.body.contactId);
+  const check = checkBeforeAddContact(req.user.id, req.body.contactId);
+  const contactExist = UserModel.findById(req.body.contactId);
 
-  if (!contactExist) {
+  const checks = await Promise.all([contactExist, check]);
+
+  if (!checks[0]) {
     return next(new AppError('This contact is not found', 404));
   }
 
-  if (!check) {
+  if (!checks[1]) {
     return next(new AppError("You've requested this", 400));
   }
 
@@ -122,7 +124,7 @@ exports.addContact = catchError(async (req, res, next) => {
 });
 
 exports.cancelAddContact = catchError(async (req, res, next) => {
-  await ContactModel.findOneAndDelete({
+  const delContact = ContactModel.findOneAndDelete({
     $or: [
       {
         $and: [{ userId: req.user.id }, { contactId: req.body.contactId }]
@@ -133,18 +135,20 @@ exports.cancelAddContact = catchError(async (req, res, next) => {
     ]
   });
 
-  req.notificationObj = {
-    sender: req.user.id,
-    receiver: req.body.contactId,
-    type: CONSTANTS.NOTIFICATION_TYPES.ADD_CONTACT
-  };
-
-  await UserModel.updateMany(
+  const updateUser = UserModel.updateMany(
     {
       _id: { $in: [req.user.id, req.body.contactId] }
     },
     { contact: null }
   );
+
+  await Promise.all([delContact, updateUser]);
+
+  req.notificationObj = {
+    sender: req.user.id,
+    receiver: req.body.contactId,
+    type: CONSTANTS.NOTIFICATION_TYPES.ADD_CONTACT
+  };
 
   next();
 });
