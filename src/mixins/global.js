@@ -1,8 +1,9 @@
-const { mapMutations } = require('vuex');
+const { mapGetters, mapMutations, mapActions } = require('vuex');
 const config = require('@/config');
 
 const mixin = {
   computed: {
+    ...mapGetters(['GET_USERS', 'GET_HOME_NOTIFICATIONS']),
     isFormValid() {
       return validObj => this.$v[validObj].$invalid;
     }
@@ -13,7 +14,13 @@ const mixin = {
     };
   },
   methods: {
-    ...mapMutations(['SET_LOCAL_USER']),
+    ...mapMutations([
+      'toggleLoader',
+      'SET_LOCAL_USER',
+      'DECREASE_HOME_TOTAL_NOTIFICATIONS',
+      'REMOVE_HOME_NOTIFICATIONS'
+    ]),
+    ...mapActions(['cancelAddContact']),
     formatDate(date) {
       const d = new Date(date);
       let month = '' + (d.getMonth() + 1);
@@ -49,6 +56,30 @@ const mixin = {
     /* ALERTS */
     alert: function(type, message) {
       this.$alertify[type](message);
+    },
+    /* FRIEND REQUESTS */
+    async cancelAddContactAction(data) {
+      this.toggleLoader(true);
+      try {
+        const res = await this.cancelAddContact({ contactId: data.contactId });
+
+        if (this.GET_HOME_NOTIFICATIONS[data.id]) {
+          this.REMOVE_HOME_NOTIFICATIONS({ _id: data.id });
+        }
+
+        if (this.GET_USERS[data.contactId]) {
+          this.$set(this.GET_USERS[data.contactId], 'contact', null);
+        }
+
+        this.$socket.emit('friend-request-off', {
+          contactId: data.contactId,
+          notificationId: res.data.data.deletedDoc
+        });
+        this.toggleLoader(false);
+      } catch (err) {
+        console.log(err);
+        console.log(err.response);
+      }
     }
   }
 };

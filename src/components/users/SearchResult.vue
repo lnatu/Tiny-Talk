@@ -1,18 +1,22 @@
 <template>
   <div class="user-search-result">
-    <div v-if="Object.keys(users).length === 0 && users.constructor === Object">
+    <div
+      v-if="
+        Object.keys(GET_USERS).length === 0 && GET_USERS.constructor === Object
+      "
+    >
       <h3 class="mb-3 line-height-1">Searching...</h3>
     </div>
     <div v-else>
       <div>
-        <h3 v-if="Object.keys(users).length > 0" class="mb-3 line-height-1">
+        <h3 v-if="Object.keys(GET_USERS).length > 0" class="mb-3 line-height-1">
           Search result for {{ $route.query.q }}
         </h3>
         <h3 v-else class="mb-3 line-height-1">
           No result for {{ $route.query.q }}
         </h3>
       </div>
-      <div v-for="user in users" :key="user._id" class="user-card">
+      <div v-for="user in GET_USERS" :key="user._id" class="user-card">
         <figure class="user-card__figure d-flex align-items-center">
           <a href="#" class="user-card__avatar d-block">
             <img
@@ -26,7 +30,7 @@
         </figure>
         <div class="user-card__cta">
           <a
-            v-if="!user.friendRequestStatus"
+            v-if="!user.contact"
             class="user-card__cta-b"
             href="#"
             @click.prevent="addContactAction(user._id)"
@@ -38,10 +42,10 @@
             </svg>
           </a>
           <a
-            v-else
+            v-if="user.contact && GET_LOCAL_USER._id === user.contact.userId"
             class="user-card__cta-b"
             href="#"
-            @click.prevent="cancelAddContactAction(user._id)"
+            @click.prevent="cancelAddContactAction({ contactId: user._id })"
           >
             <svg class="icon-svg icon-svg--danger icon-svg--2x">
               <use
@@ -49,6 +53,17 @@
               ></use>
             </svg>
           </a>
+          <div
+            v-if="user.contact && GET_LOCAL_USER._id === user.contact.contactId"
+          >
+            <button class="btn btn-submit">Accept</button>
+            <button
+              class="btn btn-danger ml-1"
+              @click.prevent="cancelAddContactAction({ contactId: user._id })"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -56,7 +71,9 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import mixin from '@/mixins/global';
+
 export default {
   name: 'SearchResult',
   data() {
@@ -64,17 +81,22 @@ export default {
       users: {}
     };
   },
+  computed: {
+    ...mapGetters(['GET_LOCAL_USER', 'GET_USERS'])
+  },
+  mixins: [mixin],
   methods: {
-    ...mapMutations(['toggleLoader']),
+    ...mapMutations(['toggleLoader', 'SET_USERS']),
     ...mapActions(['findAllUser', 'addContact', 'cancelAddContact']),
     async performSearchFromQuery() {
       this.toggleLoader(true);
+      this.SET_USERS({});
       try {
         const res = await this.findAllUser(this.$route.query);
         const usersData = res.data.data.data;
         if (usersData.length > 0) {
           usersData.forEach(item => {
-            this.$set(this.users, item._id, item);
+            this.$set(this.GET_USERS, item._id, item);
           });
         }
         this.toggleLoader(false);
@@ -87,24 +109,16 @@ export default {
       this.toggleLoader(true);
       try {
         const res = await this.addContact({ contactId });
-        if (res.status === 200) {
-          this.$set(this.users[contactId], 'friendRequestStatus', true);
-        }
-        this.$socket.emit('friend-request-on', contactId);
-        this.toggleLoader(false);
-      } catch (err) {
-        console.log(err);
-        console.log(err.response);
-      }
-    },
-    async cancelAddContactAction(contactId) {
-      this.toggleLoader(true);
-      try {
-        const res = await this.cancelAddContact({ contactId });
-        if (res.status === 204) {
-          this.$set(this.users[contactId], 'friendRequestStatus', false);
-        }
-        this.$socket.emit('friend-request-off', contactId);
+        const contact = res.data.data.contact;
+
+        this.$set(this.GET_USERS[contactId], 'contact', contact);
+
+        const notification = res.data.data.notification;
+        this.$socket.emit('friend-request-on', {
+          contactId,
+          contact,
+          notification
+        });
         this.toggleLoader(false);
       } catch (err) {
         console.log(err);

@@ -21,16 +21,31 @@
       <p class="notification-times mt-1">a day ago</p>
       <div class="notification-cta">
         <button class="btn btn-submit">Accept</button>
-        <button class="btn btn-danger ml-1">Cancel</button>
+        <button
+          class="btn btn-danger ml-1"
+          @click="cancelAddContactAction({ id, contactId })"
+        >
+          Cancel
+        </button>
       </div>
     </div>
   </li>
 </template>
 
 <script>
+import mixin from '@/mixins/global';
+
 export default {
   name: 'HomeNotificationItem',
   props: {
+    id: {
+      type: String,
+      required: true
+    },
+    contactId: {
+      type: String,
+      required: true
+    },
     avatar: {
       type: String,
       required: true
@@ -39,6 +54,7 @@ export default {
       type: String,
       required: true
     }
-  }
+  },
+  mixins: [mixin]
 };
 </script>

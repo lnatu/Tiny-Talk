@@ -3,6 +3,11 @@ const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema(
   {
+    contact: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'contact',
+      default: null
+    },
     firstName: {
       type: String,
       trim: true,
@@ -114,6 +119,15 @@ userSchema.virtual('fullName').get(function() {
 });
 
 userSchema.index({ firstName: 'text', lastName: 'text', email: 'text' });
+
+userSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'contact',
+    select: '-__v'
+  });
+
+  next();
+});
 
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) {

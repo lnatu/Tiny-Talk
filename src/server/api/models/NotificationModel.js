@@ -15,10 +15,6 @@ const notificationSchema = new mongoose.Schema({
     type: String,
     required: [true, 'notification type ?']
   },
-  content: {
-    type: String,
-    required: [true, 'notification content ?']
-  },
   isRead: {
     type: Boolean,
     default: false
@@ -28,6 +24,15 @@ const notificationSchema = new mongoose.Schema({
     default: Date.now(),
     select: false
   }
+});
+
+notificationSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'sender',
+    select: '_id firstName lastName fullName avatar'
+  });
+
+  next();
 });
 
 const NotificationModel = mongoose.model('notification', notificationSchema);

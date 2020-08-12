@@ -1,10 +1,12 @@
 const multer = require('multer');
 const sharp = require('sharp');
+const APIFeatures = require('./../../utils/apiFeatures');
 const UserModel = require('./../models/UserModel');
 const ContactModel = require('./../models/ContactModel');
 const AppError = require('./../../utils/appError');
 const catchError = require('./../../utils/catchError');
 const factory = require('./../../helpers/factory');
+const CONSTANTS = require('./../../config/constants');
 
 /* const storage = multer.diskStorage({
   destination(req, file, cb) {
@@ -85,38 +87,70 @@ const checkBeforeAddContact = async (userId, contactId) => {
 };
 
 exports.addContact = catchError(async (req, res, next) => {
-  const check = await checkBeforeAddContact(req.user.id, req.body.contactId);
-  const contactExist = await UserModel.findById(req.body.contactId);
+  const check = checkBeforeAddContact(req.user.id, req.body.contactId);
+  const contactExist = UserModel.findById(req.body.contactId);
 
-  if (!contactExist) {
+  const checks = await Promise.all([contactExist, check]);
+
+  if (!checks[0]) {
     return next(new AppError('This contact is not found', 404));
   }
 
-  if (!check) {
+  if (!checks[1]) {
     return next(new AppError("You've requested this", 400));
   }
 
-  const contact = await ContactModel.create({
+  const contactCreatedResponse = await ContactModel.create({
     userId: req.user.id,
     contactId: req.body.contactId
   });
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      contact
-    }
-  });
+  await UserModel.updateMany(
+    {
+      _id: { $in: [req.user.id, req.body.contactId] }
+    },
+    { contact: contactCreatedResponse._id }
+  );
+
+  req.notificationObj = {
+    sender: req.user.id,
+    receiver: req.body.contactId,
+    type: CONSTANTS.NOTIFICATION_TYPES.ADD_CONTACT
+  };
+
+  req.contact = contactCreatedResponse;
+
+  next();
 });
 
 exports.cancelAddContact = catchError(async (req, res, next) => {
-  await ContactModel.findOneAndDelete({
-    $and: [{ userId: req.user.id }, { contactId: req.body.contactId }]
+  const delContact = ContactModel.findOneAndDelete({
+    $or: [
+      {
+        $and: [{ userId: req.user.id }, { contactId: req.body.contactId }]
+      },
+      {
+        $and: [{ userId: req.body.contactId }, { contactId: req.user.id }]
+      }
+    ]
   });
 
-  res.status(204).json({
-    status: 'success'
-  });
+  const updateUser = UserModel.updateMany(
+    {
+      _id: { $in: [req.user.id, req.body.contactId] }
+    },
+    { contact: null }
+  );
+
+  await Promise.all([delContact, updateUser]);
+
+  req.notificationObj = {
+    sender: req.user.id,
+    receiver: req.body.contactId,
+    type: CONSTANTS.NOTIFICATION_TYPES.ADD_CONTACT
+  };
+
+  next();
 });
 
 exports.updateAccountInfo = factory.updateOne(UserModel);

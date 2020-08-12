@@ -18,5 +18,7 @@ exports.api = {
 };
 
 exports.localKeys = {
-  USER_KEY: 'current-user'
+  USER_KEY: 'current-user',
+  NOTIFICATIONS_KEY: 'user-notifications',
+  TOTAL_NOTIFICATIONS_KEY: 'total-notifications'
 };

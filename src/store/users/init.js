@@ -1,11 +1,28 @@
 const axios = require('axios');
 const config = require('@/config');
 
-const state = {};
+const state = {
+  users: {}
+};
 
-const getters = {};
+const getters = {
+  GET_USERS(state) {
+    return state.users;
+  }
+};
 
-const mutations = {};
+const mutations = {
+  SET_USERS(state, payload) {
+    state.users = payload;
+  },
+  UPDATE_USERS_KEY(state, { key, value }) {
+    if (Object.keys(state.users).length === 0) {
+      return;
+    }
+
+    this._vm.$set(state.users[key], 'contact', value);
+  }
+};
 
 const actions = {
   /* eslint-disable */
