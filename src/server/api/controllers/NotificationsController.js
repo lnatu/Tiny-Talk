@@ -14,7 +14,8 @@ exports.createNotification = catchError(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: {
-      notification
+      notification,
+      contact: req.contact
     }
   });
 });
@@ -23,7 +24,14 @@ exports.deleteNotification = catchError(async (req, res, next) => {
   const { sender, receiver, type } = req.notificationObj;
 
   const deletedDoc = await NotificationModel.findOneAndDelete({
-    $and: [{ sender }, { receiver }, { type }]
+    $or: [
+      {
+        $and: [{ sender }, { receiver }, { type }]
+      },
+      {
+        $and: [{ sender: receiver }, { receiver: sender }, { type }]
+      }
+    ]
   }).select('_id');
 
   res.status(200).json({

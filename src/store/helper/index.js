@@ -1,7 +1,11 @@
 exports.StorageHelper = class StorageHelper {
   constructor() {}
 
-  save(key, data) {
+  saveAsString(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
+  }
+
+  save(key, data) {
+    localStorage.setItem(key, data);
   }
 };

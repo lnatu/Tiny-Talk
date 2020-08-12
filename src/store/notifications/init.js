@@ -8,7 +8,9 @@ const storageHelper = new helper.StorageHelper();
 const state = {
   homeNotification:
     JSON.parse(localStorage.getItem(config.localKeys.NOTIFICATIONS_KEY)) || {},
-  totalNotifications: 0
+  totalNotifications:
+    parseInt(localStorage.getItem(config.localKeys.TOTAL_NOTIFICATIONS_KEY)) ||
+    0
 };
 
 const getters = {
@@ -35,24 +37,38 @@ const getters = {
 const mutations = {
   PUSH_HOME_NOTIFICATIONS(state, payload) {
     this._vm.$set(state.homeNotification, payload._id, payload);
-    storageHelper.save(
+    storageHelper.saveAsString(
       config.localKeys.NOTIFICATIONS_KEY,
       state.homeNotification
     );
     state.totalNotifications++;
+    storageHelper.save(
+      config.localKeys.TOTAL_NOTIFICATIONS_KEY,
+      state.totalNotifications
+    );
   },
   REMOVE_HOME_NOTIFICATIONS(state, payload) {
+    if (!payload._id) {
+      return;
+    }
     this._vm.$delete(state.homeNotification, payload._id);
-    storageHelper.save(
+    storageHelper.saveAsString(
       config.localKeys.NOTIFICATIONS_KEY,
       state.homeNotification
     );
     if (state.totalNotifications > 0) {
       state.totalNotifications--;
+      storageHelper.save(
+        config.localKeys.TOTAL_NOTIFICATIONS_KEY,
+        state.totalNotifications
+      );
     }
   },
   SET_HOME_NOTIFICATIONS(state, payload) {
     state.homeNotification = payload;
+  },
+  SET_HOME_TOTAL_NOTIFICATIONS(state, payload) {
+    state.totalNotifications = payload;
   }
 };
 

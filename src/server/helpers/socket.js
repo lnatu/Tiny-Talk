@@ -24,12 +24,7 @@ exports.responseToClients = responseToClients;
 
 exports.openFriendRequest = (io, socket, clients, eventName) => {
   socket.on(eventName, clientData => {
-    /* const { id, fullName, avatar } = socket.request.user;
-    const sender = {
-      id,
-      fullName,
-      avatar
-    }; */
+    const { id } = socket.request.user;
 
     if (clients[clientData.contactId]) {
       responseToClients(
@@ -38,6 +33,8 @@ exports.openFriendRequest = (io, socket, clients, eventName) => {
         io,
         'friend-request-on-response',
         {
+          currentUser: id,
+          contact: clientData.contact,
           notification: clientData.notification
         }
       );
@@ -48,9 +45,6 @@ exports.openFriendRequest = (io, socket, clients, eventName) => {
 exports.closeFriendRequest = (io, socket, clients, eventName) => {
   socket.on(eventName, clientData => {
     const { id } = socket.request.user;
-    const currentUser = {
-      id
-    };
 
     if (clients[clientData.contactId]) {
       responseToClients(
@@ -58,7 +52,7 @@ exports.closeFriendRequest = (io, socket, clients, eventName) => {
         clientData.contactId,
         io,
         'friend-request-off-response',
-        { currentUser, notificationId: clientData.notificationId }
+        { currentUser: id, notificationId: clientData.notificationId }
       );
     }
   });

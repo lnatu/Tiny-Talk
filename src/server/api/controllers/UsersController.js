@@ -1,5 +1,6 @@
 const multer = require('multer');
 const sharp = require('sharp');
+const APIFeatures = require('./../../utils/apiFeatures');
 const UserModel = require('./../models/UserModel');
 const ContactModel = require('./../models/ContactModel');
 const AppError = require('./../../utils/appError');
@@ -97,23 +98,39 @@ exports.addContact = catchError(async (req, res, next) => {
     return next(new AppError("You've requested this", 400));
   }
 
-  await ContactModel.create({
+  const contactCreatedResponse = await ContactModel.create({
     userId: req.user.id,
     contactId: req.body.contactId
   });
+
+  await UserModel.updateMany(
+    {
+      _id: { $in: [req.user.id, req.body.contactId] }
+    },
+    { contact: contactCreatedResponse._id }
+  );
 
   req.notificationObj = {
     sender: req.user.id,
     receiver: req.body.contactId,
     type: CONSTANTS.NOTIFICATION_TYPES.ADD_CONTACT
   };
+
+  req.contact = contactCreatedResponse;
 
   next();
 });
 
 exports.cancelAddContact = catchError(async (req, res, next) => {
   await ContactModel.findOneAndDelete({
-    $and: [{ userId: req.user.id }, { contactId: req.body.contactId }]
+    $or: [
+      {
+        $and: [{ userId: req.user.id }, { contactId: req.body.contactId }]
+      },
+      {
+        $and: [{ userId: req.body.contactId }, { contactId: req.user.id }]
+      }
+    ]
   });
 
   req.notificationObj = {
@@ -121,6 +138,13 @@ exports.cancelAddContact = catchError(async (req, res, next) => {
     receiver: req.body.contactId,
     type: CONSTANTS.NOTIFICATION_TYPES.ADD_CONTACT
   };
+
+  await UserModel.updateMany(
+    {
+      _id: { $in: [req.user.id, req.body.contactId] }
+    },
+    { contact: null }
+  );
 
   next();
 });
