@@ -13,8 +13,9 @@
             <use xlink:href="@/assets/img/icons/sprites.svg#icon-x"></use>
           </svg>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" @scroll="scrollToLoad">
           <home-notification-list />
+          <spinner />
         </div>
       </div>
     </div>
@@ -23,11 +24,15 @@
 
 <script>
 import HomeNotificationList from '@/components/notification/HomeNotificationList';
+import Spinner from '@/components/loading/Spinner';
+import mixin from '@/mixins/global';
 
 export default {
   name: 'NotificationModal',
   components: {
-    HomeNotificationList
-  }
+    HomeNotificationList,
+    Spinner
+  },
+  mixins: [mixin]
 };
 </script>

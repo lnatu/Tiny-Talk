@@ -30,7 +30,12 @@
         </figure>
         <div class="user-card__cta">
           <a
-            v-if="!user.contact"
+            v-if="
+              !user.contact ||
+                (user.contact &&
+                  GET_LOCAL_USER._id !== user.contact.userId &&
+                  GET_LOCAL_USER._id !== user.contact.contactId)
+            "
             class="user-card__cta-b"
             href="#"
             @click.prevent="addContactAction(user._id)"

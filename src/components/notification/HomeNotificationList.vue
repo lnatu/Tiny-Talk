@@ -7,7 +7,15 @@
       <home-notification-item
         v-for="item in GET_HOME_NOTIFICATIONS"
         :key="item._id"
-        :id="item._id"
+        :contactId="item.sender._id"
+        :avatar="item.sender.avatar"
+        :fullName="item.sender.fullName"
+      />
+    </ul>
+    <ul class="notification-list list-style-none mt-5">
+      <home-notification-item
+        v-for="item in GET_HOME_NOTIFICATIONS"
+        :key="item._id"
         :contactId="item.sender._id"
         :avatar="item.sender.avatar"
         :fullName="item.sender.fullName"

@@ -23,7 +23,7 @@
         <button class="btn btn-submit">Accept</button>
         <button
           class="btn btn-danger ml-1"
-          @click="cancelAddContactAction({ id, contactId })"
+          @click="cancelAddContactAction({ contactId })"
         >
           Cancel
         </button>
@@ -38,10 +38,6 @@ import mixin from '@/mixins/global';
 export default {
   name: 'HomeNotificationItem',
   props: {
-    id: {
-      type: String,
-      required: true
-    },
     contactId: {
       type: String,
       required: true

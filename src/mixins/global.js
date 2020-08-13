@@ -10,7 +10,8 @@ const mixin = {
   },
   data() {
     return {
-      validObj: ''
+      validObj: '',
+      lastScrollTop: 0
     };
   },
   methods: {
@@ -18,7 +19,8 @@ const mixin = {
       'toggleLoader',
       'SET_LOCAL_USER',
       'DECREASE_HOME_TOTAL_NOTIFICATIONS',
-      'REMOVE_HOME_NOTIFICATIONS'
+      'REMOVE_HOME_NOTIFICATIONS',
+      'UPDATE_USERS_KEY'
     ]),
     ...mapActions(['cancelAddContact']),
     formatDate(date) {
@@ -57,23 +59,32 @@ const mixin = {
     alert: function(type, message) {
       this.$alertify[type](message);
     },
+    /* DOM EVENTS */
+    scrollToLoad({ target: { scrollTop, clientHeight, scrollHeight } }) {
+      if (scrollTop > this.lastScrollTop) {
+        if (scrollHeight - scrollTop - clientHeight < 1) {
+          console.log('ok ne');
+        }
+      }
+      this.lastScrollTop = scrollTop;
+    },
     /* FRIEND REQUESTS */
     async cancelAddContactAction(data) {
       this.toggleLoader(true);
       try {
         const res = await this.cancelAddContact({ contactId: data.contactId });
+        const notificationId = res.data.data.deletedDoc._id;
 
-        if (this.GET_HOME_NOTIFICATIONS[data.id]) {
-          this.REMOVE_HOME_NOTIFICATIONS({ _id: data.id });
-        }
-
-        if (this.GET_USERS[data.contactId]) {
-          this.$set(this.GET_USERS[data.contactId], 'contact', null);
-        }
+        this.REMOVE_HOME_NOTIFICATIONS({ _id: notificationId });
+        this.UPDATE_USERS_KEY({
+          userId: data.contactId,
+          key: 'contact',
+          value: null
+        });
 
         this.$socket.emit('friend-request-off', {
           contactId: data.contactId,
-          notificationId: res.data.data.deletedDoc
+          notificationId: notificationId
         });
         this.toggleLoader(false);
       } catch (err) {

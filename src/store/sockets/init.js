@@ -12,7 +12,8 @@ const actions = {
   'SOCKET_friend-request-on-response'({ commit }, server) {
     commit('PUSH_HOME_NOTIFICATIONS', server.notification);
     commit('UPDATE_USERS_KEY', {
-      key: server.currentUser,
+      userId: server.currentUser,
+      key: 'contact',
       value: server.contact
     });
     this._vm.$alertify.success(
@@ -21,8 +22,12 @@ const actions = {
   },
 
   'SOCKET_friend-request-off-response'({ commit }, server) {
-    commit('REMOVE_HOME_NOTIFICATIONS', server.notificationId);
-    commit('UPDATE_USERS_KEY', { key: server.currentUser, value: null });
+    commit('REMOVE_HOME_NOTIFICATIONS', { _id: server.notificationId });
+    commit('UPDATE_USERS_KEY', {
+      userId: server.currentUser,
+      key: 'contact',
+      value: null
+    });
   }
 };
 
