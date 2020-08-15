@@ -29,8 +29,9 @@
           </figcaption>
         </figure>
         <div class="user-card__cta">
+          <spinner v-if="SPINNER_SHOW && SPINNER_SHOW[user._id]" />
           <a
-            v-if="!user.contact"
+            v-if="!user.friendRequest"
             class="user-card__cta-b"
             href="#"
             @click.prevent="addContactAction(user._id)"
@@ -42,10 +43,12 @@
             </svg>
           </a>
           <a
-            v-if="user.contact && GET_LOCAL_USER._id === user.contact.userId"
+            v-if="user.friendRequest && user.friendRequest.cancel"
             class="user-card__cta-b"
             href="#"
-            @click.prevent="cancelAddContactAction({ contactId: user._id })"
+            @click.prevent="
+              cancelAddContactAction({ contactId: user._id, self: true })
+            "
           >
             <svg class="icon-svg icon-svg--danger icon-svg--2x">
               <use
@@ -53,9 +56,7 @@
               ></use>
             </svg>
           </a>
-          <div
-            v-if="user.contact && GET_LOCAL_USER._id === user.contact.contactId"
-          >
+          <div v-if="user.friendRequest && user.friendRequest.accept">
             <button class="btn btn-submit">Accept</button>
             <button
               class="btn btn-danger ml-1"
@@ -72,31 +73,31 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
+import Spinner from '@/components/loading/Spinner';
 import mixin from '@/mixins/global';
 
 export default {
   name: 'SearchResult',
-  data() {
-    return {
-      users: {}
-    };
+  components: {
+    Spinner
   },
   computed: {
     ...mapGetters(['GET_LOCAL_USER', 'GET_USERS'])
   },
   mixins: [mixin],
   methods: {
-    ...mapMutations(['toggleLoader', 'SET_USERS']),
-    ...mapActions(['findAllUser', 'addContact', 'cancelAddContact']),
+    ...mapMutations(['toggleLoader', 'SET_USERS', 'UPDATE_USERS_KEY']),
+    ...mapActions(['findContact', 'addContact', 'cancelAddContact']),
     async performSearchFromQuery() {
       this.toggleLoader(true);
       this.SET_USERS({});
       try {
-        const res = await this.findAllUser(this.$route.query);
+        const res = await this.findContact(this.$route.query);
         const usersData = res.data.data.data;
         if (usersData.length > 0) {
           usersData.forEach(item => {
             this.$set(this.GET_USERS, item._id, item);
+            this.$set(this.SPINNER_SHOW, item._id, false);
           });
         }
         this.toggleLoader(false);
@@ -106,20 +107,28 @@ export default {
       }
     },
     async addContactAction(contactId) {
-      this.toggleLoader(true);
+      this.UPDATE_USERS_KEY({
+        userId: contactId,
+        key: 'friendRequest',
+        value: { holder: true }
+      });
+      this.SPINNER_SHOW[contactId] = true;
       try {
         const res = await this.addContact({ contactId });
-        const contact = res.data.data.contact;
-
-        this.$set(this.GET_USERS[contactId], 'contact', contact);
-
         const notification = res.data.data.notification;
+
+        this.SPINNER_SHOW[contactId] = false;
+
+        this.UPDATE_USERS_KEY({
+          userId: contactId,
+          key: 'friendRequest',
+          value: { cancel: true }
+        });
+
         this.$socket.emit('friend-request-on', {
           contactId,
-          contact,
           notification
         });
-        this.toggleLoader(false);
       } catch (err) {
         console.log(err);
         console.log(err.response);

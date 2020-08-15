@@ -11,6 +11,7 @@
         :contactId="item.sender._id"
         :avatar="item.sender.avatar"
         :fullName="item.sender.fullName"
+        :createdAt="timeSince(new Date(item.createdAt).getTime())"
       />
     </ul>
   </div>
@@ -19,6 +20,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import HomeNotificationItem from './HomeNotificationItem';
+import mixin from '@/mixins/global';
 
 export default {
   name: 'MainNotificationList',
@@ -27,6 +29,12 @@ export default {
   },
   computed: {
     ...mapGetters(['GET_HOME_NOTIFICATIONS'])
+  },
+  mixins: [mixin],
+  created() {
+    for (const key in this.GET_HOME_NOTIFICATIONS) {
+      this.SPINNER_SHOW[this.GET_HOME_NOTIFICATIONS[key].sender._id] = false;
+    }
   }
 };
 </script>

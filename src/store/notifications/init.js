@@ -1,3 +1,4 @@
+const axios = require('axios');
 const config = require('@/config');
 const helper = require('../helper');
 
@@ -54,7 +55,7 @@ const mutations = {
       config.localKeys.NOTIFICATIONS_KEY,
       state.homeNotification
     );
-    if (state.totalNotifications > 0) {
+    if (state.totalNotifications > 0 && !payload.self) {
       state.totalNotifications--;
       storageHelper.save(
         config.localKeys.TOTAL_NOTIFICATIONS_KEY,
@@ -81,10 +82,27 @@ const mutations = {
       config.localKeys.TOTAL_NOTIFICATIONS_KEY,
       state.totalNotifications
     );
+  },
+  MERGE_NEW_NOTIFICATIONS(state, payload) {
+    state.homeNotification = { ...state.homeNotification, ...payload };
+    storageHelper.saveAsString(
+      config.localKeys.NOTIFICATIONS_KEY,
+      state.homeNotification
+    );
   }
 };
 
-const actions = {};
+const actions = {
+  /* eslint-disable no-unused-vars */
+  async getMyNotifications({ commit }, { page }) {
+    return await axios.get(config.api.users.getNotifications, {
+      params: {
+        page,
+        limit: config.LIMITS.RESULTS_PER_CALL
+      }
+    });
+  }
+};
 
 export default {
   state,

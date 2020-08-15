@@ -10,7 +10,10 @@ const mixin = {
   },
   data() {
     return {
-      validObj: ''
+      validObj: '',
+      lastScrollTop: 0,
+      showSpinner: false,
+      SPINNER_SHOW: {}
     };
   },
   methods: {
@@ -18,9 +21,12 @@ const mixin = {
       'toggleLoader',
       'SET_LOCAL_USER',
       'DECREASE_HOME_TOTAL_NOTIFICATIONS',
-      'REMOVE_HOME_NOTIFICATIONS'
+      'REMOVE_HOME_NOTIFICATIONS',
+      'UPDATE_USERS_KEY',
+      'DELETE_USERS_KEY'
     ]),
     ...mapActions(['cancelAddContact']),
+    /* DATE & TIME */
     formatDate(date) {
       const d = new Date(date);
       let month = '' + (d.getMonth() + 1);
@@ -35,6 +41,31 @@ const mixin = {
       }
 
       return [year, month, day].join('-');
+    },
+    timeSince(timeStamp) {
+      const now = new Date(),
+        secondsPast = (now.getTime() - timeStamp) / 1000;
+      if (secondsPast < 60) {
+        return parseInt(secondsPast) + ' seconds';
+      }
+      if (secondsPast < 3600) {
+        return parseInt(secondsPast / 60) + ' minutes';
+      }
+      if (secondsPast <= 86400) {
+        return parseInt(secondsPast / 3600) + ' hours';
+      }
+      if (secondsPast > 86400) {
+        const day = timeStamp.getDate();
+        const month = timeStamp
+          .toDateString()
+          .match(/ [a-zA-Z]*/)[0]
+          .replace(' ', '');
+        const year =
+          timeStamp.getFullYear() === now.getFullYear()
+            ? ''
+            : ' ' + timeStamp.getFullYear();
+        return day + ' ' + month + year;
+      }
     },
     filterObj(obj, ...allowedFields) {
       const newObj = {};
@@ -54,28 +85,87 @@ const mixin = {
       this.$v[obj][key].$touch();
     },
     /* ALERTS */
-    alert: function(type, message) {
+    alert(type, message) {
       this.$alertify[type](message);
+    },
+    /* DOM EVENTS */
+    debounce(func, delay) {
+      clearTimeout(func._tId);
+      func._tId = setTimeout(function() {
+        func();
+      }, delay);
+    },
+    easeInOutQuad(t, b, c, d) {
+      t /= d / 2;
+      if (t < 1) return (c / 2) * t * t + b;
+      t--;
+      return (-c / 2) * (t * (t - 2) - 1) + b;
+    },
+    scrollTo(element, to, duration) {
+      let start = element.scrollTop,
+        change = to - start,
+        currentTime = 0,
+        increment = 20;
+
+      const animateScroll = () => {
+        currentTime += increment;
+        element.scrollTop = this.easeInOutQuad(
+          currentTime,
+          start,
+          change,
+          duration
+        );
+        if (currentTime < duration) {
+          requestAnimationFrame(animateScroll);
+        }
+      };
+      animateScroll();
+    },
+    scrollToLoad({ target: { scrollTop, clientHeight, scrollHeight } }, fn) {
+      if (scrollTop > this.lastScrollTop) {
+        if (scrollHeight - scrollTop - clientHeight < 1) {
+          this.showSpinner = true;
+          this.scrollTo(
+            this.$refs.notiScroll,
+            this.$refs.notiScroll.scrollHeight,
+            2000
+          );
+          this.debounce(fn, 500);
+        }
+      }
+      this.lastScrollTop = scrollTop;
     },
     /* FRIEND REQUESTS */
     async cancelAddContactAction(data) {
-      this.toggleLoader(true);
+      this.UPDATE_USERS_KEY({
+        userId: data.contactId,
+        key: 'friendRequest',
+        value: { holder: true }
+      });
+      console.log(data.contactId);
+      this.$set(this.SPINNER_SHOW, data.contactId, true);
+      // this.SPINNER_SHOW[data.contactId] = true;
       try {
         const res = await this.cancelAddContact({ contactId: data.contactId });
+        const notificationId = res.data.data.deletedDoc._id;
 
-        if (this.GET_HOME_NOTIFICATIONS[data.id]) {
-          this.REMOVE_HOME_NOTIFICATIONS({ _id: data.id });
-        }
+        this.REMOVE_HOME_NOTIFICATIONS({
+          _id: notificationId,
+          self: data.self
+        });
 
-        if (this.GET_USERS[data.contactId]) {
-          this.$set(this.GET_USERS[data.contactId], 'contact', null);
-        }
+        // this.SPINNER_SHOW[data.contactId] = false;
+        this.$set(this.SPINNER_SHOW, data.contactId, false);
+
+        this.DELETE_USERS_KEY({
+          userId: data.contactId,
+          key: 'friendRequest'
+        });
 
         this.$socket.emit('friend-request-off', {
           contactId: data.contactId,
-          notificationId: res.data.data.deletedDoc
+          notificationId: notificationId
         });
-        this.toggleLoader(false);
       } catch (err) {
         console.log(err);
         console.log(err.response);
