@@ -1,4 +1,5 @@
 const NotificationModel = require('./../models/NotificationModel');
+const APIFeatures = require('./../../utils/apiFeatures');
 const catchError = require('./../../utils/catchError');
 
 exports.createNotification = catchError(async (req, res, next) => {
@@ -43,12 +44,20 @@ exports.deleteNotification = catchError(async (req, res, next) => {
 });
 
 exports.getUserNotification = catchError(async (req, res, next) => {
-  const notifications = await NotificationModel.find({
-    receiver: req.user.id
-  });
+  const features = new APIFeatures(
+    NotificationModel.find({
+      receiver: req.user.id
+    }),
+    req.query
+  )
+    .limitFields()
+    .paginate();
+
+  const notifications = await features.query;
 
   res.status(200).json({
     status: 'success',
+    results: notifications.length,
     data: {
       notifications
     }

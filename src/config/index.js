@@ -13,8 +13,13 @@ exports.api = {
   users: {
     addContact: `${version}users/addContact`,
     cancelAddContact: `${version}users/cancelAddContact`,
-    findAll: `${version}users`
+    findContact: `${version}users/findContact`,
+    getNotifications: `${version}users/notifications`
   }
+};
+
+exports.LIMITS = {
+  RESULTS_PER_CALL: 10
 };
 
 exports.localKeys = {

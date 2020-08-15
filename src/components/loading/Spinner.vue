@@ -25,7 +25,6 @@ export default {
 @import '@/assets/scss/abstract/_variables';
 
 .sk-circle {
-  margin: 40px auto 20px;
   width: 40px;
   height: 40px;
   position: relative;

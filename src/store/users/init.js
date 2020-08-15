@@ -21,13 +21,20 @@ const mutations = {
     }
 
     this._vm.$set(state.users[userId], key, value);
+  },
+  DELETE_USERS_KEY(state, { userId, key }) {
+    if (Object.keys(state.users).length === 0) {
+      return;
+    }
+
+    this._vm.$delete(state.users[userId], key);
   }
 };
 
 const actions = {
   /* eslint-disable */
-  async findAllUser({ commit }, { q }) {
-    return await axios.get(config.api.users.findAll, {
+  async findContact({ commit }, { q }) {
+    return await axios.get(config.api.users.findContact, {
       params: {
         search: q
       }

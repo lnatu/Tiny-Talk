@@ -34,7 +34,6 @@ exports.openFriendRequest = (io, socket, clients, eventName) => {
         'friend-request-on-response',
         {
           currentUser: id,
-          contact: clientData.contact,
           notification: clientData.notification
         }
       );

@@ -8,16 +8,6 @@ const catchError = require('./../../utils/catchError');
 const factory = require('./../../helpers/factory');
 const CONSTANTS = require('./../../config/constants');
 
-/* const storage = multer.diskStorage({
-  destination(req, file, cb) {
-    cb(null, 'src/assets/img/users');
-  },
-  filename(req, file, cb) {
-    const fileExtension = file.mimetype.split('/')[1];
-    cb(null, `user-${req.user.id}-${Date.now()}.${fileExtension}`);
-  }
-}); */
-
 const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
@@ -87,7 +77,7 @@ const checkBeforeAddContact = async (userId, contactId) => {
 };
 
 exports.addContact = catchError(async (req, res, next) => {
-  const check = checkBeforeAddContact(req.user.id, req.body.contactId);
+  /* const check = checkBeforeAddContact(req.user.id, req.body.contactId);
   const contactExist = UserModel.findById(req.body.contactId);
 
   const checks = await Promise.all([contactExist, check]);
@@ -98,7 +88,7 @@ exports.addContact = catchError(async (req, res, next) => {
 
   if (!checks[1]) {
     return next(new AppError("You've requested this", 400));
-  }
+  } */
 
   const contactCreatedResponse = await ContactModel.create({
     userId: req.user.id,
@@ -153,6 +143,54 @@ exports.cancelAddContact = catchError(async (req, res, next) => {
   next();
 });
 
+exports.findContact = catchError(async (req, res, next) => {
+  let searchObj = {};
+  if (req.query.search) {
+    const keyword = req.query.search;
+    const regex = new RegExp(keyword, 'i');
+    searchObj = {
+      _id: { $nin: [req.user.id] },
+      $text: { $search: regex }
+    };
+  }
+
+  const users = await UserModel.find(searchObj).lean();
+  const contacts = await ContactModel.find().lean();
+
+  const userIds = {};
+  const contactIds = {};
+
+  contacts.forEach(contact => {
+    userIds[contact.userId] = contact.userId;
+  });
+
+  contacts.forEach(contact => {
+    contactIds[contact.contactId] = contact.contactId;
+  });
+
+  users.forEach(user => {
+    user.fullName = `${user.lastName} ${user.firstName}`;
+
+    if (userIds[req.user._id] && contactIds[user._id]) {
+      user.friendRequest = { cancel: true };
+    }
+
+    if (contactIds[req.user._id] && userIds[user._id]) {
+      user.friendRequest = { accept: true };
+    }
+  });
+
+  // Send response
+  res.status(200).json({
+    status: 'success',
+    results: users.length,
+    data: {
+      data: users
+    }
+  });
+});
+
+/* FACTORY */
 exports.updateAccountInfo = factory.updateOne(UserModel);
 exports.createUser = factory.createOne(UserModel);
 exports.findByKeyword = factory.getAll(UserModel);

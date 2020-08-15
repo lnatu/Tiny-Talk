@@ -18,8 +18,11 @@
       <p class="notification-text">
         <span>{{ fullName }}</span> has sent you a friend request
       </p>
-      <p class="notification-times mt-1">a day ago</p>
-      <div class="notification-cta">
+      <p class="notification-times mt-1">{{ createdAt }} ago</p>
+      <div class="mt-sm" v-if="SPINNER_SHOW && SPINNER_SHOW[contactId]">
+        <spinner />
+      </div>
+      <div v-else class="notification-cta">
         <button class="btn btn-submit">Accept</button>
         <button
           class="btn btn-danger ml-1"
@@ -33,11 +36,16 @@
 </template>
 
 <script>
+import Spinner from '@/components/loading/Spinner';
 import mixin from '@/mixins/global';
 
 export default {
   name: 'HomeNotificationItem',
   props: {
+    id: {
+      type: String,
+      required: true
+    },
     contactId: {
       type: String,
       required: true
@@ -49,8 +57,15 @@ export default {
     fullName: {
       type: String,
       required: true
+    },
+    createdAt: {
+      type: String,
+      required: true
     }
   },
-  mixins: [mixin]
+  mixins: [mixin],
+  components: {
+    Spinner
+  }
 };
 </script>

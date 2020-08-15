@@ -13,9 +13,13 @@
             <use xlink:href="@/assets/img/icons/sprites.svg#icon-x"></use>
           </svg>
         </div>
-        <div class="modal-body" @scroll="scrollToLoad">
+        <div
+          class="modal-body hide-scrollbar"
+          ref="notiScroll"
+          @scroll="scrollToLoad($event, loadMoreNotifications)"
+        >
           <home-notification-list />
-          <spinner />
+          <spinner v-if="showSpinner" />
         </div>
       </div>
     </div>
@@ -23,8 +27,10 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 import HomeNotificationList from '@/components/notification/HomeNotificationList';
 import Spinner from '@/components/loading/Spinner';
+import config from '@/config';
 import mixin from '@/mixins/global';
 
 export default {
@@ -33,6 +39,32 @@ export default {
     HomeNotificationList,
     Spinner
   },
-  mixins: [mixin]
+  computed: {
+    ...mapGetters(['GET_HOME_NOTIFICATIONS'])
+  },
+  mixins: [mixin],
+  methods: {
+    ...mapMutations(['MERGE_NEW_NOTIFICATIONS']),
+    ...mapActions(['getMyNotifications']),
+    async loadMoreNotifications() {
+      try {
+        const notificationSize = Object.keys(this.GET_HOME_NOTIFICATIONS)
+          .length;
+        const limitedResults = config.LIMITS.RESULTS_PER_CALL;
+        const page = Math.ceil(notificationSize / limitedResults) + 1;
+        const res = await this.getMyNotifications({ page });
+        const notifications = res.data.data.notifications;
+        if (notifications.length > 0) {
+          let notificationObj = {};
+          notifications.forEach(item => (notificationObj[item._id] = item));
+          this.MERGE_NEW_NOTIFICATIONS(notificationObj);
+        }
+        this.showSpinner = false;
+      } catch (err) {
+        console.log(err);
+        console.log(err.response);
+      }
+    }
+  }
 };
 </script>

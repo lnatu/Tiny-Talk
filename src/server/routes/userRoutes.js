@@ -2,8 +2,11 @@ const express = require('express');
 const AuthController = require('./../api/controllers/AuthController');
 const UserController = require('./../api/controllers/UsersController');
 const NotificationsController = require('./../api/controllers/NotificationsController');
+const notificationsRouter = require('./../routes/notificationRoutes');
 
 const router = express.Router();
+
+router.use('/notifications', notificationsRouter);
 
 router.post('/signup', AuthController.signup);
 router.post('/login', AuthController.login);
@@ -11,10 +14,10 @@ router.get('/activate/:token', AuthController.activateAccount);
 
 router.use(AuthController.protect);
 
-router.route('/').get(UserController.findByKeyword);
+router.route('/').get(UserController.findContact);
+router.route('/findContact').get(UserController.findContact);
 
 router.get('/logout', AuthController.logout);
-router.get('/notifications', NotificationsController.getUserNotification);
 
 router.post(
   '/addContact',

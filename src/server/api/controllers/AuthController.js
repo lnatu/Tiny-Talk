@@ -87,7 +87,7 @@ exports.login = catchError(async (req, res, next) => {
 
   const notifications = await NotificationModel.find({
     receiver: user.id
-  });
+  }).limit(10);
 
   const userObj = {
     user,
@@ -98,7 +98,7 @@ exports.login = catchError(async (req, res, next) => {
 });
 
 exports.logout = (req, res, next) => {
-  res.cookie('jwt', 'logged out', {
+  res.cookie('jwt', 'loggedout', {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true
   });

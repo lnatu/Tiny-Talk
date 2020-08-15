@@ -3,11 +3,6 @@ const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema(
   {
-    contact: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'contact',
-      default: null
-    },
     firstName: {
       type: String,
       trim: true,
