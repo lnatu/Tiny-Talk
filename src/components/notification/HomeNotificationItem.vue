@@ -42,10 +42,6 @@ import mixin from '@/mixins/global';
 export default {
   name: 'HomeNotificationItem',
   props: {
-    id: {
-      type: String,
-      required: true
-    },
     contactId: {
       type: String,
       required: true
