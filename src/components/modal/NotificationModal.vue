@@ -19,7 +19,12 @@
           @scroll="scrollToLoad($event, loadMoreNotifications)"
         >
           <home-notification-list />
-          <spinner v-if="showSpinner" />
+          <div
+            v-if="showSpinner"
+            class="d-flex justify-content-center align-items-center mt-4 mb-2"
+          >
+            <spinner />
+          </div>
         </div>
       </div>
     </div>
@@ -63,6 +68,7 @@ export default {
       } catch (err) {
         console.log(err);
         console.log(err.response);
+        this.showSpinner = false;
       }
     }
   }
