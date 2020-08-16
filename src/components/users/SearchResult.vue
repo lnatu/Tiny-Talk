@@ -1,10 +1,6 @@
 <template>
   <div class="user-search-result">
-    <div
-      v-if="
-        Object.keys(GET_USERS).length === 0 && GET_USERS.constructor === Object
-      "
-    >
+    <div v-if="searching">
       <h3 class="mb-3 line-height-1">Searching...</h3>
     </div>
     <div v-else>
@@ -84,6 +80,11 @@ export default {
   computed: {
     ...mapGetters(['GET_LOCAL_USER', 'GET_USERS'])
   },
+  data() {
+    return {
+      searching: true
+    };
+  },
   mixins: [mixin],
   methods: {
     ...mapMutations(['toggleLoader', 'SET_USERS', 'UPDATE_USERS_KEY']),
@@ -100,10 +101,12 @@ export default {
             this.$set(this.SPINNER_SHOW, item._id, false);
           });
         }
+        this.searching = false;
         this.toggleLoader(false);
       } catch (err) {
         console.log(err);
         console.log(err.response);
+        this.searching = false;
       }
     },
     async addContactAction(contactId) {

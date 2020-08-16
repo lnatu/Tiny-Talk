@@ -46,13 +46,15 @@ const mixin = {
       const now = new Date(),
         secondsPast = (now.getTime() - timeStamp) / 1000;
       if (secondsPast < 60) {
-        return parseInt(secondsPast) + ' seconds';
+        return `${
+          parseInt(secondsPast) === 0 ? 1 : parseInt(secondsPast)
+        } seconds`;
       }
       if (secondsPast < 3600) {
-        return parseInt(secondsPast / 60) + ' minutes';
+        return `${parseInt(secondsPast / 60)} minutes`;
       }
       if (secondsPast <= 86400) {
-        return parseInt(secondsPast / 3600) + ' hours';
+        return `${parseInt(secondsPast / 3600)} hours`;
       }
       if (secondsPast > 86400) {
         const day = timeStamp.getDate();
@@ -142,9 +144,7 @@ const mixin = {
         key: 'friendRequest',
         value: { holder: true }
       });
-      console.log(data.contactId);
       this.$set(this.SPINNER_SHOW, data.contactId, true);
-      // this.SPINNER_SHOW[data.contactId] = true;
       try {
         const res = await this.cancelAddContact({ contactId: data.contactId });
         const notificationId = res.data.data.deletedDoc._id;
@@ -154,7 +154,6 @@ const mixin = {
           self: data.self
         });
 
-        // this.SPINNER_SHOW[data.contactId] = false;
         this.$set(this.SPINNER_SHOW, data.contactId, false);
 
         this.DELETE_USERS_KEY({
