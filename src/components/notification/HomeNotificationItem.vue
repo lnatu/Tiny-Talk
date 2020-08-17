@@ -23,13 +23,23 @@
         <spinner />
       </div>
       <div v-else class="notification-cta">
-        <button class="btn btn-submit">Accept</button>
-        <button
-          class="btn btn-danger ml-1"
-          @click="cancelAddContactAction({ contactId })"
-        >
-          Cancel
-        </button>
+        <div v-if="type === 'add-contact'">
+          <button
+            class="btn btn-submit"
+            @click="acceptFriendRequest({ contactId })"
+          >
+            Accept
+          </button>
+          <button
+            class="btn btn-danger ml-1"
+            @click="cancelAddContactAction({ contactId })"
+          >
+            Cancel
+          </button>
+        </div>
+        <div v-if="type === 'accept-contact'" class="text-accept">
+          Friend request accepted
+        </div>
       </div>
     </div>
   </li>
@@ -51,6 +61,10 @@ export default {
       required: true
     },
     fullName: {
+      type: String,
+      required: true
+    },
+    type: {
       type: String,
       required: true
     },

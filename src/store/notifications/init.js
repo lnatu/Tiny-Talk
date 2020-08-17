@@ -6,10 +6,7 @@ const storageHelper = new helper.StorageHelper();
 
 const state = {
   homeNotification:
-    JSON.parse(localStorage.getItem(config.localKeys.NOTIFICATIONS_KEY)) || {},
-  totalNotifications:
-    parseInt(localStorage.getItem(config.localKeys.TOTAL_NOTIFICATIONS_KEY)) ||
-    0
+    JSON.parse(localStorage.getItem(config.localKeys.NOTIFICATIONS_KEY)) || {}
 };
 
 const getters = {
@@ -29,7 +26,13 @@ const getters = {
    * @constructor
    */
   GET_TOTAL_NOTIFICATIONS(state) {
-    return state.totalNotifications;
+    let count = 0;
+    for (const key in state.homeNotification) {
+      if (!state.homeNotification[key].isRead) {
+        count += 1;
+      }
+    }
+    return count;
   }
 };
 
@@ -40,10 +43,16 @@ const mutations = {
       config.localKeys.NOTIFICATIONS_KEY,
       state.homeNotification
     );
-    state.totalNotifications++;
-    storageHelper.save(
-      config.localKeys.TOTAL_NOTIFICATIONS_KEY,
-      state.totalNotifications
+  },
+  UPDATE_HOME_NOTIFICATION(state, { _id, value }) {
+    if (Object.keys(state.homeNotification).length === 0) {
+      return;
+    }
+
+    this._vm.$set(state.homeNotification, _id, value);
+    storageHelper.saveAsString(
+      config.localKeys.NOTIFICATIONS_KEY,
+      state.homeNotification
     );
   },
   REMOVE_HOME_NOTIFICATIONS(state, payload) {
@@ -55,33 +64,9 @@ const mutations = {
       config.localKeys.NOTIFICATIONS_KEY,
       state.homeNotification
     );
-    if (state.totalNotifications > 0 && !payload.self) {
-      state.totalNotifications--;
-      storageHelper.save(
-        config.localKeys.TOTAL_NOTIFICATIONS_KEY,
-        state.totalNotifications
-      );
-    }
   },
   SET_HOME_NOTIFICATIONS(state, payload) {
     state.homeNotification = payload;
-  },
-  SET_HOME_TOTAL_NOTIFICATIONS(state, payload) {
-    state.totalNotifications = payload;
-  },
-  DECREASE_HOME_TOTAL_NOTIFICATIONS(state) {
-    state.totalNotifications -= 1;
-    storageHelper.save(
-      config.localKeys.TOTAL_NOTIFICATIONS_KEY,
-      state.totalNotifications
-    );
-  },
-  INCREASE_HOME_TOTAL_NOTIFICATIONS(state) {
-    state.totalNotifications += 1;
-    storageHelper.save(
-      config.localKeys.TOTAL_NOTIFICATIONS_KEY,
-      state.totalNotifications
-    );
   },
   MERGE_NEW_NOTIFICATIONS(state, payload) {
     state.homeNotification = { ...state.homeNotification, ...payload };

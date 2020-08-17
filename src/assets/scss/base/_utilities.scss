@@ -406,6 +406,10 @@ button:not(:disabled),
     fill: $text-color !important;
   }
 
+  &--success {
+    fill: $success-color !important;
+  }
+
   &--danger {
     fill: $danger-color !important;
   }

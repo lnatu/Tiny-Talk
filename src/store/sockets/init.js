@@ -14,7 +14,7 @@ const actions = {
     commit('UPDATE_USERS_KEY', {
       userId: server.currentUser,
       key: 'friendRequest',
-      value: { accept: true }
+      value: { wait: true }
     });
     this._vm.$alertify.success(
       `${server.notification.sender.fullName} sent you a friend request`
@@ -26,6 +26,14 @@ const actions = {
     commit('DELETE_USERS_KEY', {
       userId: server.currentUser,
       key: 'friendRequest'
+    });
+  },
+
+  'SOCKET_friend-request-accepted-response'({ commit }, server) {
+    commit('UPDATE_USERS_KEY', {
+      userId: server.currentUser,
+      key: 'friendRequest',
+      value: { accept: true }
     });
   }
 };

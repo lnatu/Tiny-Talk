@@ -43,6 +43,29 @@ exports.deleteNotification = catchError(async (req, res, next) => {
   });
 });
 
+exports.updateNotificationType = catchError(async (req, res, next) => {
+  const { sender, receiver, type } = req.notificationObj;
+
+  const updatedDoc = await NotificationModel.findOneAndUpdate(
+    {
+      $and: [{ sender }, { receiver }, { type }]
+    },
+    { isRead: true, type: 'accept-contact' },
+    {
+      new: true
+    }
+  );
+
+  console.log(updatedDoc);
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      updatedDoc
+    }
+  });
+});
+
 exports.getUserNotification = catchError(async (req, res, next) => {
   const features = new APIFeatures(
     NotificationModel.find({

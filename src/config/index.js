@@ -12,6 +12,7 @@ exports.api = {
   },
   users: {
     addContact: `${version}users/addContact`,
+    acceptContact: `${version}users/contacts/accept`,
     cancelAddContact: `${version}users/cancelAddContact`,
     findContact: `${version}users/findContact`,
     getNotifications: `${version}users/notifications`

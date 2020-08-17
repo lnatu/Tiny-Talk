@@ -10,6 +10,7 @@
         :contactId="item.sender._id"
         :avatar="item.sender.avatar"
         :fullName="item.sender.fullName"
+        :type="item.type"
         :createdAt="timeSince(new Date(item.createdAt).getTime())"
       />
     </ul>

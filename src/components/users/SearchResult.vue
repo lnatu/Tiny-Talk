@@ -52,8 +52,13 @@
               ></use>
             </svg>
           </a>
-          <div v-if="user.friendRequest && user.friendRequest.accept">
-            <button class="btn btn-submit">Accept</button>
+          <div v-if="user.friendRequest && user.friendRequest.wait">
+            <button
+              class="btn btn-submit"
+              @click.prevent="acceptFriendRequest({ contactId: user._id })"
+            >
+              Accept
+            </button>
             <button
               class="btn btn-danger ml-1"
               @click.prevent="cancelAddContactAction({ contactId: user._id })"
@@ -61,6 +66,17 @@
               Cancel
             </button>
           </div>
+          <a
+            class="user-card__cta-b"
+            href="#"
+            v-if="user.friendRequest && user.friendRequest.accept"
+          >
+            <svg class="icon-svg icon-svg--success icon-svg--2x">
+              <use
+                xlink:href="@/assets/img/icons/sprites.svg#icon-commenting"
+              ></use>
+            </svg>
+          </a>
         </div>
       </div>
     </div>

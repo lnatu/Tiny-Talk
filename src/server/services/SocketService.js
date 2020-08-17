@@ -62,6 +62,13 @@ class SocketService {
         'friend-request-off'
       );
 
+      socketHelper.acceptFriendRequest(
+        this.io,
+        socket,
+        this.clients,
+        'friend-request-accepted'
+      );
+
       socket.on('disconnect', () => {
         socketHelper.clearClientsSocketId(
           this.clients,
