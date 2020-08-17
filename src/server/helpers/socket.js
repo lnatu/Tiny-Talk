@@ -56,3 +56,19 @@ exports.closeFriendRequest = (io, socket, clients, eventName) => {
     }
   });
 };
+
+exports.acceptFriendRequest = (io, socket, clients, eventName) => {
+  socket.on(eventName, clientData => {
+    const { id } = socket.request.user;
+
+    if (clients[clientData.contactId]) {
+      responseToClients(
+        clients,
+        clientData.contactId,
+        io,
+        'friend-request-accepted-response',
+        { currentUser: id, notificationId: clientData.notificationId }
+      );
+    }
+  });
+};

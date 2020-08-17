@@ -67,8 +67,7 @@ export default {
     ...mapMutations([
       'toggleLoader',
       'SET_LOCAL_USER',
-      'SET_HOME_NOTIFICATIONS',
-      'SET_HOME_TOTAL_NOTIFICATIONS'
+      'SET_HOME_NOTIFICATIONS'
     ]),
     ...mapActions(['login']),
     async loginAction() {
@@ -82,15 +81,10 @@ export default {
         });
         this.SET_LOCAL_USER(user);
         this.SET_HOME_NOTIFICATIONS(notificationsObj);
-        this.SET_HOME_TOTAL_NOTIFICATIONS(notifications.length);
         localStorage.setItem(localKeys.USER_KEY, JSON.stringify(user));
         localStorage.setItem(
           localKeys.NOTIFICATIONS_KEY,
           JSON.stringify(notificationsObj)
-        );
-        localStorage.setItem(
-          localKeys.TOTAL_NOTIFICATIONS_KEY,
-          notifications.length
         );
         this.toggleLoader(false);
         this.$router.push({ name: 'Home' });

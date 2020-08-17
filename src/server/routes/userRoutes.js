@@ -3,10 +3,12 @@ const AuthController = require('./../api/controllers/AuthController');
 const UserController = require('./../api/controllers/UsersController');
 const NotificationsController = require('./../api/controllers/NotificationsController');
 const notificationsRouter = require('./../routes/notificationRoutes');
+const contactsRouter = require('./../routes/contactRoutes');
 
 const router = express.Router();
 
 router.use('/notifications', notificationsRouter);
+router.use('/contacts', contactsRouter);
 
 router.post('/signup', AuthController.signup);
 router.post('/login', AuthController.login);

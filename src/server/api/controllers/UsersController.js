@@ -77,7 +77,7 @@ const checkBeforeAddContact = async (userId, contactId) => {
 };
 
 exports.addContact = catchError(async (req, res, next) => {
-  /* const check = checkBeforeAddContact(req.user.id, req.body.contactId);
+  const check = checkBeforeAddContact(req.user.id, req.body.contactId);
   const contactExist = UserModel.findById(req.body.contactId);
 
   const checks = await Promise.all([contactExist, check]);
@@ -88,7 +88,7 @@ exports.addContact = catchError(async (req, res, next) => {
 
   if (!checks[1]) {
     return next(new AppError("You've requested this", 400));
-  } */
+  }
 
   const contactCreatedResponse = await ContactModel.create({
     userId: req.user.id,
@@ -114,25 +114,24 @@ exports.addContact = catchError(async (req, res, next) => {
 });
 
 exports.cancelAddContact = catchError(async (req, res, next) => {
-  const delContact = ContactModel.findOneAndDelete({
+  await ContactModel.findOneAndDelete({
     $or: [
       {
-        $and: [{ userId: req.user.id }, { contactId: req.body.contactId }]
+        $and: [
+          { userId: req.user.id },
+          { contactId: req.body.contactId },
+          { status: false }
+        ]
       },
       {
-        $and: [{ userId: req.body.contactId }, { contactId: req.user.id }]
+        $and: [
+          { userId: req.body.contactId },
+          { contactId: req.user.id },
+          { status: false }
+        ]
       }
     ]
   });
-
-  const updateUser = UserModel.updateMany(
-    {
-      _id: { $in: [req.user.id, req.body.contactId] }
-    },
-    { contact: null }
-  );
-
-  await Promise.all([delContact, updateUser]);
 
   req.notificationObj = {
     sender: req.user.id,
@@ -161,21 +160,52 @@ exports.findContact = catchError(async (req, res, next) => {
   const contactIds = {};
 
   contacts.forEach(contact => {
-    userIds[contact.userId] = contact.userId;
+    if (!userIds[contact.userId]) {
+      userIds[contact.userId] = { id: contact.userId, status: contact.status };
+    }
   });
 
   contacts.forEach(contact => {
-    contactIds[contact.contactId] = contact.contactId;
+    if (!contactIds[contact.contactId]) {
+      contactIds[contact.contactId] = {
+        id: contact.contactId,
+        status: contact.status
+      };
+    }
   });
 
   users.forEach(user => {
     user.fullName = `${user.lastName} ${user.firstName}`;
 
-    if (userIds[req.user._id] && contactIds[user._id]) {
+    if (
+      userIds[req.user._id] &&
+      contactIds[user._id] &&
+      !userIds[req.user._id].status
+    ) {
       user.friendRequest = { cancel: true };
     }
 
-    if (contactIds[req.user._id] && userIds[user._id]) {
+    if (
+      contactIds[req.user._id] &&
+      userIds[user._id] &&
+      !userIds[user._id].status
+    ) {
+      user.friendRequest = { wait: true };
+    }
+
+    if (
+      userIds[req.user._id] &&
+      contactIds[user._id] &&
+      userIds[req.user._id].status
+    ) {
+      user.friendRequest = { accept: true };
+    }
+
+    if (
+      contactIds[req.user._id] &&
+      userIds[user._id] &&
+      userIds[user._id].status
+    ) {
       user.friendRequest = { accept: true };
     }
   });

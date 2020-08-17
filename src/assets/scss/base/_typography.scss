@@ -1,5 +1,5 @@
 body {
-  font-family: 'Hind Siliguri', sans-serif;
+  font-family: 'Fira Sans Condensed', sans-serif;
   font-weight: 400;
   font-size: 1.6rem;
   line-height: 1.7;
@@ -13,4 +13,10 @@ body {
 
 .text-muted {
   color: #adb5bd !important;
+}
+
+.text-accept {
+  font-size: 12px;
+  font-weight: 500;
+  color: $primary-color-2;
 }

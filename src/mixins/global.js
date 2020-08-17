@@ -20,12 +20,12 @@ const mixin = {
     ...mapMutations([
       'toggleLoader',
       'SET_LOCAL_USER',
-      'DECREASE_HOME_TOTAL_NOTIFICATIONS',
+      'UPDATE_HOME_NOTIFICATION',
       'REMOVE_HOME_NOTIFICATIONS',
       'UPDATE_USERS_KEY',
       'DELETE_USERS_KEY'
     ]),
-    ...mapActions(['cancelAddContact']),
+    ...mapActions(['cancelAddContact', 'acceptContact']),
     /* DATE & TIME */
     formatDate(date) {
       const d = new Date(date);
@@ -168,6 +168,42 @@ const mixin = {
       } catch (err) {
         console.log(err);
         console.log(err.response);
+        this.$set(this.SPINNER_SHOW, data.contactId, false);
+      }
+    },
+    async acceptFriendRequest(data) {
+      this.UPDATE_USERS_KEY({
+        userId: data.contactId,
+        key: 'friendRequest',
+        value: { holder: true }
+      });
+      this.$set(this.SPINNER_SHOW, data.contactId, true);
+
+      try {
+        const res = await this.acceptContact({ contactId: data.contactId });
+        const notification = res.data.data.updatedDoc;
+
+        this.UPDATE_HOME_NOTIFICATION({
+          _id: notification._id,
+          value: notification
+        });
+
+        this.$set(this.SPINNER_SHOW, data.contactId, false);
+
+        this.UPDATE_USERS_KEY({
+          userId: data.contactId,
+          key: 'friendRequest',
+          value: { accept: true }
+        });
+
+        this.$socket.emit('friend-request-accepted', {
+          contactId: data.contactId,
+          notificationId: notification._id
+        });
+      } catch (err) {
+        console.log(err);
+        console.log(err.response);
+        this.$set(this.SPINNER_SHOW, data.contactId, false);
       }
     }
   }
