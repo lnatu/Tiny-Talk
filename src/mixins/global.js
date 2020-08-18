@@ -130,7 +130,7 @@ const mixin = {
           this.scrollTo(
             this.$refs.notiScroll,
             this.$refs.notiScroll.scrollHeight,
-            2000
+            1000
           );
           this.debounce(fn, 500);
         }
