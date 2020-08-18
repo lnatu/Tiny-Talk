@@ -156,57 +156,43 @@ exports.findContact = catchError(async (req, res, next) => {
   const users = await UserModel.find(searchObj).lean();
   const contacts = await ContactModel.find().lean();
 
-  const userIds = {};
-  const contactIds = {};
-
-  contacts.forEach(contact => {
-    if (!userIds[contact.userId]) {
-      userIds[contact.userId] = { id: contact.userId, status: contact.status };
-    }
+  const userObj = {};
+  users.forEach(item => {
+    item.fullName = `${item.lastName} ${item.firstName}`;
+    userObj[item._id] = item;
   });
 
-  contacts.forEach(contact => {
-    if (!contactIds[contact.contactId]) {
-      contactIds[contact.contactId] = {
-        id: contact.contactId,
-        status: contact.status
-      };
-    }
-  });
-
-  users.forEach(user => {
-    user.fullName = `${user.lastName} ${user.firstName}`;
-
+  contacts.forEach(item => {
     if (
-      userIds[req.user._id] &&
-      contactIds[user._id] &&
-      !userIds[req.user._id].status
+      item.userId.equals(req.user.id) &&
+      userObj[item.contactId] &&
+      !item.status
     ) {
-      user.friendRequest = { cancel: true };
+      userObj[item.contactId].friendRequest = { cancel: true };
     }
 
     if (
-      contactIds[req.user._id] &&
-      userIds[user._id] &&
-      !userIds[user._id].status
+      item.contactId.equals(req.user.id) &&
+      userObj[item.userId] &&
+      !item.status
     ) {
-      user.friendRequest = { wait: true };
+      userObj[item.userId].friendRequest = { wait: true };
     }
 
     if (
-      userIds[req.user._id] &&
-      contactIds[user._id] &&
-      userIds[req.user._id].status
+      item.userId.equals(req.user.id) &&
+      userObj[item.contactId] &&
+      item.status
     ) {
-      user.friendRequest = { accept: true };
+      userObj[item.contactId].friendRequest = { accept: true };
     }
 
     if (
-      contactIds[req.user._id] &&
-      userIds[user._id] &&
-      userIds[user._id].status
+      item.contactId.equals(req.user.id) &&
+      userObj[item.userId] &&
+      item.status
     ) {
-      user.friendRequest = { accept: true };
+      userObj[item.userId].friendRequest = { accept: true };
     }
   });
 

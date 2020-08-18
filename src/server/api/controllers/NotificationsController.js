@@ -1,6 +1,7 @@
 const NotificationModel = require('./../models/NotificationModel');
 const APIFeatures = require('./../../utils/apiFeatures');
 const catchError = require('./../../utils/catchError');
+const CONSTANTS = require('./../../config/constants');
 
 exports.createNotification = catchError(async (req, res, next) => {
   let notification = await NotificationModel.create(req.notificationObj);
@@ -50,13 +51,11 @@ exports.updateNotificationType = catchError(async (req, res, next) => {
     {
       $and: [{ sender }, { receiver }, { type }]
     },
-    { isRead: true, type: 'accept-contact' },
+    { isRead: true, type: CONSTANTS.NOTIFICATION_TYPES.ACCEPT_CONTACT },
     {
       new: true
     }
   );
-
-  console.log(updatedDoc);
 
   res.status(200).json({
     status: 'success',

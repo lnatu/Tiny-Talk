@@ -42,9 +42,7 @@
             v-if="user.friendRequest && user.friendRequest.cancel"
             class="user-card__cta-b"
             href="#"
-            @click.prevent="
-              cancelAddContactAction({ contactId: user._id, self: true })
-            "
+            @click.prevent="cancelAddContactAction({ contactId: user._id })"
           >
             <svg class="icon-svg icon-svg--danger icon-svg--2x">
               <use
