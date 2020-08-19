@@ -18,7 +18,7 @@
       <p class="notification-text">
         <span>{{ fullName }}</span> has sent you a friend request
       </p>
-      <p class="notification-times mt-1">{{ createdAt }} ago</p>
+      <p class="notification-times mt-1">{{ createdAt }}</p>
       <div class="mt-sm" v-if="SPINNER_SHOW && SPINNER_SHOW[contactId]">
         <spinner />
       </div>

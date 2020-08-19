@@ -46,27 +46,28 @@ const mixin = {
       const now = new Date(),
         secondsPast = (now.getTime() - timeStamp) / 1000;
       if (secondsPast < 60) {
-        return `${
-          parseInt(secondsPast) === 0 ? 1 : parseInt(secondsPast)
-        } seconds`;
+        return `Just now`;
       }
       if (secondsPast < 3600) {
-        return `${parseInt(secondsPast / 60)} minutes`;
+        const time = parseInt(secondsPast / 60);
+        if (time === 1) {
+          return `${time} minute ago`;
+        }
+        return `${time} minutes ago`;
       }
       if (secondsPast <= 86400) {
-        return `${parseInt(secondsPast / 3600)} hours`;
+        const time = parseInt(secondsPast / 3600);
+        if (time === 1) {
+          return `${time} hour ago`;
+        }
+        return `${time} hours ago`;
       }
       if (secondsPast > 86400) {
-        const day = timeStamp.getDate();
-        const month = timeStamp
-          .toDateString()
-          .match(/ [a-zA-Z]*/)[0]
-          .replace(' ', '');
-        const year =
-          timeStamp.getFullYear() === now.getFullYear()
-            ? ''
-            : ' ' + timeStamp.getFullYear();
-        return day + ' ' + month + year;
+        const time = parseInt(secondsPast / 86400);
+        if (time === 1) {
+          return `${time} day ago`;
+        }
+        return `${time} days ago`;
       }
     },
     filterObj(obj, ...allowedFields) {
