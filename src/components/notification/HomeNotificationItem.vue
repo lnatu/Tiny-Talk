@@ -26,13 +26,13 @@
         <div v-if="type === 'add-contact'">
           <button
             class="btn btn-submit"
-            @click="acceptFriendRequest({ contactId })"
+            @click="acceptFriendRequest({ contact: contactId })"
           >
             Accept
           </button>
           <button
             class="btn btn-danger ml-1"
-            @click="cancelAddContactAction({ contactId })"
+            @click="cancelAddContactAction({ contact: contactId })"
           >
             Cancel
           </button>

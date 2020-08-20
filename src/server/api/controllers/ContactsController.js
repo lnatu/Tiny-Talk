@@ -6,13 +6,13 @@ const catchError = require('./../../utils/catchError');
 exports.acceptFriendRequest = catchError(async (req, res, next) => {
   await ContactModel.findOneAndUpdate(
     {
-      $and: [{ contactId: req.user.id }, { userId: req.body.contactId }]
+      $and: [{ contact: req.user.id }, { user: req.body.contact }]
     },
     { status: true }
   );
 
   req.notificationObj = {
-    sender: req.body.contactId,
+    sender: req.body.contact,
     receiver: req.user.id,
     type: CONSTANTS.NOTIFICATION_TYPES.ADD_CONTACT
   };

@@ -42,7 +42,7 @@
             v-if="user.friendRequest && user.friendRequest.cancel"
             class="user-card__cta-b"
             href="#"
-            @click.prevent="cancelAddContactAction({ contactId: user._id })"
+            @click.prevent="cancelAddContactAction({ contact: user._id })"
           >
             <svg class="icon-svg icon-svg--danger icon-svg--2x">
               <use
@@ -53,13 +53,13 @@
           <div v-if="user.friendRequest && user.friendRequest.wait">
             <button
               class="btn btn-submit"
-              @click.prevent="acceptFriendRequest({ contactId: user._id })"
+              @click.prevent="acceptFriendRequest({ contact: user._id })"
             >
               Accept
             </button>
             <button
               class="btn btn-danger ml-1"
-              @click.prevent="cancelAddContactAction({ contactId: user._id })"
+              @click.prevent="cancelAddContactAction({ contact: user._id })"
             >
               Cancel
             </button>
@@ -123,27 +123,27 @@ export default {
         this.searching = false;
       }
     },
-    async addContactAction(contactId) {
+    async addContactAction(contact) {
       this.UPDATE_USERS_KEY({
-        userId: contactId,
+        userId: contact,
         key: 'friendRequest',
         value: { holder: true }
       });
-      this.SPINNER_SHOW[contactId] = true;
+      this.SPINNER_SHOW[contact] = true;
       try {
-        const res = await this.addContact({ contactId });
+        const res = await this.addContact({ contact });
         const notification = res.data.data.notification;
 
-        this.SPINNER_SHOW[contactId] = false;
+        this.SPINNER_SHOW[contact] = false;
 
         this.UPDATE_USERS_KEY({
-          userId: contactId,
+          userId: contact,
           key: 'friendRequest',
           value: { cancel: true }
         });
 
         this.$socket.emit('friend-request-on', {
-          contactId,
+          contactId: contact,
           notification
         });
       } catch (err) {

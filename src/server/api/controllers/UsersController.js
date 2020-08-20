@@ -58,26 +58,26 @@ exports.updateAvatar = catchError(async (req, res, next) => {
 
 /**
  *
- * @param userId
- * @param contactId
- * @returns {Promise<*>}
+ * @param user
+ * @param contact
+ * @returns {Promise<boolean>}
  */
-const checkBeforeAddContact = async (userId, contactId) => {
+const checkBeforeAddContact = async (user, contact) => {
   return !(await ContactModel.findOne({
     $or: [
       {
-        $and: [{ userId }, { contactId }]
+        $and: [{ user }, { contact }]
       },
       {
-        $and: [{ userId: contactId }, { contactId: userId }]
+        $and: [{ user: contact }, { contact: user }]
       }
     ]
   }));
 };
 
 exports.addContact = catchError(async (req, res, next) => {
-  const check = checkBeforeAddContact(req.user.id, req.body.contactId);
-  const contactExist = UserModel.findById(req.body.contactId);
+  const check = checkBeforeAddContact(req.user.id, req.body.contact);
+  const contactExist = UserModel.findById(req.body.contact);
 
   const checks = await Promise.all([contactExist, check]);
 
@@ -89,25 +89,18 @@ exports.addContact = catchError(async (req, res, next) => {
     return next(new AppError("You've requested this", 400));
   }
 
-  const contactCreatedResponse = await ContactModel.create({
-    userId: req.user.id,
-    contactId: req.body.contactId
+  const newContact = await ContactModel.create({
+    user: req.user.id,
+    contact: req.body.contact
   });
-
-  await UserModel.updateMany(
-    {
-      _id: { $in: [req.user.id, req.body.contactId] }
-    },
-    { contact: contactCreatedResponse._id }
-  );
 
   req.notificationObj = {
     sender: req.user.id,
-    receiver: req.body.contactId,
+    receiver: req.body.contact,
     type: CONSTANTS.NOTIFICATION_TYPES.ADD_CONTACT
   };
 
-  req.contact = contactCreatedResponse;
+  req.contact = newContact;
 
   next();
 });
@@ -117,15 +110,15 @@ exports.cancelAddContact = catchError(async (req, res, next) => {
     $or: [
       {
         $and: [
-          { userId: req.user.id },
-          { contactId: req.body.contactId },
+          { user: req.user.id },
+          { contact: req.body.contact },
           { status: false }
         ]
       },
       {
         $and: [
-          { userId: req.body.contactId },
-          { contactId: req.user.id },
+          { user: req.body.contact },
+          { contact: req.user.id },
           { status: false }
         ]
       }
@@ -134,7 +127,7 @@ exports.cancelAddContact = catchError(async (req, res, next) => {
 
   req.notificationObj = {
     sender: req.user.id,
-    receiver: req.body.contactId,
+    receiver: req.body.contact,
     type: CONSTANTS.NOTIFICATION_TYPES.ADD_CONTACT
   };
 
@@ -163,35 +156,27 @@ exports.findContact = catchError(async (req, res, next) => {
 
   contacts.forEach(item => {
     if (
-      item.userId.equals(req.user.id) &&
-      userObj[item.contactId] &&
+      item.user.equals(req.user.id) &&
+      userObj[item.contact] &&
       !item.status
     ) {
-      userObj[item.contactId].friendRequest = { cancel: true };
+      userObj[item.contact].friendRequest = { cancel: true };
     }
 
     if (
-      item.contactId.equals(req.user.id) &&
-      userObj[item.userId] &&
+      item.contact.equals(req.user.id) &&
+      userObj[item.user] &&
       !item.status
     ) {
-      userObj[item.userId].friendRequest = { wait: true };
+      userObj[item.user].friendRequest = { wait: true };
     }
 
-    if (
-      item.userId.equals(req.user.id) &&
-      userObj[item.contactId] &&
-      item.status
-    ) {
-      userObj[item.contactId].friendRequest = { accept: true };
+    if (item.user.equals(req.user.id) && userObj[item.contact] && item.status) {
+      userObj[item.contact].friendRequest = { accept: true };
     }
 
-    if (
-      item.contactId.equals(req.user.id) &&
-      userObj[item.userId] &&
-      item.status
-    ) {
-      userObj[item.userId].friendRequest = { accept: true };
+    if (item.contact.equals(req.user.id) && userObj[item.user] && item.status) {
+      userObj[item.user].friendRequest = { accept: true };
     }
   });
 

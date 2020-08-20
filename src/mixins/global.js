@@ -141,47 +141,46 @@ const mixin = {
     /* FRIEND REQUESTS */
     async cancelAddContactAction(data) {
       this.UPDATE_USERS_KEY({
-        userId: data.contactId,
+        userId: data.contact,
         key: 'friendRequest',
         value: { holder: true }
       });
-      this.$set(this.SPINNER_SHOW, data.contactId, true);
+      this.$set(this.SPINNER_SHOW, data.contact, true);
       try {
-        const res = await this.cancelAddContact({ contactId: data.contactId });
+        const res = await this.cancelAddContact({ contact: data.contact });
         const notificationId = res.data.data.deletedDoc._id;
 
         this.REMOVE_HOME_NOTIFICATIONS({
-          _id: notificationId,
-          self: data.self
+          _id: notificationId
         });
 
-        this.$set(this.SPINNER_SHOW, data.contactId, false);
+        this.$set(this.SPINNER_SHOW, data.contact, false);
 
         this.DELETE_USERS_KEY({
-          userId: data.contactId,
+          userId: data.contact,
           key: 'friendRequest'
         });
 
         this.$socket.emit('friend-request-off', {
-          contactId: data.contactId,
+          contactId: data.contact,
           notificationId: notificationId
         });
       } catch (err) {
         console.log(err);
         console.log(err.response);
-        this.$set(this.SPINNER_SHOW, data.contactId, false);
+        this.$set(this.SPINNER_SHOW, data.contact, false);
       }
     },
     async acceptFriendRequest(data) {
       this.UPDATE_USERS_KEY({
-        userId: data.contactId,
+        userId: data.contact,
         key: 'friendRequest',
         value: { holder: true }
       });
-      this.$set(this.SPINNER_SHOW, data.contactId, true);
+      this.$set(this.SPINNER_SHOW, data.contact, true);
 
       try {
-        const res = await this.acceptContact({ contactId: data.contactId });
+        const res = await this.acceptContact({ contact: data.contact });
         const notification = res.data.data.updatedDoc;
 
         this.UPDATE_HOME_NOTIFICATION({
@@ -189,22 +188,22 @@ const mixin = {
           value: notification
         });
 
-        this.$set(this.SPINNER_SHOW, data.contactId, false);
+        this.$set(this.SPINNER_SHOW, data.contact, false);
 
         this.UPDATE_USERS_KEY({
-          userId: data.contactId,
+          userId: data.contact,
           key: 'friendRequest',
           value: { accept: true }
         });
 
         this.$socket.emit('friend-request-accepted', {
-          contactId: data.contactId,
+          contactId: data.contact,
           notificationId: notification._id
         });
       } catch (err) {
         console.log(err);
         console.log(err.response);
-        this.$set(this.SPINNER_SHOW, data.contactId, false);
+        this.$set(this.SPINNER_SHOW, data.contact, false);
       }
     }
   }

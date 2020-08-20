@@ -40,20 +40,20 @@ const actions = {
       }
     });
   },
-  async addContact({ commit }, { contactId }) {
+  async addContact({ commit }, { contact }) {
     return await axios.post(config.api.users.addContact, {
-      contactId
+      contact
     });
   },
-  async acceptContact({ commit }, { contactId }) {
+  async acceptContact({ commit }, { contact }) {
     return await axios.post(config.api.users.acceptContact, {
-      contactId
+      contact
     });
   },
-  async cancelAddContact({ commit }, { contactId }) {
+  async cancelAddContact({ commit }, { contact }) {
     return await axios.delete(config.api.users.cancelAddContact, {
       data: {
-        contactId
+        contact
       }
     });
   }
