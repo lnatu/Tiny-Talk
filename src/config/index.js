@@ -10,6 +10,9 @@ exports.api = {
     updateAccountInfo: `${version}users/updateAvatar`,
     updatePassword: `${version}users/updatePassword`
   },
+  contacts: {
+    getMyContacts: `${version}users/contacts`
+  },
   users: {
     addContact: `${version}users/addContact`,
     acceptContact: `${version}users/contacts/accept`,
@@ -26,5 +29,6 @@ exports.LIMITS = {
 exports.localKeys = {
   USER_KEY: 'current-user',
   NOTIFICATIONS_KEY: 'user-notifications',
-  TOTAL_NOTIFICATIONS_KEY: 'total-notifications'
+  TOTAL_NOTIFICATIONS_KEY: 'total-notifications',
+  USER_CONTACT_KEY: 'user-contacts'
 };

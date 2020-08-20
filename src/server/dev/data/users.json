@@ -1,5 +1,356 @@
 [
   {
-
+    "_id": "5f377bfdfe63432818b25c4f",
+    "facebook": {
+      "uid": null,
+      "token": null,
+      "email": null
+    },
+    "google": {
+      "uid": null,
+      "token": null
+    },
+    "birthday": null,
+    "gender": "male",
+    "phone": null,
+    "address": null,
+    "website": null,
+    "avatar": "user-5f377bfdfe63432818b25c4f-1597770282894.png",
+    "role": "user",
+    "isActive": true,
+    "createdAt": {
+      "$date": "2020-08-15T05:51:42.459Z"
+    },
+    "updatedAt": null,
+    "deletedAt": null,
+    "firstName": "Tuyền",
+    "lastName": "Huỳnh Ngọc Bích",
+    "email": "hnbtuyen@gmail.com",
+    "password": "$2b$12$5xrSUrgC590FTWZqAU8WZOZoEwhVTccNNSklYSKwZNsqTeZNNsaWW"
+  },
+  {
+    "_id": "5f377c68fe63432818b25c51",
+    "facebook": {
+      "uid": null,
+      "token": null,
+      "email": null
+    },
+    "google": {
+      "uid": null,
+      "token": null
+    },
+    "birthday": null,
+    "gender": "male",
+    "phone": null,
+    "address": null,
+    "website": null,
+    "avatar": "user-5f377c68fe63432818b25c51-1597471861600.png",
+    "role": "user",
+    "isActive": true,
+    "createdAt": {
+      "$date": "2020-08-15T05:51:42.459Z"
+    },
+    "updatedAt": null,
+    "deletedAt": null,
+    "firstName": "Trúc",
+    "lastName": "Lưu Thanh",
+    "email": "luuthanhtruc113@gmail.com",
+    "password": "$2b$12$cxxrHIink1w0BnMkqQb1t.cpb45hsDOURmqUQTJM6P8zXwF1/x2hu"
+  },
+  {
+    "_id": "5f377ca8fe63432818b25c53",
+    "facebook": {
+      "uid": null,
+      "token": null,
+      "email": null
+    },
+    "google": {
+      "uid": null,
+      "token": null
+    },
+    "birthday": null,
+    "gender": "male",
+    "phone": null,
+    "address": null,
+    "website": null,
+    "avatar": "user-5f377ca8fe63432818b25c53-1597471926504.png",
+    "role": "user",
+    "isActive": true,
+    "createdAt": {
+      "$date": "2020-08-15T05:51:42.459Z"
+    },
+    "updatedAt": null,
+    "deletedAt": null,
+    "firstName": "Marina",
+    "lastName": "Lambrini Diamandis",
+    "email": "marinasdiamond@gmail.com",
+    "password": "$2b$12$a2l1d8ASWSoFnBB5Zb5L6.TJj4nkacM4dcI.95qSfOGOZVshcppVO"
+  },
+  {
+    "_id": "5f377cd6fe63432818b25c55",
+    "facebook": {
+      "uid": null,
+      "token": null,
+      "email": null
+    },
+    "google": {
+      "uid": null,
+      "token": null
+    },
+    "birthday": null,
+    "gender": "male",
+    "phone": null,
+    "address": null,
+    "website": null,
+    "avatar": "user-5f377cd6fe63432818b25c55-1597471973500.png",
+    "role": "user",
+    "isActive": true,
+    "createdAt": {
+      "$date": "2020-08-15T05:51:42.459Z"
+    },
+    "updatedAt": null,
+    "deletedAt": null,
+    "firstName": "Juvia",
+    "lastName": "Lockser",
+    "email": "juvialockser@fairytail.io",
+    "password": "$2b$12$cGK2ReassFMeucZ7EWJSF.NNFaW.c/oWe3fs0ISk7AtKtNZmAHrSC"
+  },
+  {
+    "_id": "5f377fbbcfef4a27e8bbdb0d",
+    "facebook": {
+      "uid": null,
+      "token": null,
+      "email": null
+    },
+    "google": {
+      "uid": null,
+      "token": null
+    },
+    "birthday": {
+      "$date": "1996-09-28T00:00:00Z"
+    },
+    "gender": "male",
+    "phone": "0909899573",
+    "address": "Dĩ An",
+    "website": "https://www.facebook.com/profile.php?id=100008736941685",
+    "avatar": "user-5f377fbbcfef4a27e8bbdb0d-1597472716217.png",
+    "role": "user",
+    "isActive": true,
+    "createdAt": {
+      "$date": "2020-08-15T06:20:46.127Z"
+    },
+    "updatedAt": null,
+    "deletedAt": null,
+    "firstName": "Linh",
+    "lastName": "Nguyễn Tú",
+    "email": "nttlinh@gmail.com",
+    "password": "$2b$12$9xmwqBCvsPPcnomkRKe9M.mdj0k4tpR/knLE5z0NI5b7ZncKp4BWG"
+  },
+  {
+    "_id":  "5f377ff4cfef4a27e8bbdb0f",
+    "facebook": {
+      "uid": null,
+      "token": null,
+      "email": null
+    },
+    "google": {
+      "uid": null,
+      "token": null
+    },
+    "birthday": {
+      "$date": "1970-01-01T00:00:00Z"
+    },
+    "gender": "male",
+    "phone": null,
+    "address": null,
+    "website": null,
+    "avatar": "default-avatar.jpg",
+    "role": "user",
+    "isActive": true,
+    "createdAt": {
+      "$date": "2020-08-15T06:20:46.127Z"
+    },
+    "updatedAt": null,
+    "deletedAt": null,
+    "firstName": "Linh",
+    "lastName": "Nguyễn Ngọc",
+    "email": "nnlinh@gmail.com",
+    "password": "$2b$12$tQOSOCI2L5nxNLlEbSAx0OF1ow1KIiNCVhsGCmIQOjZKHd7EcFAeu"
+  },
+  {
+    "_id": "5f3783e4f0fbb60b0cc83a5c",
+    "facebook": {
+      "uid": null,
+      "token": null,
+      "email": null
+    },
+    "google": {
+      "uid": null,
+      "token": null
+    },
+    "birthday": null,
+    "gender": "male",
+    "phone": null,
+    "address": null,
+    "website": null,
+    "avatar": "default-avatar.jpg",
+    "role": "user",
+    "isActive": true,
+    "createdAt": {
+      "$date": "2020-08-15T06:36:56.076Z"
+    },
+    "updatedAt": null,
+    "deletedAt": null,
+    "firstName": "Linh",
+    "lastName": "Phan",
+    "email": "linhphan@gmail.com",
+    "password": "$2b$12$C1MTNpUucy7D3qQm2UPfYuTsJwtoTbWqQIxKm2/t7ov4DNbnCSAdu"
+  },
+  {
+    "_id": "5f3ab2347fd3f342481a9553",
+    "facebook": {
+      "uid": null,
+      "token": null,
+      "email": null
+    },
+    "google": {
+      "uid": null,
+      "token": null
+    },
+    "birthday": {
+      "$date": "1970-01-01T00:00:00Z"
+    },
+    "gender": "male",
+    "phone": null,
+    "address": null,
+    "website": null,
+    "avatar": "user-5f3ab2347fd3f342481a9553-1597682453091.png",
+    "role": "user",
+    "isActive": true,
+    "createdAt": {
+      "$date": "2020-08-17T16:29:30.792Z"
+    },
+    "updatedAt": null,
+    "deletedAt": null,
+    "firstName": "Hyo-jung",
+    "lastName": "Kim",
+    "email": "hyolyn@gmail.com",
+    "password": "$2b$12$6B9nPvhA//dDUyIH2P.MfOD2bcJ8ZpbpNWvXxAqmihcz8jGfmESEi"
+  },
+  {
+    "_id": "5f3ab44a7fd3f342481a955b",
+    "facebook": {
+      "uid": null,
+      "token": null,
+      "email": null
+    },
+    "google": {
+      "uid": null,
+      "token": null
+    },
+    "birthday": null,
+    "gender": "male",
+    "phone": null,
+    "address": null,
+    "website": null,
+    "avatar": "user-5f3ab44a7fd3f342481a955b-1597682800171.png",
+    "role": "user",
+    "isActive": true,
+    "createdAt": {
+      "$date": "2020-08-17T16:29:30.792Z"
+    },
+    "updatedAt": null,
+    "deletedAt": null,
+    "firstName": "Sun-young",
+    "lastName": "Park",
+    "email": "hyomin@something.io",
+    "password": "$2b$12$YeV8w5.YGqMmX8wuXhuWT.yw0QZjTHQlt5W2GkRi5x.MbCulnboL6"
+  },
+  {
+    "_id": "5f3ab4bf7fd3f342481a955f",
+    "facebook": {
+      "uid": null,
+      "token": null,
+      "email": null
+    },
+    "google": {
+      "uid": null,
+      "token": null
+    },
+    "birthday": null,
+    "gender": "male",
+    "phone": null,
+    "address": null,
+    "website": null,
+    "avatar": "user-5f3ab4bf7fd3f342481a955f-1597683040529.png",
+    "role": "user",
+    "isActive": true,
+    "createdAt": {
+      "$date": "2020-08-17T16:29:30.792Z"
+    },
+    "updatedAt": null,
+    "deletedAt": null,
+    "firstName": "Jei",
+    "lastName": "Firestar",
+    "email": "jeif@firestar.io",
+    "password": "$2b$12$sq/WamHxOX77hZBXADILR.Ho8Ht2nmaYaQk/ESKjc01x6jc2WK9py"
+  },
+  {
+    "_id": "5f3ab5a37fd3f342481a9563",
+    "facebook": {
+      "uid": null,
+      "token": null,
+      "email": null
+    },
+    "google": {
+      "uid": null,
+      "token": null
+    },
+    "birthday": null,
+    "gender": "male",
+    "phone": null,
+    "address": null,
+    "website": null,
+    "avatar": "user-5f3ab5a37fd3f342481a9563-1597683181707.png",
+    "role": "user",
+    "isActive": true,
+    "createdAt": {
+      "$date": "2020-08-17T16:29:30.792Z"
+    },
+    "updatedAt": null,
+    "deletedAt": null,
+    "firstName": "Saitama",
+    "lastName": "Saitama",
+    "email": "onepunch@onepunch.io",
+    "password": "$2b$12$5AR9IgjpwJVqV2vfYw/7e.SS8iY23Tx/KeZU82s2fY.o7r80QHvbu"
+  },
+  {
+    "_id": "5f3ab64b7fd3f342481a9567",
+    "facebook": {
+      "uid": null,
+      "token": null,
+      "email": null
+    },
+    "google": {
+      "uid": null,
+      "token": null
+    },
+    "birthday": null,
+    "gender": "male",
+    "phone": null,
+    "address": null,
+    "website": null,
+    "avatar": "user-5f3ab64b7fd3f342481a9567-1597683321287.png",
+    "role": "user",
+    "isActive": true,
+    "createdAt": {
+      "$date": "2020-08-17T16:29:30.792Z"
+    },
+    "updatedAt": null,
+    "deletedAt": null,
+    "firstName": "Jane",
+    "lastName": "Mary",
+    "email": "maryjane@fairytail.io",
+    "password": "$2b$12$A5wxrUBJosEK7B6KsTlRTeehzj8m.C25ty05YDf.iSlT8AiFvZNJK"
   }
 ]

@@ -1,6 +1,5 @@
 const multer = require('multer');
 const sharp = require('sharp');
-const APIFeatures = require('./../../utils/apiFeatures');
 const UserModel = require('./../models/UserModel');
 const ContactModel = require('./../models/ContactModel');
 const AppError = require('./../../utils/appError');

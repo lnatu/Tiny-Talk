@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 import auth from './auth/init';
+import contacts from './contacts/init';
 import users from './users/init';
 import notifications from './notifications/init';
 import sockets from './sockets/init';
@@ -51,5 +52,5 @@ export default new Vuex.Store({
     }
   },
   actions: {},
-  modules: { auth, users, notifications, sockets }
+  modules: { auth, contacts, users, notifications, sockets }
 });

@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import ContactList from '@/components/contact/ContactList';
 
 export default {
@@ -88,6 +88,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['getMyContacts']),
     performSearch() {
       if (!this.searchKeyword) {
         return;
@@ -97,6 +98,9 @@ export default {
         query: { q: this.searchKeyword }
       });
     }
+  },
+  created() {
+    this.getMyContacts();
   }
 };
 </script>

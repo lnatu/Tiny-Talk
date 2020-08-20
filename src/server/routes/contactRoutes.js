@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.use(AuthController.protect);
 
+router.get('/', ContactsController.getMyContacts);
+
 router
   .route('/accept')
   .post(

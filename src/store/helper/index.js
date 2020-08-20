@@ -8,4 +8,8 @@ exports.StorageHelper = class StorageHelper {
   save(key, data) {
     localStorage.setItem(key, data);
   }
+
+  getAsJson(key) {
+    return JSON.parse(localStorage.getItem(key));
+  }
 };

@@ -4,13 +4,13 @@
       <div class="contact-avatar online mr-2">
         <img
           class="contact-avatar__pic"
-          src="@/assets/img/users/girl.png"
+          :src="require(`@/assets/img/users/${contact.contactId.avatar}`)"
           alt="girl"
         />
       </div>
       <div class="contact-content">
         <div class="contact-info">
-          <h6 class="contact-name">Demi Lovato</h6>
+          <h6 class="contact-name">{{ contact.contactId.fullName }}</h6>
           <div class="chat-time">Just now</div>
         </div>
         <div class="contact-text">
@@ -23,8 +23,15 @@
 
 <script>
 export default {
-  name: 'ContactItem'
+  name: 'ContactItem',
+  props: {
+    contact: {
+      type: Object,
+      required: true
+    }
+  },
+  created() {
+    console.log(this.contact);
+  }
 };
 </script>
-
-<style scoped></style>
