@@ -67,7 +67,11 @@ exports.acceptFriendRequest = (io, socket, clients, eventName) => {
         clientData.contactId,
         io,
         'friend-request-accepted-response',
-        { currentUser: id, notificationId: clientData.notificationId }
+        {
+          currentUser: id,
+          notificationId: clientData.notificationId,
+          contact: clientData.contact
+        }
       );
     }
   });

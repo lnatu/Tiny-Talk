@@ -78,6 +78,8 @@ export default {
         await this.logout();
         this.SET_LOCAL_USER('');
         localStorage.removeItem(localKeys.USER_KEY);
+        localStorage.removeItem(localKeys.NOTIFICATIONS_KEY);
+        localStorage.removeItem(localKeys.USER_CONTACT_KEY);
         location.reload();
         this.$socket.emit('user-logout');
         this.toggleLoader(false);

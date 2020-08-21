@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex">
+  <div class="d-flex flex-1">
     <app-sidebar />
     <app-main />
     <notification-modal />

@@ -3,7 +3,7 @@ const config = require('@/config');
 
 const mixin = {
   computed: {
-    ...mapGetters(['GET_USERS', 'GET_HOME_NOTIFICATIONS']),
+    ...mapGetters(['GET_USERS', 'GET_HOME_NOTIFICATIONS', 'GET_CONTACTS']),
     isFormValid() {
       return validObj => this.$v[validObj].$invalid;
     }
@@ -23,7 +23,9 @@ const mixin = {
       'UPDATE_HOME_NOTIFICATION',
       'REMOVE_HOME_NOTIFICATIONS',
       'UPDATE_USERS_KEY',
-      'DELETE_USERS_KEY'
+      'DELETE_USERS_KEY',
+      'ADD_TO_FIRST_CONTACTS',
+      'SORT_CONTACTS'
     ]),
     ...mapActions(['cancelAddContact', 'acceptContact']),
     /* DATE & TIME */
@@ -50,24 +52,15 @@ const mixin = {
       }
       if (secondsPast < 3600) {
         const time = parseInt(secondsPast / 60);
-        if (time === 1) {
-          return `${time} minute ago`;
-        }
-        return `${time} minutes ago`;
+        return time === 1 ? `${time} minute ago` : `${time} minutes ago`;
       }
       if (secondsPast <= 86400) {
         const time = parseInt(secondsPast / 3600);
-        if (time === 1) {
-          return `${time} hour ago`;
-        }
-        return `${time} hours ago`;
+        return time === 1 ? `${time} hour ago` : `${time} hours ago`;
       }
       if (secondsPast > 86400) {
         const time = parseInt(secondsPast / 86400);
-        if (time === 1) {
-          return `${time} day ago`;
-        }
-        return `${time} days ago`;
+        return time === 1 ? `${time} day ago` : `${time} days ago`;
       }
     },
     filterObj(obj, ...allowedFields) {
@@ -181,7 +174,26 @@ const mixin = {
 
       try {
         const res = await this.acceptContact({ contact: data.contact });
+        const contactObj = res.data.data.contact;
         const notification = res.data.data.updatedDoc;
+
+        const user = {
+          _id: contactObj._id,
+          contact: contactObj.user,
+          createdAt: contactObj.createdAt,
+          status: contactObj.status,
+          updatedAt: contactObj.updatedAt
+        };
+
+        const contact = {
+          _id: contactObj._id,
+          contact: contactObj.contact,
+          createdAt: contactObj.createdAt,
+          status: contactObj.status,
+          updatedAt: contactObj.updatedAt
+        };
+
+        this.ADD_TO_FIRST_CONTACTS(user);
 
         this.UPDATE_HOME_NOTIFICATION({
           _id: notification._id,
@@ -198,6 +210,7 @@ const mixin = {
 
         this.$socket.emit('friend-request-accepted', {
           contactId: data.contact,
+          contact,
           notificationId: notification._id
         });
       } catch (err) {

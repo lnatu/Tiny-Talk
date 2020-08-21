@@ -35,6 +35,7 @@ const actions = {
       key: 'friendRequest',
       value: { accept: true }
     });
+    commit('ADD_TO_FIRST_CONTACTS', server.contact);
   }
 };
 

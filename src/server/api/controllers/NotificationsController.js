@@ -60,7 +60,8 @@ exports.updateNotificationType = catchError(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: {
-      updatedDoc
+      updatedDoc,
+      contact: req.contact
     }
   });
 });

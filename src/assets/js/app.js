@@ -27,10 +27,12 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   const mediaPopupCTA = document.querySelector('.media-options__cta');
-  mediaPopupCTA.addEventListener('click', function(e) {
-    e.preventDefault();
-    document.querySelector('.media-popup').classList.toggle('show');
-  });
+  if (mediaPopupCTA) {
+    mediaPopupCTA.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelector('.media-popup').classList.toggle('show');
+    });
+  }
 
   modalToggle.forEach(item => {
     item.addEventListener('click', function(e) {

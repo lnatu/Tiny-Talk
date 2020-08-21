@@ -743,5 +743,3 @@ export default {
   name: 'ConversationContent'
 };
 </script>
-
-<style scoped></style>

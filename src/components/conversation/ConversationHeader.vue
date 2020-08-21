@@ -2,10 +2,15 @@
   <div class="conversation-header">
     <div class="media">
       <div class="media__avatar mr-2">
-        <img src="@/assets/img/users/girl.png" alt="girl" />
+        <img
+          :src="
+            require(`@/assets/img/users/${this.GET_ONE_CONTACT.contact.avatar}`)
+          "
+          alt="girl"
+        />
       </div>
       <div class="media__body">
-        <h6 class="media__name">Demi Lovato</h6>
+        <h6 class="media__name">{{ this.GET_ONE_CONTACT.contact.fullName }}</h6>
         <p class="media__status text-muted mt-sm">Online</p>
       </div>
     </div>
@@ -34,3 +39,14 @@
     </ul>
   </div>
 </template>
+
+<script>
+import { mapGetters } from 'vuex';
+
+export default {
+  name: 'ConversationHeader',
+  computed: {
+    ...mapGetters(['GET_ONE_CONTACT'])
+  }
+};
+</script>

@@ -17,13 +17,11 @@ const contactSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
-    select: false
+    default: Date.now
   },
   updatedAt: {
     type: Date,
-    default: null,
-    select: false
+    default: null
   },
   deletedAt: {
     type: Date,

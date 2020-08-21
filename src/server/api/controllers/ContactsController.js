@@ -4,18 +4,34 @@ const CONSTANTS = require('./../../config/constants');
 const catchError = require('./../../utils/catchError');
 
 exports.acceptFriendRequest = catchError(async (req, res, next) => {
-  await ContactModel.findOneAndUpdate(
+  const contact = await ContactModel.findOneAndUpdate(
     {
       $and: [{ contact: req.user.id }, { user: req.body.contact }]
     },
-    { status: true }
+    { status: true, updatedAt: Date.now() },
+    {
+      new: true
+    }
   );
+
+  await contact
+    .populate({
+      path: 'contact'
+    })
+    .populate({
+      path: 'user'
+    })
+    .execPopulate();
+
+  contact.__v = undefined;
 
   req.notificationObj = {
     sender: req.body.contact,
     receiver: req.user.id,
     type: CONSTANTS.NOTIFICATION_TYPES.ADD_CONTACT
   };
+
+  req.contact = contact;
 
   next();
 });
@@ -24,15 +40,15 @@ exports.getMyContacts = catchError(async (req, res, next) => {
   const features = new APIFeatures(
     ContactModel.find({
       $or: [
-        { $and: [{ userId: req.user.id, status: true }] },
-        { $and: [{ contactId: req.user.id, status: true }] }
+        { $and: [{ user: req.user.id, status: true }] },
+        { $and: [{ contact: req.user.id, status: true }] }
       ]
     })
       .populate({
-        path: 'userId'
+        path: 'user'
       })
       .populate({
-        path: 'contactId'
+        path: 'contact'
       })
       .lean(),
     req.query
@@ -44,18 +60,18 @@ exports.getMyContacts = catchError(async (req, res, next) => {
   const contacts = await features.query;
 
   contacts.forEach(contact => {
-    if (contact.userId._id.equals(req.user.id)) {
-      delete contact.userId;
-      contact.contactId.fullName = `${contact.contactId.lastName} ${contact.contactId.firstName}`;
+    if (contact.user._id.equals(req.user.id)) {
+      delete contact.user;
+      contact.contact.fullName = `${contact.contact.lastName} ${contact.contact.firstName}`;
     }
 
-    if (contact.contactId._id.equals(req.user.id)) {
-      delete contact.contactId;
-      contact.contactId = contact.userId;
-      contact.contactId.fullName = `${contact.userId.lastName} ${contact.userId.firstName}`;
+    if (contact.contact._id.equals(req.user.id)) {
+      delete contact.contact;
+      contact.contact = contact.user;
+      contact.contact.fullName = `${contact.user.lastName} ${contact.user.firstName}`;
     }
 
-    delete contact.userId;
+    delete contact.user;
   });
 
   res.status(200).json({

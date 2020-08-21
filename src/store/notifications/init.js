@@ -6,7 +6,7 @@ const storageHelper = new helper.StorageHelper();
 
 const state = {
   homeNotification:
-    JSON.parse(localStorage.getItem(config.localKeys.NOTIFICATIONS_KEY)) || {}
+    storageHelper.getAsJson(config.localKeys.NOTIFICATIONS_KEY) || {}
 };
 
 const getters = {

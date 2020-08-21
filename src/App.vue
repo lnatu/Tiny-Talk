@@ -2,7 +2,7 @@
   <div id="app">
     <div class="layout">
       <app-nav v-if="GET_LOGIN_STATUS" />
-      <router-view></router-view>
+      <router-view />
     </div>
     <loader v-if="SHOW_LOADER" />
   </div>

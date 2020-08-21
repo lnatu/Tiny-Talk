@@ -7,12 +7,16 @@ const helper = require('../helper');
 const storageHelper = new helper.StorageHelper();
 
 const state = {
-  contacts: storageHelper.getAsJson(config.localKeys.USER_CONTACT_KEY) || {}
+  contacts: storageHelper.getAsJson(config.localKeys.USER_CONTACT_KEY) || [],
+  contact: {}
 };
 
 const getters = {
   GET_CONTACTS(state) {
     return state.contacts;
+  },
+  GET_ONE_CONTACT(state) {
+    return state.contact;
   }
 };
 
@@ -20,20 +24,42 @@ const mutations = {
   SET_CONTACTS(state, payload) {
     state.contacts = payload;
   },
-  SET_CONTACT_KEY_VALUE(state, payload) {
-    this._vm.$set(state.contacts, payload._id, payload);
+  SET_ONE_CONTACT(state, payload) {
+    state.contact = state.contacts[payload]
+  },
+  ADD_TO_FIRST_CONTACTS(state, payload) {
+    console.log(state.contacts);
+    state.contacts.unshift(payload);
+    storageHelper.saveAsString(
+      config.localKeys.USER_CONTACT_KEY,
+      state.contacts
+    );
+  },
+  SORT_CONTACTS(state) {
+    if (state.contacts.length === 0) {
+      return;
+    }
+    storageHelper.saveAsString(
+      config.localKeys.USER_CONTACT_KEY,
+      state.contacts
+    );
   }
 };
 
 const actions = {
   async getMyContacts({ state, commit }) {
+    if (state.contacts.length > 0) {
+      return;
+    }
     try {
       const CONTACT_SIZE = Object.keys(state.contacts).length;
       const DATA_LIMIT = config.LIMITS.RESULTS_PER_CALL;
       const page = Math.ceil(CONTACT_SIZE / DATA_LIMIT) + 1;
+      const sort = '-updatedAt';
 
       const res = await axios.get(config.api.contacts.getMyContacts, {
         params: {
+          sort,
           page,
           limit: config.LIMITS.RESULTS_PER_CALL
         }
@@ -45,9 +71,12 @@ const actions = {
         return;
       }
 
-      contacts.forEach(contact => {
-        commit('SET_CONTACT_KEY_VALUE', contact);
-      });
+      commit('SET_CONTACTS', contacts);
+
+      storageHelper.saveAsString(
+        config.localKeys.USER_CONTACT_KEY,
+        state.contacts
+      );
     } catch (err) {
       console.log(err);
       console.log(err.response);
