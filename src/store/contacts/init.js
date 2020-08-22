@@ -28,7 +28,6 @@ const mutations = {
     state.contact = state.contacts[payload]
   },
   ADD_TO_FIRST_CONTACTS(state, payload) {
-    console.log(state.contacts);
     state.contacts.unshift(payload);
     storageHelper.saveAsString(
       config.localKeys.USER_CONTACT_KEY,

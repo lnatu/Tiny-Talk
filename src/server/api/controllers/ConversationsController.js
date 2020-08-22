@@ -1,4 +1,5 @@
 const ConversationModel = require('./../models/ConversationModel');
+const MessageModel = require('./../models/MessageModel');
 const catchError = require('./../../utils/catchError');
 
 exports.getMyConversations = catchError(async (req, res, next) => {
@@ -6,10 +7,17 @@ exports.getMyConversations = catchError(async (req, res, next) => {
     participants: {
       $in: req.user.id
     }
-  });
+  }).lean();
+
+  for (const c of conversations) {
+    c.messages = await MessageModel.find({ conversation: c._id }).select(
+      'sender message type createdAt'
+    );
+  }
 
   res.status(200).json({
     status: 'success',
+    results: conversations.length,
     data: {
       conversations
     }

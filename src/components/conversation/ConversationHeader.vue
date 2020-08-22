@@ -8,7 +8,9 @@
         />
       </div>
       <div class="media__body">
-        <h6 class="media__name">{{ contact.fullName }}</h6>
+        <h6 class="media__name">
+          {{ `${contact.lastName} ${contact.firstName}` }}
+        </h6>
         <p class="media__status text-muted mt-sm">Online</p>
       </div>
     </div>

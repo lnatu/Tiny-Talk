@@ -19,7 +19,11 @@
           <div class="chat-time">Just now</div>
         </div>
         <div class="contact-text">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+          <p
+            v-if="lastMessageSent && contact._id === lastMessageSent.sender._id"
+          >
+            {{ lastMessageSent.message }}
+          </p>
         </div>
       </div>
     </a>
@@ -42,7 +46,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['GET_ONE_CONTACT', 'GET_ONE_CONVERSATION']),
+    ...mapGetters([
+      'GET_LOCAL_USER',
+      'GET_ONE_CONTACT',
+      'GET_ONE_CONVERSATION'
+    ]),
     contactActive() {
       if (Object.keys(this.GET_ONE_CONVERSATION).length === 0) {
         return false;
@@ -50,12 +58,21 @@ export default {
       return this.GET_ONE_CONVERSATION.participants.find(
         p => p._id === this.contact._id
       );
+    },
+    lastMessageSent() {
+      if (Object.keys(this.GET_ONE_CONVERSATION).length === 0) {
+        return false;
+      }
+
+      const totalMessages = this.GET_ONE_CONVERSATION.messages.length;
+      return this.GET_ONE_CONVERSATION.messages[totalMessages - 1];
     }
   },
   methods: {
     ...mapMutations(['FIND_CONVERSATION']),
     startChat() {
       this.FIND_CONVERSATION({ userId: this.contact._id });
+      console.log(this.GET_ONE_CONVERSATION);
     }
   }
 };

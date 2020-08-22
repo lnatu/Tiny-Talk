@@ -50,6 +50,14 @@ const messageSchema = new mongoose.Schema({
   }
 });
 
+messageSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'sender',
+    select: 'firstName lastName fullName avatar gender'
+  });
+  next();
+});
+
 const MessageModel = mongoose.model('message', messageSchema);
 
 module.exports = MessageModel;
