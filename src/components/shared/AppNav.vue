@@ -80,6 +80,8 @@ export default {
         localStorage.removeItem(localKeys.USER_KEY);
         localStorage.removeItem(localKeys.NOTIFICATIONS_KEY);
         localStorage.removeItem(localKeys.USER_CONTACT_KEY);
+        localStorage.removeItem(localKeys.CONVERSATIONS_KEY);
+        localStorage.removeItem(localKeys.CONVERSATION_KEY);
         location.reload();
         this.$socket.emit('user-logout');
         this.toggleLoader(false);

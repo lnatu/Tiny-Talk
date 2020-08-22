@@ -20,6 +20,7 @@ const mixin = {
     ...mapMutations([
       'toggleLoader',
       'SET_LOCAL_USER',
+      'PUSH_CONVERSATION',
       'UPDATE_HOME_NOTIFICATION',
       'REMOVE_HOME_NOTIFICATIONS',
       'UPDATE_USERS_KEY',
@@ -138,7 +139,9 @@ const mixin = {
         key: 'friendRequest',
         value: { holder: true }
       });
+
       this.$set(this.SPINNER_SHOW, data.contact, true);
+
       try {
         const res = await this.cancelAddContact({ contact: data.contact });
         const notificationId = res.data.data.deletedDoc._id;
@@ -170,12 +173,16 @@ const mixin = {
         key: 'friendRequest',
         value: { holder: true }
       });
+
       this.$set(this.SPINNER_SHOW, data.contact, true);
 
       try {
         const res = await this.acceptContact({ contact: data.contact });
         const contactObj = res.data.data.contact;
         const notification = res.data.data.updatedDoc;
+        const conversation = res.data.data.conversation;
+
+        this.PUSH_CONVERSATION(conversation);
 
         const user = {
           _id: contactObj._id,
@@ -209,8 +216,9 @@ const mixin = {
         });
 
         this.$socket.emit('friend-request-accepted', {
-          contactId: data.contact,
           contact,
+          conversation,
+          contactId: data.contact,
           notificationId: notification._id
         });
       } catch (err) {

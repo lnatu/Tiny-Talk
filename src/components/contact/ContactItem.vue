@@ -1,6 +1,11 @@
 <template>
-  <li class="contact-item" @click="startChat">
-    <a href="#" class="contact-link" :class="{ active: contactActive }">
+  <li class="contact-item">
+    <a
+      href="#"
+      class="contact-link"
+      :class="{ active: contactActive }"
+      @click.prevent="startChat"
+    >
       <div class="contact-avatar online mr-2">
         <img
           class="contact-avatar__pic"
@@ -37,18 +42,20 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['GET_ONE_CONTACT']),
+    ...mapGetters(['GET_ONE_CONTACT', 'GET_ONE_CONVERSATION']),
     contactActive() {
-      if (Object.keys(this.GET_ONE_CONTACT).length === 0) {
+      if (Object.keys(this.GET_ONE_CONVERSATION).length === 0) {
         return false;
       }
-      return this.GET_ONE_CONTACT.contact._id === this.contact._id;
+      return this.GET_ONE_CONVERSATION.participants.find(
+        p => p._id === this.contact._id
+      );
     }
   },
   methods: {
-    ...mapMutations(['SET_ONE_CONTACT']),
+    ...mapMutations(['FIND_CONVERSATION']),
     startChat() {
-      this.SET_ONE_CONTACT(this.index);
+      this.FIND_CONVERSATION({ userId: this.contact._id });
     }
   }
 };

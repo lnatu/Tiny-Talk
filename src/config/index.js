@@ -13,6 +13,9 @@ exports.api = {
   contacts: {
     getMyContacts: `${version}users/contacts`
   },
+  conversations: {
+    getMyConversations: `${version}users/conversations`
+  },
   users: {
     addContact: `${version}users/addContact`,
     acceptContact: `${version}users/contacts/accept`,
@@ -27,6 +30,9 @@ exports.LIMITS = {
 };
 
 exports.localKeys = {
+  CONVERSATIONS_KEY: 'user-conversations',
+  CONVERSATION_KEY: 'user-conversation',
+  CONVERSATION_CONTACT_ID_KEY: 'user-conversation-contact-id',
   USER_KEY: 'current-user',
   NOTIFICATIONS_KEY: 'user-notifications',
   TOTAL_NOTIFICATIONS_KEY: 'total-notifications',

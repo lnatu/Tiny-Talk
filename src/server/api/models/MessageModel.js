@@ -6,10 +6,10 @@ const messageSchema = new mongoose.Schema({
     ref: 'user',
     required: [true, 'message must have sender']
   },
-  receiver: {
+  conversation: {
     type: mongoose.Schema.ObjectId,
-    ref: 'user',
-    required: [true, 'message must have receiver']
+    ref: 'conversation',
+    required: [true, 'message must belong to a conversation']
   },
   message: {
     type: String,
@@ -20,18 +20,13 @@ const messageSchema = new mongoose.Schema({
     contentType: String,
     fileName: String
   },
-  isRead: {
-    type: Boolean,
-    default: false
-  },
-  messageConversationType: {
-    type: String,
-    enum: {
-      values: ['private', 'group'],
-      message: 'Message conversation type is either: private or group'
+  seenBy: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'user'
     }
-  },
-  messageType: {
+  ],
+  type: {
     type: String,
     default: 'message',
     enum: {

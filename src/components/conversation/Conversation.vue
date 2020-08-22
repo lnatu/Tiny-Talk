@@ -1,6 +1,9 @@
 <template>
   <div class="conversation h-100">
-    <div class="h-100" v-if="Object.keys(GET_ONE_CONTACT).length > 0">
+    <div
+      class="h-100"
+      v-if="Object.keys(GET_ONE_CONVERSATION).length > 0 && GET_CONTACT_ID"
+    >
       <conversation-header />
       <conversation-content />
       <conversation-footer />
@@ -25,7 +28,7 @@ export default {
     ConversationFooter
   },
   computed: {
-    ...mapGetters(['GET_ONE_CONTACT'])
+    ...mapGetters(['GET_ONE_CONVERSATION', 'GET_CONTACT_ID'])
   }
 };
 </script>

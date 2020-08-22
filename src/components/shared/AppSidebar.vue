@@ -88,7 +88,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['getMyContacts']),
+    ...mapActions(['getMyContacts', 'getMyConversations']),
     performSearch() {
       if (!this.searchKeyword) {
         return;
@@ -101,6 +101,7 @@ export default {
   },
   created() {
     this.getMyContacts();
+    this.getMyConversations();
   }
 };
 </script>

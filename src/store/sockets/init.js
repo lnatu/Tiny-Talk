@@ -36,6 +36,7 @@ const actions = {
       value: { accept: true }
     });
     commit('ADD_TO_FIRST_CONTACTS', server.contact);
+    commit('PUSH_CONVERSATION', server.conversation);
   }
 };
 

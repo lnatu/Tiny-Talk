@@ -70,7 +70,8 @@ exports.acceptFriendRequest = (io, socket, clients, eventName) => {
         {
           currentUser: id,
           notificationId: clientData.notificationId,
-          contact: clientData.contact
+          contact: clientData.contact,
+          conversation: clientData.conversation
         }
       );
     }

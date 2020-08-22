@@ -3,12 +3,16 @@ const AuthController = require('./../api/controllers/AuthController');
 const UserController = require('./../api/controllers/UsersController');
 const NotificationsController = require('./../api/controllers/NotificationsController');
 const notificationsRouter = require('./../routes/notificationRoutes');
+const conversationsRouter = require('./../routes/conversationRoutes');
 const contactsRouter = require('./../routes/contactRoutes');
+const messagesRouter = require('./../routes/messageRoutes');
 
 const router = express.Router();
 
 router.use('/notifications', notificationsRouter);
+router.use('/conversations', conversationsRouter);
 router.use('/contacts', contactsRouter);
+router.use('/messages', messagesRouter);
 
 router.post('/signup', AuthController.signup);
 router.post('/login', AuthController.login);
