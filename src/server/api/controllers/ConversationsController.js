@@ -1,19 +1,24 @@
 const ConversationModel = require('./../models/ConversationModel');
 const MessageModel = require('./../models/MessageModel');
+const APIFeatures = require('./../../utils/apiFeatures');
 const catchError = require('./../../utils/catchError');
 
 exports.getMyConversations = catchError(async (req, res, next) => {
-  const conversations = await ConversationModel.find({
-    participants: {
-      $in: req.user.id
-    }
-  }).lean();
+  const features = new APIFeatures(
+    ConversationModel.find({
+      participants: {
+        $in: req.user.id
+      }
+    }).populate({
+      path: 'messages'
+    }),
+    req.query
+  )
+    .sort()
+    .limitFields()
+    .paginate();
 
-  for (const c of conversations) {
-    c.messages = await MessageModel.find({ conversation: c._id }).select(
-      'sender message type createdAt'
-    );
-  }
+  const conversations = await features.query;
 
   res.status(200).json({
     status: 'success',
@@ -35,6 +40,9 @@ exports.createConversation = catchError(async (req, res, next) => {
     .populate({
       path: 'participants',
       select: '-__v -facebook -google'
+    })
+    .populate({
+      path: 'messages'
     })
     .execPopulate();
 

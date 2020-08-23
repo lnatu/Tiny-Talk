@@ -1,10 +1,11 @@
 <template>
   <div class="h-100">
-    <div v-if="GET_CONTACTS.length > 0" class="h-100">
+    <div v-if="GET_CONVERSATIONS.length > 0" class="h-100">
       <ul class="contact-list list-style-none">
         <ContactItem
-          v-for="(item, i) in GET_CONTACTS"
-          :contact="item.contact"
+          v-for="(item, i) in GET_CONVERSATIONS"
+          :contact="item.participants.find(p => p._id !== GET_LOCAL_USER._id)"
+          :messages="item.messages"
           :index="i"
           :key="item._id"
         />
@@ -18,7 +19,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import ContactItem from '@/components/contact/ContactItem';
 
 export default {
@@ -27,10 +28,7 @@ export default {
     ContactItem
   },
   computed: {
-    ...mapGetters(['GET_CONTACTS'])
-  },
-  methods: {
-    ...mapMutations(['SET_CONTACTS'])
+    ...mapGetters(['GET_LOCAL_USER', 'GET_CONVERSATIONS'])
   }
 };
 </script>

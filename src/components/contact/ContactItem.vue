@@ -15,15 +15,18 @@
       </div>
       <div class="contact-content">
         <div class="contact-info">
-          <h6 class="contact-name">{{ contact.fullName }}</h6>
-          <div class="chat-time">Just now</div>
+          <h6 class="contact-name">
+            {{ `${contact.fullName}` }}
+          </h6>
+          <div class="chat-time" v-if="lastMessageSent">
+            {{ formatAMPM(new Date(lastMessageSent.createdAt)) }}
+          </div>
         </div>
         <div class="contact-text">
-          <p
-            v-if="lastMessageSent && contact._id === lastMessageSent.sender._id"
-          >
+          <p v-if="lastMessageSent">
             {{ lastMessageSent.message }}
           </p>
+          <p v-else>Say hi</p>
         </div>
       </div>
     </a>
@@ -32,12 +35,17 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
+import mixin from '@/mixins/global';
 
 export default {
   name: 'ContactItem',
   props: {
     contact: {
       type: Object,
+      required: true
+    },
+    messages: {
+      type: Array,
       required: true
     },
     index: {
@@ -60,19 +68,19 @@ export default {
       );
     },
     lastMessageSent() {
-      if (Object.keys(this.GET_ONE_CONVERSATION).length === 0) {
+      if (this.messages.length === 0) {
         return false;
       }
 
-      const totalMessages = this.GET_ONE_CONVERSATION.messages.length;
-      return this.GET_ONE_CONVERSATION.messages[totalMessages - 1];
+      const totalMessages = this.messages.length;
+      return this.messages[totalMessages - 1];
     }
   },
+  mixins: [mixin],
   methods: {
     ...mapMutations(['FIND_CONVERSATION']),
     startChat() {
       this.FIND_CONVERSATION({ userId: this.contact._id });
-      console.log(this.GET_ONE_CONVERSATION);
     }
   }
 };

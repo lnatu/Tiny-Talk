@@ -29,7 +29,7 @@ const getters = {
 
 const mutations = {
   PUSH_CONVERSATION(state, payload) {
-    state.conversations.push(payload);
+    state.conversations.unshift(payload);
     storageHelper.saveAsString(
       config.localKeys.CONVERSATIONS_KEY,
       state.conversations
@@ -62,13 +62,22 @@ const mutations = {
 };
 
 const actions = {
-  async getMyConversations({ commit }, payload) {
+  async getMyConversations({ commit }) {
     if (state.conversations.length > 0) {
       return;
     }
 
     try {
-      const res = await axios.get(config.api.conversations.getMyConversations);
+      const CONVERSATIONS_SIZE = Object.keys(state.conversations).length;
+      const DATA_LIMIT = config.LIMITS.RESULTS_PER_CALL;
+      const page = Math.ceil(CONVERSATIONS_SIZE / DATA_LIMIT) + 1;
+
+      const res = await axios.get(config.api.conversations.getMyConversations, {
+        params: {
+          page,
+          limit: DATA_LIMIT
+        }
+      });
       const conversations = res.data.data.conversations;
 
       if (conversations.length === 0) {

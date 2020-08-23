@@ -1,6 +1,9 @@
 <template>
   <div class="conversation-content">
-    <div class="conversation-container">
+    <div
+      class="conversation-container"
+      v-if="GET_ONE_CONVERSATION.messages.length > 0"
+    >
       <!-- <div class="message-day">
         <div class="message">
           <div class="message-wrapper">
@@ -753,7 +756,9 @@
                   alt="girl"
                 />
               </div>
-              <div class="message-dFate ml-1">9:12am</div>
+              <div class="message-dFate ml-1">
+                {{ formatAMPM(new Date(message.createdAt)) }}
+              </div>
               <div class="message-date d-flex align-items-center">
                 <svg
                   class="media-nav__icon cursor-pointer dropdown-button no-style"
@@ -825,7 +830,9 @@
                   alt="girl"
                 />
               </div>
-              <div class="message-date ml-1">9:12am</div>
+              <div class="message-date ml-1">
+                {{ formatAMPM(new Date(message.createdAt)) }}
+              </div>
               <div class="message-date d-flex align-items-center">
                 <svg
                   class="media-nav__icon cursor-pointer dropdown-button no-style"
@@ -882,17 +889,25 @@
         </div>
       </div>
     </div>
+    <div
+      class="conversation-container h-100 d-flex align-items-center justify-content-center"
+      v-else
+    >
+      <h1>Say hi</h1>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import mixin from '@/mixins/global';
 
 export default {
   name: 'ConversationContent',
   computed: {
     ...mapGetters(['GET_ONE_CONVERSATION', 'GET_CONTACT_ID', 'GET_LOCAL_USER'])
   },
+  mixins: [mixin],
   created() {
     console.log(this.GET_ONE_CONVERSATION);
   }
