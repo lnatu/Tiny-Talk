@@ -1,5 +1,4 @@
 const ConversationModel = require('./../models/ConversationModel');
-const MessageModel = require('./../models/MessageModel');
 const APIFeatures = require('./../../utils/apiFeatures');
 const catchError = require('./../../utils/catchError');
 
@@ -54,6 +53,28 @@ exports.createConversation = catchError(async (req, res, next) => {
       conversation,
       contact: req.contact,
       updatedDoc: req.updatedDoc
+    }
+  });
+});
+
+exports.updateConversationDate = catchError(async (req, res, next) => {
+  const conversation = await ConversationModel.findByIdAndUpdate(
+    {
+      _id: req.body.conversation
+    },
+    {
+      updatedAt: Date.now()
+    },
+    {
+      new: true
+    }
+  );
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      conversation,
+      message: req.message
     }
   });
 });

@@ -35,6 +35,7 @@
         </div>
         <div class="typing-box prepare-message">
           <textarea
+            v-model="message"
             id="self-message"
             class="no-resize"
             name="self-message"
@@ -46,6 +47,9 @@
           <a
             class="cta-send d-flex align-items-center justify-content-center"
             href="#"
+            @click.prevent="
+              sendMessage({ conversation: GET_ONE_CONVERSATION._id, message })
+            "
           >
             <svg class="cta-send__icon">
               <use xlink:href="@/assets/img/icons/sprites.svg#icon-send" />
@@ -58,8 +62,21 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
-  name: 'ConversationFooter'
+  name: 'ConversationFooter',
+  computed: {
+    ...mapGetters(['GET_ONE_CONVERSATION'])
+  },
+  data() {
+    return {
+      message: ''
+    };
+  },
+  methods: {
+    ...mapActions(['sendMessage'])
+  }
 };
 </script>
 

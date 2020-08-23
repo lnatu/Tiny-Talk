@@ -15,12 +15,17 @@ exports.createMessage = catchError(async (req, res, next) => {
     return next(new AppError("You're not belong to this conversation", 400));
   }
 
+  req.body.sender = req.user.id;
   const message = await MessageModel.create(req.body);
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      message
-    }
-  });
+  await message
+    .populate({
+      path: 'sender',
+      select: 'firstName lastName fullName avatar gender'
+    })
+    .execPopulate();
+
+  req.message = message;
+
+  next();
 });

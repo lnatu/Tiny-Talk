@@ -16,6 +16,9 @@ exports.api = {
   conversations: {
     getMyConversations: `${version}users/conversations`
   },
+  messages: {
+    sendMessage: `${version}users/messages`
+  },
   users: {
     addContact: `${version}users/addContact`,
     acceptContact: `${version}users/contacts/accept`,

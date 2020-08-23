@@ -26,8 +26,7 @@ const conversationSchema = new mongoose.Schema(
     },
     updatedAt: {
       type: Date,
-      default: null,
-      select: false
+      default: Date.now
     },
     deletedAt: {
       type: Date,

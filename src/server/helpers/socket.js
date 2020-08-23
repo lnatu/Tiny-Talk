@@ -77,3 +77,23 @@ exports.acceptFriendRequest = (io, socket, clients, eventName) => {
     }
   });
 };
+
+exports.sendMessage = (io, socket, clients, eventName) => {
+  socket.on(eventName, clientData => {
+    const { id } = socket.request.user;
+
+    if (clients[clientData.contactId]) {
+      responseToClients(
+        clients,
+        clientData.contactId,
+        io,
+        'send-message-response-response',
+        {
+          currentUser: id,
+          conversation: clientData.conversation,
+          message: clientData.message
+        }
+      );
+    }
+  });
+};

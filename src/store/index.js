@@ -6,6 +6,7 @@ Vue.use(Vuex);
 import auth from './auth/init';
 import contacts from './contacts/init';
 import conversations from './conversations/init';
+import messages from './messages/init';
 import users from './users/init';
 import notifications from './notifications/init';
 import sockets from './sockets/init';
@@ -53,5 +54,13 @@ export default new Vuex.Store({
     }
   },
   actions: {},
-  modules: { auth, contacts, conversations, users, notifications, sockets }
+  modules: {
+    auth,
+    contacts,
+    conversations,
+    messages,
+    users,
+    notifications,
+    sockets
+  }
 });

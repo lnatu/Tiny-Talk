@@ -37,6 +37,11 @@ const actions = {
     });
     commit('ADD_TO_FIRST_CONTACTS', server.contact);
     commit('PUSH_CONVERSATION', server.conversation);
+  },
+
+  'SOCKET_send-message-response-response'({ commit }, server) {
+    commit('SWAP_CONVERSATION_INDEX', server.conversation);
+    commit('PUSH_NEW_MESSAGE_CONVERSATION', server.message);
   }
 };
 
