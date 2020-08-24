@@ -47,9 +47,7 @@
           <a
             class="cta-send d-flex align-items-center justify-content-center"
             href="#"
-            @click.prevent="
-              sendMessage({ conversation: GET_ONE_CONVERSATION._id, message })
-            "
+            @click.prevent="sendMyMessage"
           >
             <svg class="cta-send__icon">
               <use xlink:href="@/assets/img/icons/sprites.svg#icon-send" />
@@ -62,48 +60,58 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import mixin from '@/mixins/global';
 
 export default {
   name: 'ConversationFooter',
   computed: {
-    ...mapGetters(['GET_ONE_CONVERSATION'])
+    ...mapGetters(['GET_ONE_CONVERSATION', 'GET_LOCAL_USER'])
   },
   data() {
     return {
       message: ''
     };
   },
+  mixins: [mixin],
   methods: {
+    ...mapMutations([
+      'SWAP_CONVERSATION_INDEX',
+      'PUSH_NEW_MESSAGE_CONVERSATION'
+    ]),
     ...mapActions(['sendMessage']),
     async sendMyMessage() {
-      // const _thisConversation = getters.GET_ONE_CONVERSATION;
-      // const _thisUser = getters.GET_LOCAL_USER;
-      // const contact = _thisConversation.participants.find(
-      //         p => p._id !== _thisUser._id
-      // );
-      //
-      // commit('SWAP_CONVERSATION_INDEX', _thisConversation);
-      //
-      // try {
-      //   const res = await axios.post(config.api.messages.sendMessage, {
-      //     conversation: payload.conversation,
-      //     message: payload.message
-      //   });
-      //
-      //   const { conversation, message } = res.data.data;
-      //
-      //   commit('PUSH_NEW_MESSAGE_CONVERSATION', message);
-      //
-      //   this._vm.$socket.emit('send-message', {
-      //     contactId: contact._id,
-      //     conversation,
-      //     message
-      //   });
-      // } catch (err) {
-      //   console.log(err);
-      //   console.log(err.response);
-      // }
+      const _thisConversation = this.GET_ONE_CONVERSATION;
+      const _thisUser = this.GET_LOCAL_USER;
+      const contact = _thisConversation.participants.find(
+        p => p._id !== _thisUser._id
+      );
+
+      this.SWAP_CONVERSATION_INDEX(_thisConversation);
+
+      try {
+        const res = await this.sendMessage({
+          conversation: _thisConversation._id,
+          message: this.message
+        });
+
+        const { conversation, message } = res.data.data;
+
+        this.PUSH_NEW_MESSAGE_CONVERSATION({ message, conversation });
+
+        setTimeout(() => {
+          this.scrollToBottom(document.querySelector('.conversation-content'));
+        }, 100);
+
+        this.$socket.emit('send-message', {
+          contactId: contact._id,
+          conversation,
+          message
+        });
+      } catch (err) {
+        console.log(err);
+        console.log(err.response);
+      }
     }
   }
 };

@@ -141,6 +141,9 @@ const mixin = {
       }
       this.lastScrollTop = scrollTop;
     },
+    scrollToBottom(el) {
+      el.scrollTop = el.scrollHeight;
+    },
     /* FRIEND REQUESTS */
     async cancelAddContactAction(data) {
       this.UPDATE_USERS_KEY({

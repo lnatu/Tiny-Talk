@@ -41,7 +41,7 @@ const actions = {
 
   'SOCKET_send-message-response-response'({ commit }, server) {
     commit('SWAP_CONVERSATION_INDEX', server.conversation);
-    commit('PUSH_NEW_MESSAGE_CONVERSATION', server.message);
+    commit('PUSH_NEW_MESSAGE_CONVERSATION', server);
   }
 };
 

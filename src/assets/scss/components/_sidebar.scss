@@ -3,7 +3,6 @@
 @import './../base/utilities';
 
 .sidebar {
-  flex: 0 0 420px;
   width: 420px;
 
   border-right: 1px solid $border-light-color;
@@ -176,9 +175,9 @@
 
     p {
       overflow: hidden;
+      white-space: nowrap;
 
       text-overflow: ellipsis;
-      white-space: nowrap;
     }
   }
 }

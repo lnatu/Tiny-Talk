@@ -6,8 +6,8 @@
 
     line-height: 1.2;
     text-align: left;
-
-    padding: 2rem 4.25rem;
+    word-break: break-word;
+    padding: 2rem;
 
     color: #8094ae;
 
@@ -15,7 +15,7 @@
   }
 
   &-day {
-    padding: 2rem 4rem;
+    padding: 1rem 4rem;
   }
 
   &-options {

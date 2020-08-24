@@ -1,5 +1,5 @@
 <template>
-  <div class="conversation-content">
+  <div ref="conversationContent" class="conversation-content">
     <div
       class="conversation-container"
       v-if="GET_ONE_CONVERSATION.messages.length > 0"
