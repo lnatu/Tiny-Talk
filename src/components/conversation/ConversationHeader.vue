@@ -9,7 +9,7 @@
       </div>
       <div class="media__body">
         <h6 class="media__name">
-          {{ `${contact.lastName} ${contact.firstName}` }}
+          {{ contact.fullName }}
         </h6>
         <p class="media__status text-muted mt-sm">Online</p>
       </div>
@@ -46,10 +46,10 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'ConversationHeader',
   computed: {
-    ...mapGetters(['GET_ONE_CONVERSATION', 'GET_CONTACT_ID']),
+    ...mapGetters(['GET_ONE_CONVERSATION', 'GET_LOCAL_USER']),
     contact() {
       return this.GET_ONE_CONVERSATION.participants.find(
-        p => p._id === this.GET_CONTACT_ID
+        p => p._id !== this.GET_LOCAL_USER._id
       );
     }
   }

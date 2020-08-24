@@ -34,6 +34,7 @@
     "validator": "^13.1.1",
     "vue": "^2.6.11",
     "vue-alertify": "^1.1.0",
+    "vue-content-loader": "^0.2.3",
     "vue-router": "^3.2.0",
     "vue-socket.io": "^3.0.9",
     "vuelidate": "^0.7.5",

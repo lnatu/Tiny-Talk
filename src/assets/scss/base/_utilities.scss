@@ -137,7 +137,6 @@ button:not(:disabled),
   display: none !important;
 }
 
-
 .d-block {
   display: block !important;
 }
@@ -450,4 +449,8 @@ button:not(:disabled),
 
 .text-a {
   font-size: 1.4rem;
+}
+
+.overflow-hidden {
+  overflow: hidden !important;
 }

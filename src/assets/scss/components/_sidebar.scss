@@ -182,3 +182,13 @@
     }
   }
 }
+
+.contact-item.loader {
+  padding: 1rem 2rem;
+
+  text-decoration: none;
+  color: $text-color;
+
+  border: 1px solid $border-light-color;
+  border-radius: 5px;
+}

@@ -742,7 +742,7 @@
         v-for="message in GET_ONE_CONVERSATION.messages"
         :key="message._id"
       >
-        <div class="message" v-if="message.sender._id === GET_CONTACT_ID">
+        <div class="message" v-if="message.sender._id !== GET_LOCAL_USER._id">
           <div class="message-wrapper">
             <div class="message-content bg-light">
               <span>
@@ -813,10 +813,7 @@
             </div>
           </div>
         </div>
-        <div
-          class="message self"
-          v-if="message.sender._id === GET_LOCAL_USER._id"
-        >
+        <div class="message self" v-else>
           <div class="message-wrapper">
             <div class="message-content bg-theme text-white">
               <span>
@@ -905,11 +902,8 @@ import mixin from '@/mixins/global';
 export default {
   name: 'ConversationContent',
   computed: {
-    ...mapGetters(['GET_ONE_CONVERSATION', 'GET_CONTACT_ID', 'GET_LOCAL_USER'])
+    ...mapGetters(['GET_ONE_CONVERSATION', 'GET_LOCAL_USER'])
   },
-  mixins: [mixin],
-  created() {
-    console.log(this.GET_ONE_CONVERSATION);
-  }
+  mixins: [mixin]
 };
 </script>

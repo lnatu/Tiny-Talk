@@ -57,14 +57,15 @@ export default {
     ...mapGetters([
       'GET_LOCAL_USER',
       'GET_ONE_CONTACT',
+      'GET_CONVERSATIONS',
       'GET_ONE_CONVERSATION'
     ]),
     contactActive() {
       if (Object.keys(this.GET_ONE_CONVERSATION).length === 0) {
         return false;
       }
-      return this.GET_ONE_CONVERSATION.participants.find(
-        p => p._id === this.contact._id
+      return (
+        this.GET_ONE_CONVERSATION._id === this.GET_CONVERSATIONS[this.index]._id
       );
     },
     lastMessageSent() {
@@ -80,7 +81,7 @@ export default {
   methods: {
     ...mapMutations(['FIND_CONVERSATION']),
     startChat() {
-      this.FIND_CONVERSATION({ userId: this.contact._id });
+      this.FIND_CONVERSATION({ index: this.index });
     }
   }
 };
