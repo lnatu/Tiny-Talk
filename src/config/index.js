@@ -35,6 +35,7 @@ exports.LIMITS = {
 exports.localKeys = {
   CONVERSATIONS_KEY: 'user-conversations',
   CONVERSATION_KEY: 'user-conversation',
+  CONVERSATION_INDEX: 'user-conversation-index',
   CONVERSATION_CONTACT_ID_KEY: 'user-conversation-contact-id',
   USER_KEY: 'current-user',
   NOTIFICATIONS_KEY: 'user-notifications',

@@ -35,6 +35,7 @@
         </div>
         <div class="typing-box prepare-message">
           <textarea
+            ref="inputMessage"
             v-model="message"
             id="self-message"
             class="no-resize"
@@ -87,7 +88,10 @@ export default {
         p => p._id !== _thisUser._id
       );
 
-      this.SWAP_CONVERSATION_INDEX(_thisConversation);
+      this.SWAP_CONVERSATION_INDEX({
+        conversation: _thisConversation,
+        next: true
+      });
 
       try {
         const res = await this.sendMessage({
@@ -102,6 +106,9 @@ export default {
         setTimeout(() => {
           this.scrollToBottom(document.querySelector('.conversation-content'));
         }, 100);
+
+        this.message = '';
+        this.$refs.inputMessage.focus();
 
         this.$socket.emit('send-message', {
           contactId: contact._id,

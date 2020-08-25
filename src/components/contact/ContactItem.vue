@@ -61,7 +61,7 @@ export default {
       'GET_ONE_CONVERSATION'
     ]),
     contactActive() {
-      if (Object.keys(this.GET_ONE_CONVERSATION).length === 0) {
+      if (!this.GET_ONE_CONVERSATION) {
         return false;
       }
       return (

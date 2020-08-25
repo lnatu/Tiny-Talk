@@ -2,7 +2,7 @@
   <div ref="conversationContent" class="conversation-content">
     <div
       class="conversation-container"
-      v-if="GET_ONE_CONVERSATION.messages.length > 0"
+      v-if="GET_ONE_CONVERSATION && GET_ONE_CONVERSATION.messages.length > 0"
     >
       <!-- <div class="message-day">
         <div class="message">

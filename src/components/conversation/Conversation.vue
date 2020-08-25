@@ -1,6 +1,6 @@
 <template>
   <div class="conversation h-100">
-    <div class="h-100" v-if="Object.keys(GET_ONE_CONVERSATION).length > 0">
+    <div class="h-100" v-if="GET_ONE_CONVERSATION">
       <conversation-header />
       <conversation-content />
       <conversation-footer />
@@ -26,6 +26,9 @@ export default {
   },
   computed: {
     ...mapGetters(['GET_ONE_CONVERSATION'])
+  },
+  created() {
+    console.log(this.GET_ONE_CONVERSATION)
   }
 };
 </script>

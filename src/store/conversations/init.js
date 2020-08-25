@@ -8,8 +8,8 @@ const storageHelper = new helper.StorageHelper();
 const state = {
   conversations:
     storageHelper.getAsJson(config.localKeys.CONVERSATIONS_KEY) || [],
-  conversation:
-    storageHelper.getAsJson(config.localKeys.CONVERSATION_KEY) || {},
+  conversationIndex:
+    storageHelper.get(config.localKeys.CONVERSATION_INDEX) || null,
   conversationLoader: false
 };
 
@@ -18,7 +18,7 @@ const getters = {
     return state.conversations;
   },
   GET_ONE_CONVERSATION(state) {
-    return state.conversation;
+    return state.conversations[state.conversationIndex];
   },
   /**
    *
@@ -47,11 +47,11 @@ const mutations = {
     );
   },
   FIND_CONVERSATION(state, { index }) {
-    state.conversation = state.conversations[index];
+    state.conversationIndex = index;
 
     storageHelper.saveAsString(
-      config.localKeys.CONVERSATION_KEY,
-      state.conversation
+      config.localKeys.CONVERSATION_INDEX,
+      state.conversationIndex
     );
   },
   PUSH_NEW_MESSAGE_CONVERSATION(state, payload) {
@@ -67,8 +67,8 @@ const mutations = {
     this._vm.$set(state.conversations, idx, conv);
 
     storageHelper.saveAsString(
-      config.localKeys.CONVERSATION_KEY,
-      state.conversation
+      config.localKeys.CONVERSATION_INDEX,
+      state.conversationIndex
     );
 
     storageHelper.saveAsString(
@@ -77,7 +77,9 @@ const mutations = {
     );
   },
   SWAP_CONVERSATION_INDEX(state, payload) {
-    const idx = state.conversations.findIndex(c => c._id === payload._id);
+    const idx = state.conversations.findIndex(
+      c => c._id === payload.conversation._id
+    );
 
     if (idx === 0) {
       return;
@@ -86,6 +88,14 @@ const mutations = {
     const c = state.conversations[idx];
     state.conversations.splice(idx, 1);
     state.conversations.unshift(c);
+
+    if (payload.next) {
+      state.conversationIndex = state.conversations.indexOf(c);
+    } else {
+      if (state.conversationIndex !== state.conversations.length - 1) {
+        state.conversationIndex++;
+      }
+    }
 
     storageHelper.saveAsString(
       config.localKeys.CONVERSATIONS_KEY,

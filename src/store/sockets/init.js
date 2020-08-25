@@ -40,7 +40,10 @@ const actions = {
   },
 
   'SOCKET_send-message-response-response'({ commit }, server) {
-    commit('SWAP_CONVERSATION_INDEX', server.conversation);
+    commit('SWAP_CONVERSATION_INDEX', {
+      conversation: server.conversation,
+      next: false
+    });
     commit('PUSH_NEW_MESSAGE_CONVERSATION', server);
   }
 };
