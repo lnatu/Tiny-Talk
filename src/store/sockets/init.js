@@ -45,6 +45,12 @@ const actions = {
       next: false
     });
     commit('PUSH_NEW_MESSAGE_CONVERSATION', server);
+  },
+  'SOCKET_typing-on-response'({ commit }, server) {
+    commit('SHOW_TYPING', { server, isShow: true });
+  },
+  'SOCKET_typing-off-response'({ commit }, server) {
+    commit('SHOW_TYPING', { server, isShow: false });
   }
 };
 

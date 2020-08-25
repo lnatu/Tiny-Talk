@@ -885,6 +885,18 @@
           </div>
         </div>
       </div>
+      <div class="message-day pb-2" v-if="isShowTyping">
+        <div class="typing-indicator">
+          <span />
+          <span />
+          <span />
+        </div>
+        <img
+          style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover;"
+          :src="require(`@/assets/img/users/${contact.avatar}`)"
+          :alt="contact.fullName"
+        />
+      </div>
     </div>
     <div
       class="conversation-container h-100 d-flex align-items-center justify-content-center"
@@ -901,9 +913,79 @@ import mixin from '@/mixins/global';
 
 export default {
   name: 'ConversationContent',
+  props: {
+    contact: {
+      type: Object,
+      required: true
+    }
+  },
   computed: {
-    ...mapGetters(['GET_ONE_CONVERSATION', 'GET_LOCAL_USER'])
+    ...mapGetters(['GET_ONE_CONVERSATION', 'GET_LOCAL_USER', 'GET_SHOW_TYPING'])
   },
   mixins: [mixin]
 };
 </script>
+
+<style lang="scss" scoped>
+.typing-indicator {
+  $ti-color-bg: #e6e7ed;
+  background-color: $ti-color-bg;
+  will-change: transform;
+  width: auto;
+  border-radius: 50px;
+  padding: 10px;
+  display: table;
+  position: relative;
+  bottom: 5px;
+  left: 30px;
+  animation: 2s bulge infinite ease-out;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: -2px;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: $ti-color-bg;
+  }
+
+  &::after {
+    height: 5px;
+    width: 5px;
+    left: -5px;
+    bottom: -5px;
+  }
+
+  span {
+    height: 5px;
+    width: 5px;
+    float: left;
+    margin: 0 1px;
+    background-color: #9e9ea1;
+    display: block;
+    border-radius: 50%;
+    opacity: 0.4;
+
+    @for $i from 1 through 3 {
+      &:nth-of-type(#{$i}) {
+        animation: 1s blink infinite ($i * 0.3333s);
+      }
+    }
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes bulge {
+  50% {
+    transform: scale(1.05);
+  }
+}
+</style>

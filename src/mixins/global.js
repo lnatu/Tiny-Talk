@@ -3,9 +3,19 @@ const config = require('@/config');
 
 const mixin = {
   computed: {
-    ...mapGetters(['GET_USERS', 'GET_HOME_NOTIFICATIONS', 'GET_CONTACTS']),
+    ...mapGetters([
+      'GET_USERS',
+      'GET_HOME_NOTIFICATIONS',
+      'GET_CONTACTS',
+      'GET_SHOW_TYPING',
+      'GET_CONVERSATIONS',
+      'GET_ONE_CONVERSATION'
+    ]),
     isFormValid() {
       return validObj => this.$v[validObj].$invalid;
+    },
+    isShowTyping() {
+      return this.GET_SHOW_TYPING.isOn;
     }
   },
   data() {
@@ -13,7 +23,9 @@ const mixin = {
       validObj: '',
       lastScrollTop: 0,
       showSpinner: false,
-      SPINNER_SHOW: {}
+      SPINNER_SHOW: {},
+      typing: false,
+      lastTypingTime: null
     };
   },
   methods: {
@@ -140,6 +152,28 @@ const mixin = {
         }
       }
       this.lastScrollTop = scrollTop;
+    },
+    updateTyping(data) {
+      if (!this.typing) {
+        this.typing = true;
+        this.$socket.emit('typing-on', {
+          contactId: data.contactId,
+          conversationId: data.conversationId
+        });
+      }
+
+      this.lastTypingTime = new Date().getTime();
+      setTimeout(() => {
+        const timer = new Date().getTime();
+        const timeDiff = timer - this.lastTypingTime;
+        if (timeDiff >= config.LIMITS.TYPING_TIMER_MAX && this.typing) {
+          this.$socket.emit('typing-off', {
+            contactId: data.contactId,
+            conversationId: data.conversationId
+          });
+          this.typing = false;
+        }
+      }, config.LIMITS.TYPING_TIMER_MAX);
     },
     scrollToBottom(el) {
       el.scrollTop = el.scrollHeight;

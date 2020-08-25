@@ -29,7 +29,8 @@ exports.api = {
 };
 
 exports.LIMITS = {
-  RESULTS_PER_CALL: 10
+  RESULTS_PER_CALL: 10,
+  TYPING_TIMER_MAX: 2000
 };
 
 exports.localKeys = {

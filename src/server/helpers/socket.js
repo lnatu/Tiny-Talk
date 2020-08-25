@@ -97,3 +97,42 @@ exports.sendMessage = (io, socket, clients, eventName) => {
     }
   });
 };
+
+exports.typingOn = (io, socket, clients, eventName) => {
+  socket.on(eventName, clientData => {
+    const { id } = socket.request.user;
+    console.log(clientData)
+
+    if (clients[clientData.contactId]) {
+      responseToClients(
+        clients,
+        clientData.contactId,
+        io,
+        'typing-on-response',
+        {
+          currentUser: id,
+          conversationId: clientData.conversationId
+        }
+      );
+    }
+  });
+};
+
+exports.typingOff = (io, socket, clients, eventName) => {
+  socket.on(eventName, clientData => {
+    const { id } = socket.request.user;
+
+    if (clients[clientData.contactId]) {
+      responseToClients(
+        clients,
+        clientData.contactId,
+        io,
+        'typing-off-response',
+        {
+          currentUser: id,
+          conversationId: clientData.conversationId
+        }
+      );
+    }
+  });
+};

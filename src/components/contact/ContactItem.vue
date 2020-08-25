@@ -23,10 +23,17 @@
           </div>
         </div>
         <div class="contact-text">
-          <p v-if="lastMessageSent">
-            {{ lastMessageSent.message }}
-          </p>
-          <p v-else>Say hi</p>
+          <div class="typing-indicator" v-if="isShowTyping">
+            <span class="dot" />
+            <span class="dot" />
+            <span class="dot" />
+          </div>
+          <div v-else>
+            <p v-if="lastMessageSent">
+              {{ lastMessageSent.message }}
+            </p>
+            <p v-else>Say hi</p>
+          </div>
         </div>
       </div>
     </a>
@@ -58,7 +65,8 @@ export default {
       'GET_LOCAL_USER',
       'GET_ONE_CONTACT',
       'GET_CONVERSATIONS',
-      'GET_ONE_CONVERSATION'
+      'GET_ONE_CONVERSATION',
+      'GET_SHOW_TYPING'
     ]),
     contactActive() {
       if (!this.GET_ONE_CONVERSATION) {
@@ -86,3 +94,59 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.typing-indicator {
+  position: relative;
+  display: inline-block;
+  line-height: inherit;
+
+  .dot {
+    position: relative;
+    display: inline-block;
+    border-radius: 50%;
+    width: 6px;
+    height: 6px;
+    background: #adb5bd;
+    animation: typing 1.2s infinite ease-in-out;
+
+    &:nth-child(2) {
+      animation-delay: 150ms;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 300ms;
+    }
+  }
+
+  .dot + .dot {
+    margin-left: 5px;
+  }
+}
+
+.contact-link:hover .dot,
+.contact-link.active .dot {
+  background: #fff;
+}
+
+@keyframes typing {
+  50%,
+  100%,
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-150%);
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+</style>

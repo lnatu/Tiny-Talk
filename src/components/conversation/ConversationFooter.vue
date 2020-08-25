@@ -42,6 +42,12 @@
             name="self-message"
             rows="5"
             placeholder="Your message..."
+            @input="
+              updateTyping({
+                conversationId: GET_ONE_CONVERSATION._id,
+                contactId: contact._id
+              })
+            "
           />
         </div>
         <div class="typing-box cta">
@@ -66,6 +72,12 @@ import mixin from '@/mixins/global';
 
 export default {
   name: 'ConversationFooter',
+  props: {
+    contact: {
+      type: Object,
+      required: true
+    }
+  },
   computed: {
     ...mapGetters(['GET_ONE_CONVERSATION', 'GET_LOCAL_USER'])
   },
@@ -87,6 +99,11 @@ export default {
       const contact = _thisConversation.participants.find(
         p => p._id !== _thisUser._id
       );
+
+      this.$socket.emit('typing-off', {
+        contactId: contact._id,
+        conversationId: _thisConversation._id
+      });
 
       this.SWAP_CONVERSATION_INDEX({
         conversation: _thisConversation,
@@ -120,6 +137,9 @@ export default {
         console.log(err.response);
       }
     }
+  },
+  created() {
+    console.log(this.contact);
   }
 };
 </script>

@@ -71,6 +71,10 @@ class SocketService {
 
       socketHelper.sendMessage(this.io, socket, this.clients, 'send-message');
 
+      socketHelper.typingOn(this.io, socket, this.clients, 'typing-on');
+
+      socketHelper.typingOff(this.io, socket, this.clients, 'typing-off');
+
       socket.on('disconnect', () => {
         socketHelper.clearClientsSocketId(
           this.clients,

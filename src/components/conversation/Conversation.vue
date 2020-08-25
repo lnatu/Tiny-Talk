@@ -2,8 +2,8 @@
   <div class="conversation h-100">
     <div class="h-100" v-if="GET_ONE_CONVERSATION">
       <conversation-header />
-      <conversation-content />
-      <conversation-footer />
+      <conversation-content :contact="contact" />
+      <conversation-footer :contact="contact" />
     </div>
     <div class="d-flex align-items-center justify-content-center h-100" v-else>
       <h1>Start talking</h1>
@@ -25,10 +25,12 @@ export default {
     ConversationFooter
   },
   computed: {
-    ...mapGetters(['GET_ONE_CONVERSATION'])
-  },
-  created() {
-    console.log(this.GET_ONE_CONVERSATION)
+    ...mapGetters(['GET_ONE_CONVERSATION', 'GET_LOCAL_USER']),
+    contact() {
+      return this.GET_ONE_CONVERSATION.participants.find(
+        cp => cp._id !== this.GET_LOCAL_USER._id
+      );
+    }
   }
 };
 </script>

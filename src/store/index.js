@@ -17,6 +17,10 @@ export default new Vuex.Store({
     showSaveImage: false,
     globalError: {
       message: ''
+    },
+    showTyping: {
+      isOn: false,
+      conversationId: null
     }
   },
   getters: {
@@ -40,6 +44,15 @@ export default new Vuex.Store({
      */
     GET_GLOBAL_ERROR_MESSAGE(state) {
       return state.globalError.message;
+    },
+    /**
+     *
+     * @param state
+     * @returns {boolean}
+     * @constructor
+     */
+    GET_SHOW_TYPING(state) {
+      return state.showTyping;
     }
   },
   mutations: {
@@ -51,6 +64,11 @@ export default new Vuex.Store({
     },
     SET_SHOW_SAVE_IMAGE(state, payload) {
       state.showSaveImage = payload;
+    },
+    SHOW_TYPING(state, payload) {
+      console.log(payload);
+      state.showTyping.isOn = payload.isShow;
+      state.showTyping.conversationId = payload.server.conversationId;
     }
   },
   actions: {},
