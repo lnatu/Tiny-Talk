@@ -5,6 +5,7 @@
         <ul class="contact-list list-style-none">
           <ContactItem
             v-for="(item, i) in GET_CONVERSATIONS"
+            :conversationId="item._id"
             :contact="item.participants.find(p => p._id !== GET_LOCAL_USER._id)"
             :messages="item.messages"
             :index="i"

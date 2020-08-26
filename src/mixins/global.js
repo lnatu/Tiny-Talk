@@ -15,7 +15,9 @@ const mixin = {
       return validObj => this.$v[validObj].$invalid;
     },
     isShowTyping() {
-      return this.GET_SHOW_TYPING.isOn;
+      return conversationId =>
+        this.GET_SHOW_TYPING.isOn &&
+        this.GET_SHOW_TYPING.conversationId === conversationId;
     }
   },
   data() {

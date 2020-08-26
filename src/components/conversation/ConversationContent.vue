@@ -885,7 +885,10 @@
           </div>
         </div>
       </div>
-      <div class="message-day pb-2" v-if="isShowTyping">
+      <div
+        class="message-day pb-2"
+        v-if="isShowTyping(GET_ONE_CONVERSATION._id)"
+      >
         <div class="typing-indicator">
           <span />
           <span />

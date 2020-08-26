@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="contact-text">
-          <div class="typing-indicator" v-if="isShowTyping">
+          <div class="typing-indicator" v-if="isShowTyping(conversationId)">
             <span class="dot" />
             <span class="dot" />
             <span class="dot" />
@@ -47,6 +47,10 @@ import mixin from '@/mixins/global';
 export default {
   name: 'ContactItem',
   props: {
+    conversationId: {
+      type: String,
+      required: true
+    },
     contact: {
       type: Object,
       required: true
