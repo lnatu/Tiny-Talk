@@ -14,7 +14,8 @@ exports.api = {
     getMyContacts: `${version}users/contacts`
   },
   conversations: {
-    getMyConversations: `${version}users/conversations`
+    getMyConversations: `${version}users/conversations`,
+    getConversationMessages: `${version}conversations/%id%/messages`
   },
   messages: {
     sendMessage: `${version}users/messages`
@@ -30,6 +31,7 @@ exports.api = {
 
 exports.LIMITS = {
   RESULTS_PER_CALL: 10,
+  RESULTS_20: 20,
   TYPING_TIMER_MAX: 2000
 };
 

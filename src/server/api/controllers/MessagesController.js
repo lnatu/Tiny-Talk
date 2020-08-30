@@ -1,5 +1,6 @@
 const ConversationModel = require('./../models/ConversationModel');
 const MessageModel = require('./../models/MessageModel');
+const APIFeatures = require('./../../utils/apiFeatures');
 const AppError = require('./../../utils/appError');
 const catchError = require('./../../utils/catchError');
 
@@ -28,4 +29,31 @@ exports.createMessage = catchError(async (req, res, next) => {
   req.message = message;
 
   next();
+});
+
+exports.getConversationMessages = catchError(async (req, res, next) => {
+  console.log('params')
+  console.log(req.params)
+  const features = new APIFeatures(
+    MessageModel.find({
+      conversation: req.params.conversationId
+    }),
+    req.query
+  )
+    .sort()
+    .limitFields()
+    .paginate()
+    .limitFields();
+
+  let messages = await features.query;
+
+  messages = messages.sort((a, b) => a.createdAt - b.createdAt);
+
+  res.status(200).json({
+    status: 'success',
+    results: messages.length,
+    data: {
+      messages
+    }
+  });
 });

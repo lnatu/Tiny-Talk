@@ -1,23 +1,32 @@
 const ConversationModel = require('./../models/ConversationModel');
+const MessageModel = require('./../models/MessageModel');
 const APIFeatures = require('./../../utils/apiFeatures');
 const catchError = require('./../../utils/catchError');
 
 exports.getMyConversations = catchError(async (req, res, next) => {
+  console.log(req.params);
   const features = new APIFeatures(
     ConversationModel.find({
       participants: {
         $in: req.user.id
       }
-    }).populate({
-      path: 'messages'
-    }),
+    }).lean(),
     req.query
   )
     .sort()
     .limitFields()
-    .paginate();
+    .paginate()
+    .limitFields();
 
   const conversations = await features.query;
+
+  for (const c of conversations) {
+    c.messages = await MessageModel.find({ conversation: c._id })
+      .sort('-createdAt')
+      .limit(20)
+      .select('-__v');
+    c.messages.sort((a, b) => a.createdAt - b.createdAt);
+  }
 
   res.status(200).json({
     status: 'success',

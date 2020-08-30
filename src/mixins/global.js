@@ -155,6 +155,11 @@ const mixin = {
       }
       this.lastScrollTop = scrollTop;
     },
+    scrollHitTop({ target: { scrollTop } }, cb) {
+      if (scrollTop === 0) {
+        cb();
+      }
+    },
     updateTyping(data) {
       if (!this.typing) {
         this.typing = true;

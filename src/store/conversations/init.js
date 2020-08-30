@@ -18,7 +18,7 @@ const getters = {
     return state.conversations;
   },
   GET_ONE_CONVERSATION(state) {
-    return state.conversations[state.conversationIndex];
+    return state.conversations[state.conversationIndex * 1];
   },
   /**
    *
@@ -114,7 +114,7 @@ const actions = {
     }
     commit('SHOW_CONVERSATION_LOADER', true);
     try {
-      const CONVERSATIONS_SIZE = Object.keys(state.conversations).length;
+      const CONVERSATIONS_SIZE = state.conversations.length;
       const DATA_LIMIT = config.LIMITS.RESULTS_PER_CALL;
       const page = Math.ceil(CONVERSATIONS_SIZE / DATA_LIMIT) + 1;
       const sort = '-updatedAt';
@@ -134,6 +134,42 @@ const actions = {
       console.log(err);
       console.log(err.response);
       commit('SHOW_CONVERSATION_LOADER', false);
+    }
+  },
+  async getConversationMessages({ getters, commit }) {
+    commit('SET_MES_LOADER', true);
+    try {
+      const currentCon = getters.GET_ONE_CONVERSATION;
+      const api = config.api.conversations.getConversationMessages.replace(
+        '%id%',
+        currentCon._id
+      );
+      const MESSAGES_SIZE = currentCon.messages.length;
+      const DATA_LIMIT = config.LIMITS.RESULTS_20;
+      const page = Math.ceil(MESSAGES_SIZE / DATA_LIMIT) + 1;
+      const res = await axios.get(api, {
+        params: {
+          page,
+          limit: DATA_LIMIT
+        }
+      });
+      const messages = res.data.data.messages;
+
+      commit('SET_MES_LOADER', false);
+
+      if (messages.length === 0) {
+        return;
+      }
+
+      currentCon.messages = [...messages, ...currentCon.messages];
+      storageHelper.saveAsString(
+        config.localKeys.CONVERSATIONS_KEY,
+        state.conversations
+      );
+    } catch (err) {
+      console.log(err);
+      console.log(err.response);
+      commit('SET_MES_LOADER', false);
     }
   }
 };

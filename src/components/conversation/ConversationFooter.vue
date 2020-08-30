@@ -137,9 +137,6 @@ export default {
         console.log(err.response);
       }
     }
-  },
-  created() {
-    console.log(this.contact);
   }
 };
 </script>

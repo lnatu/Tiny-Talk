@@ -1,5 +1,14 @@
 <template>
-  <div ref="conversationContent" class="conversation-content">
+  <div
+    ref="conversationContent"
+    class="conversation-content"
+    @scroll="scrollHitTop($event, getConversationMessages)"
+  >
+    <div class="spinner" v-if="GET_MES_LOADER">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
     <div
       class="conversation-container"
       v-if="GET_ONE_CONVERSATION && GET_ONE_CONVERSATION.messages.length > 0"
@@ -911,7 +920,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import mixin from '@/mixins/global';
 
 export default {
@@ -923,72 +932,23 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['GET_ONE_CONVERSATION', 'GET_LOCAL_USER', 'GET_SHOW_TYPING'])
+    ...mapGetters([
+      'GET_ONE_CONVERSATION',
+      'GET_LOCAL_USER',
+      'GET_SHOW_TYPING',
+      'GET_MES_LOADER'
+    ])
   },
-  mixins: [mixin]
+  mixins: [mixin],
+  methods: {
+    ...mapActions(['getConversationMessages'])
+  },
+  mounted() {
+    this.scrollTo(
+      document.querySelector('.conversation-content'),
+      document.querySelector('.conversation-content').scrollHeight,
+      1000
+    );
+  }
 };
 </script>
-
-<style lang="scss" scoped>
-.typing-indicator {
-  $ti-color-bg: #e6e7ed;
-  background-color: $ti-color-bg;
-  will-change: transform;
-  width: auto;
-  border-radius: 50px;
-  padding: 10px;
-  display: table;
-  position: relative;
-  bottom: 5px;
-  left: 30px;
-  animation: 2s bulge infinite ease-out;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: -2px;
-    height: 10px;
-    width: 10px;
-    border-radius: 50%;
-    background-color: $ti-color-bg;
-  }
-
-  &::after {
-    height: 5px;
-    width: 5px;
-    left: -5px;
-    bottom: -5px;
-  }
-
-  span {
-    height: 5px;
-    width: 5px;
-    float: left;
-    margin: 0 1px;
-    background-color: #9e9ea1;
-    display: block;
-    border-radius: 50%;
-    opacity: 0.4;
-
-    @for $i from 1 through 3 {
-      &:nth-of-type(#{$i}) {
-        animation: 1s blink infinite ($i * 0.3333s);
-      }
-    }
-  }
-}
-
-@keyframes blink {
-  50% {
-    opacity: 1;
-  }
-}
-
-@keyframes bulge {
-  50% {
-    transform: scale(1.05);
-  }
-}
-</style>

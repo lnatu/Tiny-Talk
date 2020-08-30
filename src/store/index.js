@@ -21,7 +21,8 @@ export default new Vuex.Store({
     showTyping: {
       isOn: false,
       conversationId: null
-    }
+    },
+    messageLoader: false
   },
   getters: {
     /**
@@ -53,6 +54,15 @@ export default new Vuex.Store({
      */
     GET_SHOW_TYPING(state) {
       return state.showTyping;
+    },
+    /**
+     *
+     * @param state
+     * @returns {boolean}
+     * @constructor
+     */
+    GET_MES_LOADER(state) {
+      return state.messageLoader;
     }
   },
   mutations: {
@@ -66,9 +76,11 @@ export default new Vuex.Store({
       state.showSaveImage = payload;
     },
     SHOW_TYPING(state, payload) {
-      console.log(payload);
       state.showTyping.isOn = payload.isShow;
       state.showTyping.conversationId = payload.server.conversationId;
+    },
+    SET_MES_LOADER(state, payload) {
+      state.messageLoader = payload;
     }
   },
   actions: {},

@@ -17,7 +17,7 @@
         No conversation here ...
       </div>
     </div>
-    <div v-else class="text-center bg-light-2 h-100 pt-3">
+    <div v-else class="text-center bg-light-2 h-100 pt-2">
       <ul class="contact-list list-style-none overflow-hidden">
         <li class="contact-item loader" v-for="i in 7" :key="i">
           <ContentLoader :height="'92'" :primaryColor="'#C4C2C8'">

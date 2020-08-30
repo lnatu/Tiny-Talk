@@ -40,11 +40,11 @@ const conversationSchema = new mongoose.Schema(
   }
 );
 
-conversationSchema.virtual('messages', {
-  ref: 'message',
-  foreignField: 'conversation',
-  localField: '_id'
-});
+// conversationSchema.virtual('messages', {
+//   ref: 'message',
+//   foreignField: 'conversation',
+//   localField: '_id'
+// });
 
 conversationSchema.pre(/^find/, function(next) {
   this.populate({
