@@ -1,6 +1,7 @@
 /* eslint-disable */
 const axios = require('axios');
 const config = require('@/config');
+const helper = require('../helper');
 
 const state = {};
 
@@ -16,6 +17,7 @@ const actions = {
       key: 'friendRequest',
       value: { wait: true }
     });
+    helper.playSound();
     this._vm.$alertify.success(
       `${server.notification.sender.fullName} sent you a friend request`
     );
@@ -35,6 +37,7 @@ const actions = {
       key: 'friendRequest',
       value: { accept: true }
     });
+
     commit('ADD_TO_FIRST_CONTACTS', server.contact);
     commit('PUSH_CONVERSATION', server.conversation);
   },

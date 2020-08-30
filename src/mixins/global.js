@@ -234,6 +234,7 @@ const mixin = {
         const contactObj = res.data.data.contact;
         const notification = res.data.data.updatedDoc;
         const conversation = res.data.data.conversation;
+        conversation.messages = [];
 
         this.PUSH_CONVERSATION(conversation);
 

@@ -49,9 +49,6 @@ exports.createConversation = catchError(async (req, res, next) => {
       path: 'participants',
       select: '-__v -facebook -google'
     })
-    .populate({
-      path: 'messages'
-    })
     .execPopulate();
 
   conversation.__v = undefined;
