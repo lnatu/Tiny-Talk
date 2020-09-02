@@ -2,7 +2,10 @@
   <div
     ref="conversationContent"
     class="conversation-content"
-    @scroll="scrollHitTop($event, getConversationMessages)"
+    @scroll="
+      scrollHitTop($event, getConversationMessages);
+      scrollingDown($event);
+    "
   >
     <div class="spinner" v-if="GET_MES_LOADER">
       <div class="bounce1"></div>

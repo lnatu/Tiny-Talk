@@ -22,7 +22,8 @@ export default new Vuex.Store({
       isOn: false,
       conversationId: null
     },
-    messageLoader: false
+    messageLoader: false,
+    showJumpToBot: false
   },
   getters: {
     /**
@@ -63,6 +64,15 @@ export default new Vuex.Store({
      */
     GET_MES_LOADER(state) {
       return state.messageLoader;
+    },
+    /**
+     *
+     * @param state
+     * @returns {boolean}
+     * @constructor
+     */
+    GET_SHOW_JTB(state) {
+      return state.showJumpToBot;
     }
   },
   mutations: {
@@ -81,6 +91,9 @@ export default new Vuex.Store({
     },
     SET_MES_LOADER(state, payload) {
       state.messageLoader = payload;
+    },
+    SET_SHOW_JTB(state, payload) {
+      state.showJumpToBot = payload;
     }
   },
   actions: {},

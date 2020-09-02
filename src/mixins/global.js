@@ -9,7 +9,8 @@ const mixin = {
       'GET_CONTACTS',
       'GET_SHOW_TYPING',
       'GET_CONVERSATIONS',
-      'GET_ONE_CONVERSATION'
+      'GET_ONE_CONVERSATION',
+      'GET_SHOW_JTB'
     ]),
     isFormValid() {
       return validObj => this.$v[validObj].$invalid;
@@ -24,6 +25,10 @@ const mixin = {
     return {
       validObj: '',
       lastScrollTop: 0,
+      scrollPos: 0,
+      scrollDistance: 0,
+      scrollTimer: null,
+      showJumpToBot: false,
       showSpinner: false,
       SPINNER_SHOW: {},
       typing: false,
@@ -40,7 +45,8 @@ const mixin = {
       'UPDATE_USERS_KEY',
       'DELETE_USERS_KEY',
       'ADD_TO_FIRST_CONTACTS',
-      'SORT_CONTACTS'
+      'SORT_CONTACTS',
+      'SET_SHOW_JTB'
     ]),
     ...mapActions(['cancelAddContact', 'acceptContact']),
     /* DATE & TIME */
@@ -184,6 +190,20 @@ const mixin = {
     },
     scrollToBottom(el) {
       el.scrollTop = el.scrollHeight;
+    },
+    scrollingDown({ target: { scrollTop } }) {
+      if (scrollTop > this.scrollPos) {
+        clearTimeout(this.scrollTimer);
+        this.scrollDistance++;
+        if (this.scrollDistance >= 100 && !this.GET_SHOW_JTB) {
+          this.SET_SHOW_JTB(true);
+        }
+        this.scrollTimer = setTimeout(() => {
+          this.scrollDistance = 0;
+          this.SET_SHOW_JTB(false);
+        }, 5000);
+      }
+      this.scrollPos = scrollTop;
     },
     /* FRIEND REQUESTS */
     async cancelAddContactAction(data) {

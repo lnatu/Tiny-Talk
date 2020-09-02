@@ -63,6 +63,18 @@
         </div>
       </div>
     </form>
+    <a
+      class="jump-to-end"
+      href="#"
+      v-if="GET_SHOW_JTB"
+      @click.prevent="
+        scrollToBottom(document.querySelector('.conversation-content'))
+      "
+    >
+      <svg class="icon-svg icon-svg--2x icon-svg--theme">
+        <use xlink:href="@/assets/img/icons/sprites.svg#icon-chevrons-down" />
+      </svg>
+    </a>
   </div>
 </template>
 
@@ -79,7 +91,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['GET_ONE_CONVERSATION', 'GET_LOCAL_USER'])
+    ...mapGetters(['GET_ONE_CONVERSATION', 'GET_LOCAL_USER', 'GET_SHOW_JTB'])
   },
   data() {
     return {

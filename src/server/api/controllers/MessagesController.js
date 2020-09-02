@@ -32,8 +32,6 @@ exports.createMessage = catchError(async (req, res, next) => {
 });
 
 exports.getConversationMessages = catchError(async (req, res, next) => {
-  console.log('params')
-  console.log(req.params)
   const features = new APIFeatures(
     MessageModel.find({
       conversation: req.params.conversationId

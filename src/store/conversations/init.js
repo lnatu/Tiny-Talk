@@ -150,7 +150,8 @@ const actions = {
       const res = await axios.get(api, {
         params: {
           page,
-          limit: DATA_LIMIT
+          limit: DATA_LIMIT,
+          skip: MESSAGES_SIZE
         }
       });
       const messages = res.data.data.messages;
