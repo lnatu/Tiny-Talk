@@ -192,17 +192,14 @@ const mixin = {
       el.scrollTop = el.scrollHeight;
     },
     scrollingDown({ target: { scrollTop } }) {
-      if (scrollTop > this.scrollPos) {
-        clearTimeout(this.scrollTimer);
-        this.scrollDistance++;
-        if (this.scrollDistance >= 100 && !this.GET_SHOW_JTB) {
-          this.SET_SHOW_JTB(true);
-        }
-        this.scrollTimer = setTimeout(() => {
-          this.scrollDistance = 0;
-          this.SET_SHOW_JTB(false);
-        }, 5000);
+      clearTimeout(this.scrollTimer);
+      this.scrollDistance++;
+      if (this.scrollDistance >= 60 && !this.GET_SHOW_JTB) {
+        this.SET_SHOW_JTB(true);
       }
+      this.scrollTimer = setTimeout(() => {
+        this.scrollDistance = 0;
+      }, 2000);
       this.scrollPos = scrollTop;
     },
     /* FRIEND REQUESTS */

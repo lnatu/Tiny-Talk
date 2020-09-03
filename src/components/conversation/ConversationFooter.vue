@@ -63,18 +63,18 @@
         </div>
       </div>
     </form>
-    <a
-      class="jump-to-end"
-      href="#"
-      v-if="GET_SHOW_JTB"
-      @click.prevent="
-        scrollToBottom(document.querySelector('.conversation-content'))
-      "
-    >
-      <svg class="icon-svg icon-svg--2x icon-svg--theme">
-        <use xlink:href="@/assets/img/icons/sprites.svg#icon-chevrons-down" />
-      </svg>
-    </a>
+    <transition name="fade">
+      <a
+        class="jump-to-end"
+        href="#"
+        v-if="GET_SHOW_JTB"
+        @click.prevent="jumpDown"
+      >
+        <svg class="icon-svg icon-svg--2x icon-svg--theme">
+          <use xlink:href="@/assets/img/icons/sprites.svg#icon-chevrons-down" />
+        </svg>
+      </a>
+    </transition>
   </div>
 </template>
 
@@ -102,7 +102,8 @@ export default {
   methods: {
     ...mapMutations([
       'SWAP_CONVERSATION_INDEX',
-      'PUSH_NEW_MESSAGE_CONVERSATION'
+      'PUSH_NEW_MESSAGE_CONVERSATION',
+      'SET_SHOW_JTB'
     ]),
     ...mapActions(['sendMessage']),
     async sendMyMessage() {
@@ -148,6 +149,13 @@ export default {
         console.log(err);
         console.log(err.response);
       }
+    },
+    jumpDown() {
+      const convBody = document.querySelector('.conversation-content');
+      this.scrollTo(convBody, convBody.scrollHeight, 1000);
+      setTimeout(() => {
+        this.SET_SHOW_JTB(false);
+      }, 1000);
     }
   }
 };
