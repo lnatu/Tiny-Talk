@@ -50,6 +50,14 @@ const mixin = {
     ]),
     ...mapActions(['cancelAddContact', 'acceptContact']),
     /* DATE & TIME */
+    isToday(someDate) {
+      const today = new Date();
+      return (
+        new Date(someDate).getDate() === today.getDate() &&
+        new Date(someDate).getMonth() === today.getMonth() &&
+        new Date(someDate).getFullYear() === today.getFullYear()
+      );
+    },
     formatDate(date) {
       const d = new Date(date);
       let month = '' + (d.getMonth() + 1);
@@ -194,7 +202,7 @@ const mixin = {
     scrollingDown({ target: { scrollTop } }) {
       clearTimeout(this.scrollTimer);
       this.scrollDistance++;
-      if (this.scrollDistance >= 60 && !this.GET_SHOW_JTB) {
+      if (this.scrollDistance >= 50 && !this.GET_SHOW_JTB) {
         this.SET_SHOW_JTB(true);
       }
       this.scrollTimer = setTimeout(() => {

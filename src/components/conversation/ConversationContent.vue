@@ -749,148 +749,162 @@
           </div>
         </div>
       </div> -->
-      <div
-        class="message-day"
-        v-for="message in GET_ONE_CONVERSATION.messages"
-        :key="message._id"
-      >
-        <div class="message" v-if="message.sender._id !== GET_LOCAL_USER._id">
-          <div class="message-wrapper">
-            <div class="message-content bg-light">
-              <span>
-                {{ message.message }}
-              </span>
-            </div>
-            <div class="message-options">
-              <div class="message-avatar">
-                <img
-                  :src="require(`@/assets/img/users/${message.sender.avatar}`)"
-                  alt="girl"
-                />
-              </div>
-              <div class="message-dFate ml-1">
-                {{ formatAMPM(new Date(message.createdAt)) }}
-              </div>
-              <div class="message-date d-flex align-items-center">
-                <svg
-                  class="media-nav__icon cursor-pointer dropdown-button no-style"
-                >
-                  <use
-                    xlink:href="@/assets/img/icons/sprites.svg#icon-keyboard-control"
-                  />
-                </svg>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item message-action__item" href="#">
-                    <svg class="message-action__icon">
+      <div v-for="(item, i) in groupMessages" :key="i">
+        <div class="message-when">
+          <p>{{ isToday(item.date) ? 'Today' : item.date }}</p>
+        </div>
+        <div v-for="(messagesGroup, i) in item.messages" :key="i">
+          <div
+            class="message-day"
+            v-for="message in messagesGroup.messages"
+            :key="message._id"
+          >
+            <div
+              class="message"
+              v-if="message.sender._id !== GET_LOCAL_USER._id"
+            >
+              <div class="message-wrapper">
+                <div class="message-content bg-light">
+                  <span>
+                    {{ message.message }}
+                  </span>
+                </div>
+                <div class="message-options">
+                  <div class="message-avatar">
+                    <img
+                      :src="
+                        require(`@/assets/img/users/${message.sender.avatar}`)
+                      "
+                      alt="girl"
+                    />
+                  </div>
+                  <div class="message-dFate ml-1">
+                    {{ formatAMPM(new Date(message.createdAt)) }}
+                  </div>
+                  <div class="message-date d-flex align-items-center">
+                    <svg
+                      class="media-nav__icon cursor-pointer dropdown-button no-style"
+                    >
                       <use
-                        xlink:href="@/assets/img/icons/sprites.svg#icon-content-copy"
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-keyboard-control"
                       />
                     </svg>
-                    <span class="ml-1">Copy</span>
-                  </a>
-                  <a class="dropdown-item message-action__item" href="#">
-                    <svg class="message-action__icon">
-                      <use
-                        xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-left"
-                      />
-                    </svg>
-                    <span class="ml-1">Reply</span>
-                  </a>
-                  <a class="dropdown-item message-action__item" href="#">
-                    <svg class="message-action__icon">
-                      <use
-                        xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-right"
-                      />
-                    </svg>
-                    <span class="ml-1">Forward</span>
-                  </a>
-                  <a class="dropdown-item message-action__item" href="#">
-                    <svg class="message-action__icon">
-                      <use
-                        xlink:href="@/assets/img/icons/sprites.svg#icon-star-o"
-                      />
-                    </svg>
-                    <span class="ml-1">Favourite</span>
-                  </a>
-                  <a class="dropdown-item message-action__item" href="#">
-                    <svg class="message-action__icon icon-danger">
-                      <use
-                        xlink:href="@/assets/img/icons/sprites.svg#icon-trash-o"
-                      />
-                    </svg>
-                    <span class="ml-1 text-danger">Delete</span>
-                  </a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-content-copy"
+                          />
+                        </svg>
+                        <span class="ml-1">Copy</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-left"
+                          />
+                        </svg>
+                        <span class="ml-1">Reply</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-right"
+                          />
+                        </svg>
+                        <span class="ml-1">Forward</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-star-o"
+                          />
+                        </svg>
+                        <span class="ml-1">Favourite</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon icon-danger">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-trash-o"
+                          />
+                        </svg>
+                        <span class="ml-1 text-danger">Delete</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="message self" v-else>
-          <div class="message-wrapper">
-            <div class="message-content bg-theme text-white">
-              <span>
-                {{ message.message }}
-              </span>
-            </div>
-            <div class="message-options">
-              <div class="message-avatar">
-                <img
-                  :src="require(`@/assets/img/users/${message.sender.avatar}`)"
-                  alt="girl"
-                />
-              </div>
-              <div class="message-date ml-1">
-                {{ formatAMPM(new Date(message.createdAt)) }}
-              </div>
-              <div class="message-date d-flex align-items-center">
-                <svg
-                  class="media-nav__icon cursor-pointer dropdown-button no-style"
-                >
-                  <use
-                    xlink:href="@/assets/img/icons/sprites.svg#icon-keyboard-control"
-                  />
-                </svg>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item message-action__item" href="#">
-                    <svg class="message-action__icon">
+            <div class="message self" v-else>
+              <div class="message-wrapper">
+                <div class="message-content bg-theme text-white">
+                  <span>
+                    {{ message.message }}
+                  </span>
+                </div>
+                <div class="message-options">
+                  <div class="message-avatar">
+                    <img
+                      :src="
+                        require(`@/assets/img/users/${message.sender.avatar}`)
+                      "
+                      alt="girl"
+                    />
+                  </div>
+                  <div class="message-date ml-1">
+                    {{ formatAMPM(new Date(message.createdAt)) }}
+                  </div>
+                  <div class="message-date d-flex align-items-center">
+                    <svg
+                      class="media-nav__icon cursor-pointer dropdown-button no-style"
+                    >
                       <use
-                        xlink:href="@/assets/img/icons/sprites.svg#icon-content-copy"
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-keyboard-control"
                       />
                     </svg>
-                    <span class="ml-1">Copy</span>
-                  </a>
-                  <a class="dropdown-item message-action__item" href="#">
-                    <svg class="message-action__icon">
-                      <use
-                        xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-left"
-                      />
-                    </svg>
-                    <span class="ml-1">Reply</span>
-                  </a>
-                  <a class="dropdown-item message-action__item" href="#">
-                    <svg class="message-action__icon">
-                      <use
-                        xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-right"
-                      />
-                    </svg>
-                    <span class="ml-1">Forward</span>
-                  </a>
-                  <a class="dropdown-item message-action__item" href="#">
-                    <svg class="message-action__icon">
-                      <use
-                        xlink:href="@/assets/img/icons/sprites.svg#icon-star-o"
-                      />
-                    </svg>
-                    <span class="ml-1">Favourite</span>
-                  </a>
-                  <a class="dropdown-item message-action__item" href="#">
-                    <svg class="message-action__icon icon-danger">
-                      <use
-                        xlink:href="@/assets/img/icons/sprites.svg#icon-trash-o"
-                      />
-                    </svg>
-                    <span class="ml-1 text-danger">Delete</span>
-                  </a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-content-copy"
+                          />
+                        </svg>
+                        <span class="ml-1">Copy</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-left"
+                          />
+                        </svg>
+                        <span class="ml-1">Reply</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-corner-up-right"
+                          />
+                        </svg>
+                        <span class="ml-1">Forward</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-star-o"
+                          />
+                        </svg>
+                        <span class="ml-1">Favourite</span>
+                      </a>
+                      <a class="dropdown-item message-action__item" href="#">
+                        <svg class="message-action__icon icon-danger">
+                          <use
+                            xlink:href="@/assets/img/icons/sprites.svg#icon-trash-o"
+                          />
+                        </svg>
+                        <span class="ml-1 text-danger">Delete</span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -940,7 +954,47 @@ export default {
       'GET_LOCAL_USER',
       'GET_SHOW_TYPING',
       'GET_MES_LOADER'
-    ])
+    ]),
+    groupMessages() {
+      const groups = this.GET_ONE_CONVERSATION.messages.reduce(
+        (groups, message) => {
+          const date = message.createdAt.split('T')[0];
+          if (!groups[date]) {
+            groups[date] = [];
+          }
+          groups[date].push(message);
+          return groups;
+        },
+        {}
+      );
+
+      const groupArrays = Object.keys(groups).map(date => {
+        return {
+          date,
+          messages: groups[date]
+        };
+      });
+
+      groupArrays.forEach(ga => {
+        const gaGroup = ga.messages.reduce((groups, message) => {
+          const date = message.createdAt;
+          if (!groups[this.formatAMPM(new Date(date))]) {
+            groups[this.formatAMPM(new Date(date))] = [];
+          }
+          groups[this.formatAMPM(new Date(date))].push(message);
+          return groups;
+        }, {});
+
+        ga.messages = Object.keys(gaGroup).map(time => {
+          return {
+            time,
+            messages: gaGroup[time]
+          };
+        });
+      });
+
+      return groupArrays;
+    }
   },
   mixins: [mixin],
   methods: {
