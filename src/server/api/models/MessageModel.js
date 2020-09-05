@@ -4,15 +4,16 @@ const messageSchema = new mongoose.Schema({
   sender: {
     type: mongoose.Schema.ObjectId,
     ref: 'user',
-    required: [true, 'message must has sender']
+    required: [true, 'message must have sender']
   },
-  receiver: {
+  conversation: {
     type: mongoose.Schema.ObjectId,
-    ref: 'user',
-    required: [true, 'message must has receiver']
+    ref: 'conversation',
+    required: [true, 'message must belong to a conversation']
   },
-  text: {
+  message: {
     type: String,
+    trim: true,
     required: [true, 'message text cant be empty']
   },
   file: {
@@ -20,10 +21,23 @@ const messageSchema = new mongoose.Schema({
     contentType: String,
     fileName: String
   },
+  seenBy: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'user'
+    }
+  ],
+  type: {
+    type: String,
+    default: 'message',
+    enum: {
+      values: ['message', 'reply', 'forward'],
+      message: 'Message type is either: message, reply or forward'
+    }
+  },
   createdAt: {
     type: Date,
-    default: Date.now(),
-    select: false
+    default: Date.now
   },
   updatedAt: {
     type: Date,
@@ -35,6 +49,14 @@ const messageSchema = new mongoose.Schema({
     default: null,
     select: false
   }
+});
+
+messageSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'sender',
+    select: 'firstName lastName fullName avatar gender'
+  });
+  next();
 });
 
 const MessageModel = mongoose.model('message', messageSchema);

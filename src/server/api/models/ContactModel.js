@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const contactSchema = new mongoose.Schema({
-  userId: {
+  user: {
     type: mongoose.Schema.ObjectId,
     ref: 'user',
     required: [true, 'contact must has user id']
   },
-  contactId: {
+  contact: {
     type: mongoose.Schema.ObjectId,
     ref: 'user',
     required: [true, 'contact must have a reference']
@@ -17,13 +17,11 @@ const contactSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
-    select: false
+    default: Date.now
   },
   updatedAt: {
     type: Date,
-    default: null,
-    select: false
+    default: null
   },
   deletedAt: {
     type: Date,

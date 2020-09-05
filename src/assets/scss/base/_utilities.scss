@@ -137,7 +137,6 @@ button:not(:disabled),
   display: none !important;
 }
 
-
 .d-block {
   display: block !important;
 }
@@ -398,6 +397,10 @@ button:not(:disabled),
     @include svg-icon(30px, $message-text-color);
   }
 
+  &--theme {
+    fill: $theme-color !important;
+  }
+
   &--white {
     fill: $white-color !important;
   }
@@ -450,4 +453,39 @@ button:not(:disabled),
 
 .text-a {
   font-size: 1.4rem;
+}
+
+.overflow-hidden {
+  overflow: hidden !important;
+}
+
+.jump-to-end {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 35px;
+  height: 35px;
+
+  background: $white-color;
+  box-shadow: 0 3px 1px rgba($dark-color, 0.3);
+  border-radius: 50%;
+
+  transform: translate(-50%, -100%);
+
+  position: absolute;
+  left: 50%;
+  top: -10px;
+  z-index: 99;
+
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-name: bounce-1;
+  animation-timing-function: ease;
+}
+
+@keyframes bounce-1 {
+  0%   { transform: translateY(-100%); }
+  50%  { transform: translateY(-150%); }
+  100% { transform: translateY(-100%); }
 }

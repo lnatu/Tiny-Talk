@@ -1,3 +1,4 @@
+const ConversationModel = require('./../models/ConversationModel');
 const NotificationModel = require('./../models/NotificationModel');
 const APIFeatures = require('./../../utils/apiFeatures');
 const catchError = require('./../../utils/catchError');
@@ -47,7 +48,7 @@ exports.deleteNotification = catchError(async (req, res, next) => {
 exports.updateNotificationType = catchError(async (req, res, next) => {
   const { sender, receiver, type } = req.notificationObj;
 
-  const updatedDoc = await NotificationModel.findOneAndUpdate(
+  req.updatedDoc = await NotificationModel.findOneAndUpdate(
     {
       $and: [{ sender }, { receiver }, { type }]
     },
@@ -57,12 +58,7 @@ exports.updateNotificationType = catchError(async (req, res, next) => {
     }
   );
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      updatedDoc
-    }
-  });
+  next();
 });
 
 exports.getUserNotification = catchError(async (req, res, next) => {

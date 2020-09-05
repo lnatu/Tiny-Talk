@@ -27,14 +27,14 @@ class SocketService {
 
         if (!currentUser) {
           console.log('User not exists');
-          return next(new AppError('User not exists', 401));
+          next();
         }
 
         socket.request.user = currentUser;
         next();
       } else {
         console.log('Please log in to continue');
-        return next(new AppError('Please log in to continue', 401));
+        next();
       }
     });
   }
@@ -68,6 +68,12 @@ class SocketService {
         this.clients,
         'friend-request-accepted'
       );
+
+      socketHelper.sendMessage(this.io, socket, this.clients, 'send-message');
+
+      socketHelper.typingOn(this.io, socket, this.clients, 'typing-on');
+
+      socketHelper.typingOff(this.io, socket, this.clients, 'typing-off');
 
       socket.on('disconnect', () => {
         socketHelper.clearClientsSocketId(

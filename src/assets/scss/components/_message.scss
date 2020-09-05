@@ -6,16 +6,37 @@
 
     line-height: 1.2;
     text-align: left;
-
-    padding: 2rem 4.25rem;
+    word-break: break-word;
+    padding: 2rem;
 
     color: #8094ae;
 
     border-radius: 20px;
   }
 
+  &-when {
+    text-align: center;
+    line-height: 1;
+
+    position: sticky;
+    top: 5px;
+
+    p {
+      display: inline-block;
+
+      background-color: #f8f9fa;
+      border-radius: 3px;
+      border: 1px solid #e5e9f2;
+      color: $light-color-3;
+
+      font-size: 11px;
+      line-height: 1;
+      padding: 5px;
+    }
+  }
+
   &-day {
-    padding: 2rem 4rem;
+    padding: 1rem 4rem;
   }
 
   &-options {
@@ -38,7 +59,7 @@
 
     margin-left: 0;
     margin-right: 0;
-    margin-top: -1.5rem;
+    margin-top: -1rem;
 
     img {
       width: 100%;

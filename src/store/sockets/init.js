@@ -1,6 +1,7 @@
 /* eslint-disable */
 const axios = require('axios');
 const config = require('@/config');
+const helper = require('../helper');
 
 const state = {};
 
@@ -16,6 +17,7 @@ const actions = {
       key: 'friendRequest',
       value: { wait: true }
     });
+    helper.playSound();
     this._vm.$alertify.success(
       `${server.notification.sender.fullName} sent you a friend request`
     );
@@ -35,6 +37,23 @@ const actions = {
       key: 'friendRequest',
       value: { accept: true }
     });
+
+    commit('ADD_TO_FIRST_CONTACTS', server.contact);
+    commit('PUSH_CONVERSATION', server.conversation);
+  },
+
+  'SOCKET_send-message-response-response'({ commit }, server) {
+    commit('SWAP_CONVERSATION_INDEX', {
+      conversation: server.conversation,
+      next: false
+    });
+    commit('PUSH_NEW_MESSAGE_CONVERSATION', server);
+  },
+  'SOCKET_typing-on-response'({ commit }, server) {
+    commit('SHOW_TYPING', { server, isShow: true });
+  },
+  'SOCKET_typing-off-response'({ commit }, server) {
+    commit('SHOW_TYPING', { server, isShow: false });
   }
 };
 

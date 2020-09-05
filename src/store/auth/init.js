@@ -60,7 +60,7 @@ const actions = {
           JSON.stringify(res.data.data.user)
         );
         commit('toggleLoader', false);
-      }, 1000);
+      }, 2000);
     } catch (err) {
       console.log(err);
       commit('toggleLoader', false);

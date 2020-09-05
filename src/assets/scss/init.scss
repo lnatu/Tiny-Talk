@@ -4,5 +4,7 @@
 @import 'components/common';
 @import 'components/modal';
 
-@import 'base/base.scss';
-@import 'base/typography.scss';
+@import 'base/base';
+@import 'base/typography';
+@import 'base/loading';
+@import 'base/vue-transitions';

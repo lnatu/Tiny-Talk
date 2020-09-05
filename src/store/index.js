@@ -4,6 +4,9 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 import auth from './auth/init';
+import contacts from './contacts/init';
+import conversations from './conversations/init';
+import messages from './messages/init';
 import users from './users/init';
 import notifications from './notifications/init';
 import sockets from './sockets/init';
@@ -14,7 +17,13 @@ export default new Vuex.Store({
     showSaveImage: false,
     globalError: {
       message: ''
-    }
+    },
+    showTyping: {
+      isOn: false,
+      conversationId: null
+    },
+    messageLoader: false,
+    showJumpToBot: false
   },
   getters: {
     /**
@@ -37,6 +46,33 @@ export default new Vuex.Store({
      */
     GET_GLOBAL_ERROR_MESSAGE(state) {
       return state.globalError.message;
+    },
+    /**
+     *
+     * @param state
+     * @returns {boolean}
+     * @constructor
+     */
+    GET_SHOW_TYPING(state) {
+      return state.showTyping;
+    },
+    /**
+     *
+     * @param state
+     * @returns {boolean}
+     * @constructor
+     */
+    GET_MES_LOADER(state) {
+      return state.messageLoader;
+    },
+    /**
+     *
+     * @param state
+     * @returns {boolean}
+     * @constructor
+     */
+    GET_SHOW_JTB(state) {
+      return state.showJumpToBot;
     }
   },
   mutations: {
@@ -48,8 +84,26 @@ export default new Vuex.Store({
     },
     SET_SHOW_SAVE_IMAGE(state, payload) {
       state.showSaveImage = payload;
+    },
+    SHOW_TYPING(state, payload) {
+      state.showTyping.isOn = payload.isShow;
+      state.showTyping.conversationId = payload.server.conversationId;
+    },
+    SET_MES_LOADER(state, payload) {
+      state.messageLoader = payload;
+    },
+    SET_SHOW_JTB(state, payload) {
+      state.showJumpToBot = payload;
     }
   },
   actions: {},
-  modules: { auth, users, notifications, sockets }
+  modules: {
+    auth,
+    contacts,
+    conversations,
+    messages,
+    users,
+    notifications,
+    sockets
+  }
 });

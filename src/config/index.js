@@ -10,6 +10,16 @@ exports.api = {
     updateAccountInfo: `${version}users/updateAvatar`,
     updatePassword: `${version}users/updatePassword`
   },
+  contacts: {
+    getMyContacts: `${version}users/contacts`
+  },
+  conversations: {
+    getMyConversations: `${version}users/conversations`,
+    getConversationMessages: `${version}conversations/%id%/messages`
+  },
+  messages: {
+    sendMessage: `${version}users/messages`
+  },
   users: {
     addContact: `${version}users/addContact`,
     acceptContact: `${version}users/contacts/accept`,
@@ -20,11 +30,18 @@ exports.api = {
 };
 
 exports.LIMITS = {
-  RESULTS_PER_CALL: 10
+  RESULTS_PER_CALL: 10,
+  RESULTS_20: 20,
+  TYPING_TIMER_MAX: 2000
 };
 
 exports.localKeys = {
+  CONVERSATIONS_KEY: 'user-conversations',
+  CONVERSATION_KEY: 'user-conversation',
+  CONVERSATION_INDEX: 'user-conversation-index',
+  CONVERSATION_CONTACT_ID_KEY: 'user-conversation-contact-id',
   USER_KEY: 'current-user',
   NOTIFICATIONS_KEY: 'user-notifications',
-  TOTAL_NOTIFICATIONS_KEY: 'total-notifications'
+  TOTAL_NOTIFICATIONS_KEY: 'total-notifications',
+  USER_CONTACT_KEY: 'user-contacts'
 };
