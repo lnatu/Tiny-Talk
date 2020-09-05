@@ -1,5 +1,8 @@
 <template>
   <div class="conversation-footer">
+    <transition name="slide-up">
+      <VEmojiPicker v-if="showEmoji" @select="selectEmoji" />
+    </transition>
     <form action="#">
       <div class="typing-area">
         <div class="typing-box media">
@@ -38,7 +41,7 @@
             ref="inputMessage"
             v-model="message"
             id="self-message"
-            class="no-resize"
+            class="no-resize hide-scrollbar"
             name="self-message"
             rows="5"
             placeholder="Your message..."
@@ -49,6 +52,14 @@
               })
             "
           />
+          <a class="emoji-picker" href="#">
+            <img
+              src="@/assets/img/logo/emoji.svg"
+              width="20px"
+              height="20px"
+              @click="showEmoji = !showEmoji"
+            />
+          </a>
         </div>
         <div class="typing-box cta">
           <a
@@ -80,6 +91,7 @@
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
+import VEmojiPicker from 'v-emoji-picker';
 import mixin from '@/mixins/global';
 
 export default {
@@ -90,12 +102,16 @@ export default {
       required: true
     }
   },
+  components: {
+    VEmojiPicker
+  },
   computed: {
     ...mapGetters(['GET_ONE_CONVERSATION', 'GET_LOCAL_USER', 'GET_SHOW_JTB'])
   },
   data() {
     return {
-      message: ''
+      message: '',
+      showEmoji: false
     };
   },
   mixins: [mixin],
@@ -139,6 +155,7 @@ export default {
 
         this.message = '';
         this.$refs.inputMessage.focus();
+        this.showEmoji = false;
 
         this.$socket.emit('send-message', {
           contactId: contact._id,
@@ -156,7 +173,21 @@ export default {
       setTimeout(() => {
         this.SET_SHOW_JTB(false);
       }, 1000);
+    },
+    selectEmoji(emoji) {
+      this.message += emoji.data;
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+#EmojiPicker {
+  position: absolute;
+  right: 15%;
+  top: -20px;
+  z-index: 99;
+
+  transform: translateY(-100%);
+}
+</style>

@@ -13,3 +13,22 @@
   transition: opacity 1s;
   opacity: 0;
 }
+
+.slide-up-enter {
+  transform: translateY(-90%) !important;
+  opacity: 0;
+}
+
+.slide-up-enter-active {
+  transition: all .5s;
+}
+
+.slide-up-leave {
+}
+
+.slide-up-leave-active {
+  transition: all .5s;
+  transform: translateY(-90%) !important;
+  opacity: 0;
+}
+
