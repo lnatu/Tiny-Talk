@@ -1,6 +1,6 @@
 <template>
   <div class="navigation">
-    <a class="logo__button" href="#">
+    <a class="logo__button" href="#" v-if="!isMobile">
       <svg class="logo__icon">
         <use xlink:href="@/assets/img/icons/sprites.svg#icon-clockify"></use>
       </svg>

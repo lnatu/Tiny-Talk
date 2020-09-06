@@ -12,6 +12,14 @@ const mixin = {
       'GET_ONE_CONVERSATION',
       'GET_SHOW_JTB'
     ]),
+    isMobile() {
+      return (
+        this.$resize &&
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        )
+      );
+    },
     isFormValid() {
       return validObj => this.$v[validObj].$invalid;
     },

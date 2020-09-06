@@ -47,5 +47,11 @@ export default {
   height: 100vh;
 
   overflow-y: hidden;
+
+  .layout {
+    @include mobile {
+      flex-direction: column;
+    }
+  }
 }
 </style>

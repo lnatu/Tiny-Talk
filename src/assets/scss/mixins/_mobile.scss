@@ -1,0 +1,5 @@
+@mixin mobile {
+  @media (hover: none) {
+    @content;
+  }
+}

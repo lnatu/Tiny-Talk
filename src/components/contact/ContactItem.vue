@@ -91,9 +91,10 @@ export default {
   },
   mixins: [mixin],
   methods: {
-    ...mapMutations(['FIND_CONVERSATION']),
+    ...mapMutations(['FIND_CONVERSATION', 'SET_CONVERSATION_MOBILE']),
     startChat() {
       this.FIND_CONVERSATION({ index: this.index });
+      this.SET_CONVERSATION_MOBILE(true);
     }
   }
 };

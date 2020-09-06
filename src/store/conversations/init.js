@@ -10,7 +10,9 @@ const state = {
     storageHelper.getAsJson(config.localKeys.CONVERSATIONS_KEY) || [],
   conversationIndex:
     storageHelper.get(config.localKeys.CONVERSATION_INDEX) || null,
-  conversationLoader: false
+  conversationLoader: false,
+  conversationMobile: false,
+  showConvInfo: false
 };
 
 const getters = {
@@ -28,6 +30,24 @@ const getters = {
    */
   GET_CONVERSATION_LOADER(state) {
     return state.conversationLoader;
+  },
+  /**
+   *
+   * @param state
+   * @returns {boolean}
+   * @constructor
+   */
+  GET_CONVERSATION_MOBILE(state) {
+    return state.conversationMobile;
+  },
+  /**
+   *
+   * @param state
+   * @returns {boolean}
+   * @constructor
+   */
+  GET_SHOW_CONV_INFO(state) {
+    return state.showConvInfo;
   }
 };
 
@@ -104,6 +124,12 @@ const mutations = {
   },
   SHOW_CONVERSATION_LOADER(state, payload) {
     state.conversationLoader = payload;
+  },
+  SET_CONVERSATION_MOBILE(state, payload) {
+    state.conversationMobile = payload;
+  },
+  SET_SHOW_CONV_INFO(state, payload) {
+    state.showConvInfo = payload;
   }
 };
 

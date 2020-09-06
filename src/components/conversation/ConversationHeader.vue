@@ -16,9 +16,13 @@
     </div>
     <ul class="media-nav list-style-none">
       <li class="media-nav__item">
-        <a class="media-nav__link" href="#">
+        <a
+          class="media-nav__link"
+          href="#"
+          @click.prevent="SET_SHOW_CONV_INFO(true)"
+        >
           <svg class="media-nav__icon">
-            <use xlink:href="@/assets/img/icons/sprites.svg#icon-search" />
+            <use xlink:href="@/assets/img/icons/sprites.svg#icon-info" />
           </svg>
         </a>
       </li>
@@ -32,7 +36,18 @@
       <li class="media-nav__item">
         <a class="media-nav__link" href="#">
           <svg class="media-nav__icon">
-            <use xlink:href="@/assets/img/icons/sprites.svg#icon-more-vert" />
+            <use xlink:href="@/assets/img/icons/sprites.svg#icon-search" />
+          </svg>
+        </a>
+      </li>
+      <li
+        class="media-nav__item"
+        v-if="isMobile"
+        @click="SET_CONVERSATION_MOBILE(false)"
+      >
+        <a class="media-nav__link" href="#">
+          <svg class="media-nav__icon">
+            <use xlink:href="@/assets/img/icons/sprites.svg#icon-close" />
           </svg>
         </a>
       </li>
@@ -41,7 +56,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   name: 'ConversationHeader',
@@ -52,6 +67,9 @@ export default {
         p => p._id !== this.GET_LOCAL_USER._id
       );
     }
+  },
+  methods: {
+    ...mapMutations(['SET_CONVERSATION_MOBILE', 'SET_SHOW_CONV_INFO'])
   }
 };
 </script>

@@ -32,3 +32,40 @@
   opacity: 0;
 }
 
+/* start slide right */
+.slide-right-enter {
+  transform: translateX(100%);
+}
+
+.slide-right-enter-active {
+  transition: transform .5s;
+}
+
+.slide-right-leave {
+}
+
+.slide-right-leave-active {
+  transition: transform .5s;
+  transform: translateX(100%) !important;
+}
+/* end slide right */
+
+/* start flex shrink */
+.flex-shrink-enter {
+  flex: 0;
+}
+
+.flex-shrink-enter-active {
+  transition: flex .5s;
+}
+
+.flex-shrink-leave {
+
+}
+
+.flex-shrink-leave-active {
+  transition: flex .5s;
+  flex: 0;
+}
+/* end flex shrink */
+

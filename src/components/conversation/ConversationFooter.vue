@@ -182,6 +182,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/mixins/_mobile.scss';
+
 #EmojiPicker {
   position: absolute;
   right: 15%;
@@ -189,5 +191,11 @@ export default {
   z-index: 99;
 
   transform: translateY(-100%);
+
+  @include mobile {
+    right: 0;
+    top: 0;
+    width: 100%;
+  }
 }
 </style>
