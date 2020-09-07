@@ -1001,11 +1001,11 @@ export default {
     ...mapActions(['getConversationMessages'])
   },
   mounted() {
-    this.scrollTo(
-      document.querySelector('.conversation-content'),
-      document.querySelector('.conversation-content').scrollHeight,
-      1000
-    );
+    // this.scrollTo(
+    //   document.querySelector('.conversation-content'),
+    //   document.querySelector('.conversation-content').scrollHeight,
+    //   10
+    // );
   }
 };
 </script>

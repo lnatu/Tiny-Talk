@@ -1,6 +1,7 @@
 @import './../../abstract/variables';
 @import './../../abstract/mixins';
 @import './../../base/utilities';
+@import './../../mixins/mobile';
 
 .profile-sidebar {
   flex: 0 0 420px;
@@ -12,6 +13,10 @@
   padding: 20px 15px;
 
   overflow-y: auto;
+
+  @include mobile {
+    height: auto;
+  }
 }
 
 .profile-picture {
