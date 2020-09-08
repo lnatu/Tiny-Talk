@@ -1,9 +1,6 @@
 <template>
   <transition name="slide-right">
-    <main
-      class="main"
-      v-if="($resize && $mq.above(768)) || GET_CONVERSATION_MOBILE"
-    >
+    <main class="main" v-if="GET_CONVERSATION_MOBILE">
       <chat-main />
     </main>
   </transition>
@@ -13,6 +10,7 @@
 /* eslint-disable */
 import ChatMain from '@/components/chat/ChatMain';
 import { mapGetters, mapMutations } from 'vuex';
+
 export default {
   name: 'AppMain',
   components: {
@@ -20,9 +18,6 @@ export default {
   },
   computed: {
     ...mapGetters(['GET_CONVERSATION_MOBILE'])
-  },
-  created() {
-    console.log(this.$mq.above(920));
   }
 };
 </script>

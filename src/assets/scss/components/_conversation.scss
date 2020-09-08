@@ -101,7 +101,7 @@
   &-nav {
     display: flex;
 
-    &__item + &__item {
+    &__item ~ &__item {
       margin-left: 15px;
     }
 
@@ -113,6 +113,40 @@
 
     &__icon {
       @include svg-icon(20px, $light-color);
+    }
+  }
+}
+
+.media-sub-nav {
+  width: 150px;
+
+  position: absolute;
+  right: 0;
+  bottom: -5px;
+
+  background: $white-color;
+  border-radius: 5px;
+  border: 1px solid $border-light-color;
+  font-size: 13px;
+
+  transform: translateY(100%);
+
+  z-index: 999;
+
+  @include mobile {
+    right: 30px;
+  }
+
+  a {
+    padding: 10px;
+    color: $light-color;
+
+    &:hover {
+      background: $bg-light-color;
+    }
+
+    span {
+      margin-left: 10px;
     }
   }
 }

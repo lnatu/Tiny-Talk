@@ -14,6 +14,7 @@
   opacity: 0;
 }
 
+/* start slide up */
 .slide-up-enter {
   transform: translateY(-90%) !important;
   opacity: 0;
@@ -31,6 +32,27 @@
   transform: translateY(-90%) !important;
   opacity: 0;
 }
+/* end slide up */
+
+/* start slide down */
+.slide-down-enter {
+  transform: translateY(90%) !important;
+  opacity: 0;
+}
+
+.slide-down-enter-active {
+  transition: all .5s;
+}
+
+.slide-down-leave {
+}
+
+.slide-down-leave-active {
+  transition: all .5s;
+  transform: translateY(90%) !important;
+  opacity: 0;
+}
+/* end slide down */
 
 /* start slide right */
 .slide-right-enter {

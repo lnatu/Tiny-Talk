@@ -186,16 +186,20 @@ export default {
 
 #EmojiPicker {
   position: absolute;
-  right: 15%;
+  right: 20px;
   top: -20px;
   z-index: 99;
 
   transform: translateY(-100%);
 
   @include mobile {
-    right: 0;
-    top: 0;
     width: 100%;
+    top: 0;
+    right: 0;
+  }
+
+  @media only screen and (min-width: 768px) {
+    width: auto;
   }
 }
 </style>
