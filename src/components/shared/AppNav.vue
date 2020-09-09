@@ -29,7 +29,7 @@
         <router-link
           class="navigation-link"
           active-class="active"
-          to="/b"
+          :to="{ name: 'Contacts' }"
           exact
         >
           <svg class="navigation-item__icon">

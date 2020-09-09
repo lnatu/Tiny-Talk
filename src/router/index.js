@@ -18,6 +18,11 @@ const routes = [
     component: () => import('@/views/auth/ActivateAccount.vue')
   },
   {
+    path: '/contacts',
+    name: 'Contacts',
+    component: () => import('@/views/contacts/ContactMain.vue')
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/auth/Login.vue')

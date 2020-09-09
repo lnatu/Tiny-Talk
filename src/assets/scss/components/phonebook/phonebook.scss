@@ -1,0 +1,105 @@
+@import '../../init';
+
+.phonebook {
+  display: flex;
+  flex: 1;
+}
+
+.pb-sidebar {
+  flex: 0 0 420px;
+}
+
+.pb-side-body {
+  padding: 20px 15px;
+  overflow: auto;
+  height: calc(100% - 70px);
+  background-image: url(../../assets/img/bg/pb-bg-1.jpg);
+  background-size: cover;
+}
+
+.pb-alphabet {
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 5px;
+  color: $light-color;
+}
+
+.pb-box + .pb-box {
+  margin-top: 40px;
+}
+
+.pb-link {
+  border-radius: 5px;
+  border: 1px solid $border-light-color-2;
+  transition: all 0.2s;
+
+  &:hover {
+    background: $theme-color;
+    border-color: $theme-color;
+    color: #fff;
+  }
+
+  &:hover * {
+    color: inherit;
+  }
+
+  &:hover svg {
+    fill: $white-color;
+  }
+}
+
+.pb-link + .pb-link {
+  margin-top: 20px;
+}
+
+.pb-figure {
+  display: flex;
+  padding: 20px;
+}
+
+.pb-avatar {
+  img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+.pb-caption {
+  flex: 1;
+  padding-left: 15px;
+  padding-top: 5px;
+
+  &-name {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: $dark-color;
+
+    h3 {
+      font-weight: inherit;
+    }
+  }
+
+  &-icon {
+    @include svg-icon(15px, $light-color);
+    transition: fill 0.2s;
+  }
+
+  &-address {
+    display: flex;
+    align-items: flex-end;
+
+    line-height: 1;
+    margin-top: 10px;
+
+    font-size: 13px;
+    color: $light-color;
+
+    span {
+      padding-left: 5px;
+    }
+  }
+}
