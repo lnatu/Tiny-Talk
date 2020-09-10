@@ -8,7 +8,7 @@
       <div class="tt-card">
         <div class="tt-card-header line-height-1">
           <h5 class="tt-card-title mb-sm">Account</h5>
-          <p class="tt-card-sub-title">Update personal & contact information</p>
+          <p class="tt-card-sub-title">Update personalpersonal-info & contact information</p>
         </div>
         <div class="tt-card-body">
           <form action="#">

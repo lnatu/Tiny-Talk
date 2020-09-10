@@ -81,11 +81,12 @@ export default {
       );
     },
     lastMessageSent() {
-      if (this.messages.length === 0) {
+      const totalMessages = this.messages.length;
+
+      if (totalMessages === 0) {
         return false;
       }
 
-      const totalMessages = this.messages.length;
       return this.messages[totalMessages - 1];
     }
   },
