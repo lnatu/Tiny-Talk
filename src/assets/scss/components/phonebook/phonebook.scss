@@ -4,10 +4,19 @@
 .phonebook {
   display: flex;
   flex: 1;
+
+  @include mobile {
+    order: -1;
+    height: calc(100% - 70px);
+  }
 }
 
 .pb-sidebar {
   flex: 0 0 420px;
+
+  @include mobile {
+    flex: 1;
+  }
 }
 
 .pb-side-body {
@@ -109,6 +118,23 @@
 .pb-detail {
   border-left: 1px solid $border-light-color;
   padding: 40px;
+
+  @include mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 101;
+
+    width: 100%;
+    height: 100%;
+
+    @include mobile {
+      background: $bg-light-color;
+      padding: 20px;
+      overflow: auto;
+    }
+    //transform: translateX(100%);
+  }
 }
 
 .pb-hero {

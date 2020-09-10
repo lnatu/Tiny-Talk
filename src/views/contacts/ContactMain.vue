@@ -1,7 +1,9 @@
 <template>
   <div class="phonebook">
     <phone-book-sidebar />
-    <phone-book-detail />
+    <transition name="slide-right">
+      <phone-book-detail v-if="true" />
+    </transition>
   </div>
 </template>
 

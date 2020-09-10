@@ -1,5 +1,10 @@
 <template>
   <section class="pb-detail flex-1 hide-scrollbar overflow-auto">
+    <a href="#" v-if="isMobile">
+      <svg class="icon-svg icon-svg--2x icon-svg--dark">
+        <use xlink:href="@/assets/img/icons/sprites.svg#icon-arrow-left" />
+      </svg>
+    </a>
     <figure class="pb-hero">
       <div class="pb-hero-avatar">
         <img
