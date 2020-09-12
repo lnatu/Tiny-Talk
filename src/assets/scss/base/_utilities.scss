@@ -350,6 +350,11 @@ button:not(:disabled),
   text-align: right !important;
 }
 
+.text-theme {
+  color: $theme-color !important;
+}
+
+
 .text-white {
   color: $white-color !important;
 }

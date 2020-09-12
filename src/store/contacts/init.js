@@ -13,7 +13,15 @@ const state = {
 
 const getters = {
   GET_CONTACTS(state) {
-    return state.contacts;
+    return state.contacts.sort(function(a, b) {
+      if (a.contact.firstName < b.contact.firstName) {
+        return -1;
+      }
+      if (a.contact.firstName > b.contact.firstName) {
+        return 1;
+      }
+      return 0;
+    });
   },
   GET_ONE_CONTACT(state) {
     return state.contact;
@@ -25,7 +33,7 @@ const mutations = {
     state.contacts = payload;
   },
   SET_ONE_CONTACT(state, payload) {
-    state.contact = state.contacts[payload]
+    state.contact = state.contacts[payload];
   },
   ADD_TO_FIRST_CONTACTS(state, payload) {
     state.contacts.unshift(payload);
@@ -50,6 +58,7 @@ const actions = {
     if (state.contacts.length > 0) {
       return;
     }
+
     try {
       const CONTACT_SIZE = Object.keys(state.contacts).length;
       const DATA_LIMIT = config.LIMITS.RESULTS_PER_CALL;
