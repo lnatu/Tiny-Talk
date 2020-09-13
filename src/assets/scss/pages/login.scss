@@ -1,18 +1,84 @@
 .login {
+  background-image: url('./../../assets/img/bg/login-bg-5.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
   &-left {
     flex: 0 0 50%;
 
-    background-image: url('./../../assets/img/bg/login-bg-2.png');
+    background-image: url('./../../assets/img/bg/login-bg-7.jpg');
     background-repeat: no-repeat;
     background-size: cover;
   }
 
   &-right {
     flex: 1;
+
+    height: 100%;
+
+    background: $white-color;
+
+    @include mobile {
+      height: 90% !important;
+
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+    }
+  }
+
+  &-form {
+    &__icon {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+
+      svg {
+        transition: fill 0.5s;
+      }
+    }
+
+    &__form {
+      .form-group {
+        position: relative;
+        border-bottom: 3px solid $light-color-4;
+        transition: border-color 0.5s;
+
+        &.active {
+          border-color: $theme-color;
+        }
+
+        label {
+          position: absolute;
+          left: 32px;
+          top: 50%;
+
+          font-size: 17px;
+          line-height: 1;
+
+          transition: all 0.5s;
+          transform: translateY(-50%);
+
+          &.active {
+            font-size: 13px;
+
+            top: -5px;
+            left: 0;
+            transform: translateY(-100%);
+          }
+        }
+      }
+
+      @include mobile {
+        width: 70% !important;
+      }
+    }
   }
 
   &-input {
-    padding: 2.5rem 2rem;
+    border-radius: 0;
+
+    padding: 1.5rem 2.5rem;
 
     font-size: 1.7rem;
     color: $text-color;
@@ -29,18 +95,35 @@
   }
 
   &-submit {
-    display: block;
-
-    padding: 2rem 0;
+    display: inline-flex;
+    align-items: center;
 
     color: $white-color;
-    font-size: 2rem;
-    line-height: 1;
     text-decoration: none;
-    text-align: center;
 
-    background: $theme-color;
+    &:active {
+      outline: 0;
+    }
 
-    border-radius: 10px;
+    span {
+      color: $dark-color;
+      font-size: 2rem;
+      margin-right: 15px;
+    }
+
+    &__icon {
+      background-image: $theme-gradient-down;
+      padding: 1rem 3.5rem;
+      border-radius: 30px;
+
+      svg {
+        transform: translate(0, 4px) rotate(45deg);
+        transition: transform 0.3s;
+      }
+    }
+
+    &:hover &__icon svg {
+      transform: translate(15px, 4px) rotate(45deg);
+    }
   }
 }

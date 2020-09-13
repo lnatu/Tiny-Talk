@@ -79,6 +79,7 @@ export default {
         this.SET_LOCAL_USER('');
         localStorage.removeItem(localKeys.USER_KEY);
         localStorage.removeItem(localKeys.USER_CONTACT_KEY);
+        localStorage.removeItem(localKeys.USER_CONTACT_ID_KEY);
         localStorage.removeItem(localKeys.NOTIFICATIONS_KEY);
         localStorage.removeItem(localKeys.CONVERSATIONS_KEY);
         localStorage.removeItem(localKeys.CONVERSATION_INDEX);

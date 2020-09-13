@@ -1,6 +1,6 @@
 <template>
   <section class="pb-detail flex-1 hide-scrollbar overflow-auto">
-    <a href="#" v-if="isMobile">
+    <a href="#" v-if="isMobile" @click="DEL_ONE_CONTACT">
       <svg class="icon-svg icon-svg--2x icon-svg--dark">
         <use xlink:href="@/assets/img/icons/sprites.svg#icon-arrow-left" />
       </svg>
@@ -9,13 +9,13 @@
       <div class="pb-hero-avatar">
         <img
           class="d-block mx-auto"
-          src="@/assets/img/users/girl.png"
-          alt="girl"
+          :src="require(`@/assets/img/users/${GET_ONE_CONTACT.contact.avatar}`)"
+          :alt="GET_ONE_CONTACT.contact.fullName"
         />
       </div>
       <figcaption class="pb-hero-caption text-center">
         <div class="pb-hero-name">
-          Nguyễn Tú Linh
+          {{ GET_ONE_CONTACT.contact.fullName }}
         </div>
         <div class="pb-hero-actions">
           <a class="pb-hero-cta bg-primary" href="#">
@@ -54,7 +54,7 @@
           <div class="personal-info__left">
             <p class="title-small text-light">Birthday</p>
             <p class="text-a mt-1">
-              2020/01/02
+              {{ formatDate(GET_ONE_CONTACT.contact.birthday) }}
             </p>
           </div>
           <div class="personal-info__right text-right">
@@ -68,7 +68,13 @@
         >
           <div class="personal-info__left">
             <p class="title-small text-light">Phone</p>
-            <p class="text-a mt-1">0909899573</p>
+            <p class="text-a mt-1">
+              {{
+                GET_ONE_CONTACT.contact.phone
+                  ? GET_ONE_CONTACT.contact.phone
+                  : '***'
+              }}
+            </p>
           </div>
           <div class="personal-info__right text-right">
             <svg class="icon-svg--2x">
@@ -81,7 +87,9 @@
         >
           <div class="personal-info__left">
             <p class="title-small text-light">Email</p>
-            <p class="text-a mt-1">test@gmail.com</p>
+            <p class="text-a mt-1">
+              {{ GET_ONE_CONTACT.contact.email }}
+            </p>
           </div>
           <div class="personal-info__right text-right">
             <svg class="icon-svg--2x">
@@ -96,7 +104,11 @@
             <p class="title-small text-light">Website</p>
             <div class="mt-1">
               <a :href="'#'" class="text-a">
-                google.com
+                {{
+                  GET_ONE_CONTACT.contact.website
+                    ? GET_ONE_CONTACT.contact.website
+                    : '---'
+                }}
               </a>
             </div>
           </div>
@@ -112,7 +124,11 @@
           <div class="personal-info__left">
             <p class="title-small text-light">Address</p>
             <p class="text-a mt-1">
-              Some address
+              {{
+                GET_ONE_CONTACT.contact.address
+                  ? GET_ONE_CONTACT.contact.address
+                  : '---'
+              }}
             </p>
           </div>
           <div class="personal-info__right text-right">
@@ -187,7 +203,15 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
+
 export default {
-  name: 'PBDetail'
+  name: 'PBDetail',
+  computed: {
+    ...mapGetters(['GET_ONE_CONTACT'])
+  },
+  methods: {
+    ...mapMutations(['DEL_ONE_CONTACT'])
+  }
 };
 </script>

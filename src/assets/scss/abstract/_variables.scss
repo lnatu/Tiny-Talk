@@ -23,6 +23,16 @@ $light-color-5: #b2b5bd;
 $light-color-6: #b8bfc6;
 $light-color-7: #e4e6eb;
 
+// GRADIENT
+$theme-gradient-down: linear-gradient(
+  to bottom,
+  #9b96f3,
+  #8e88f7,
+  #827afa,
+  #746cfc,
+  #665dfe
+);
+
 // SIZING
 $full-screen-height: 100vh;
 $navigation-width: 70px;

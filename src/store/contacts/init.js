@@ -8,7 +8,9 @@ const storageHelper = new helper.StorageHelper();
 
 const state = {
   contacts: storageHelper.getAsJson(config.localKeys.USER_CONTACT_KEY) || [],
-  contact: {}
+  contact:
+    storageHelper.getAsJson(config.localKeys.USER_CONTACT_ID_KEY) || null,
+  contactLoading: false
 };
 
 const getters = {
@@ -17,14 +19,25 @@ const getters = {
       if (a.contact.firstName < b.contact.firstName) {
         return -1;
       }
+
       if (a.contact.firstName > b.contact.firstName) {
         return 1;
       }
+
       return 0;
     });
   },
   GET_ONE_CONTACT(state) {
     return state.contact;
+  },
+  /**
+   *
+   * @param state
+   * @returns {boolean}
+   * @constructor
+   */
+  GET_CONTACT_LOADING(state) {
+    return state.contactLoading;
   }
 };
 
@@ -33,7 +46,18 @@ const mutations = {
     state.contacts = payload;
   },
   SET_ONE_CONTACT(state, payload) {
-    state.contact = state.contacts[payload];
+    state.contact = state.contacts.find(c => c._id === payload);
+    storageHelper.saveAsString(
+      config.localKeys.USER_CONTACT_ID_KEY,
+      state.contact
+    );
+  },
+  DEL_ONE_CONTACT(state) {
+    state.contact = null;
+    storageHelper.remove(config.localKeys.USER_CONTACT_ID_KEY);
+  },
+  SET_CONTACT_LOADING(state, payload) {
+    state.contactLoading = payload;
   },
   ADD_TO_FIRST_CONTACTS(state, payload) {
     state.contacts.unshift(payload);
@@ -59,6 +83,8 @@ const actions = {
       return;
     }
 
+    commit('SET_CONTACT_LOADING', true);
+
     try {
       const CONTACT_SIZE = Object.keys(state.contacts).length;
       const DATA_LIMIT = config.LIMITS.RESULTS_PER_CALL;
@@ -76,6 +102,7 @@ const actions = {
       const { contacts } = res.data.data;
 
       if (contacts.length === 0) {
+        commit('SET_CONTACT_LOADING', false);
         return;
       }
 
@@ -85,7 +112,9 @@ const actions = {
         config.localKeys.USER_CONTACT_KEY,
         state.contacts
       );
+      commit('SET_CONTACT_LOADING', false);
     } catch (err) {
+      commit('SET_CONTACT_LOADING', false);
       console.log(err);
       console.log(err.response);
     }

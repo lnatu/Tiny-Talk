@@ -8,10 +8,12 @@
       <div class="pb-box" v-for="pb in phonebook" :key="pb.group">
         <div class="pb-alphabet text-danger">{{ pb.group }}</div>
         <a
+          :class="{ active: GET_ONE_CONTACT && GET_ONE_CONTACT._id === c._id }"
           class="pb-link d-block"
           href="#"
           v-for="c in pb.contacts"
           :key="c.contact._id"
+          @click.prevent="SET_ONE_CONTACT(c._id)"
         >
           <figure class="pb-figure">
             <div class="pb-avatar">
@@ -89,12 +91,18 @@
         </a>
       </div> -->
     </div>
+    <div
+      class="pb-side-body"
+      v-else-if="GET_CONTACTS.length === 0 && !GET_CONTACT_LOADING"
+    >
+      nothing
+    </div>
     <content-placeholder v-else />
   </aside>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 import ContentPlaceholder from '@/components/loading/ContentPlaceholder';
 
 export default {
@@ -103,7 +111,7 @@ export default {
     ContentPlaceholder
   },
   computed: {
-    ...mapGetters(['GET_CONTACTS']),
+    ...mapGetters(['GET_CONTACTS', 'GET_ONE_CONTACT', 'GET_CONTACT_LOADING']),
     phonebook() {
       return this.GET_CONTACTS.reduce((r, e) => {
         // get first letter of name of current element
@@ -123,10 +131,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getMyContacts'])
+    ...mapActions(['getMyContacts']),
+    ...mapMutations(['SET_ONE_CONTACT'])
   },
   created() {
-    console.log(this.phonebook);
     this.getMyContacts();
   }
 };
