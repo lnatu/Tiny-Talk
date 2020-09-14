@@ -1,5 +1,9 @@
 <template>
-  <div class="line-height-1" v-if="vuelidate[validateObj][validateKey].$error">
+  <div
+    class="line-height-1 error-cover"
+    :class="customClass"
+    v-if="vuelidate[validateObj][validateKey].$error"
+  >
     <div v-for="item in validateType" :key="item">
       <span
         v-if="!vuelidate[validateObj][validateKey][item] && item === 'email'"
@@ -35,6 +39,10 @@
 <script>
 export default {
   props: {
+    customClass: {
+      type: String,
+      default: ''
+    },
     vuelidate: {
       type: Object,
       required: true
@@ -62,8 +70,19 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/scss/abstract/_variables';
+.error-cover {
+  border-radius: 3px;
+}
+
 span {
-  color: $danger-color;
+  display: block;
+
+  color: inherit;
+  line-height: 1;
+
+  border-radius: 5px;
+
+  padding: 5px 0;
   font-size: 1.2rem;
 }
 </style>

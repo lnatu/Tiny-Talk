@@ -1,14 +1,14 @@
 <template>
-  <div class="d-flex w-100 h-max">
+  <div class="signup-outer d-flex w-100 h-max">
     <div
-      class="signup-left h-100 d-flex align-items-center justify-content-center position-relative"
+      class="signup-left d-flex align-items-center justify-content-center position-relative"
     >
-      <div class="signup-form w-50">
+      <div class="signup-form w-75">
         <div v-if="!signUpInfo.success.status">
           <div class="signup-header">
             <h1 class="signup-title line-height-1">Sign up to Tiny Talk</h1>
             <a
-              class="social-opt-btn d-inline-flex align-items-center mt-4"
+              class="social-opt-btn d-inline-flex align-items-center mt-2"
               href="#"
             >
               <img src="@/assets/img/icons/google.svg" alt="google brand" />
@@ -29,6 +29,7 @@
                   placeholder="First name"
                 />
                 <error
+                  :customClass="'text-white bg-danger mt-1 pl-1'"
                   :vuelidate="$v"
                   :validateObj="'signUpObj'"
                   :validateKey="'firstName'"
@@ -45,6 +46,7 @@
                   placeholder="Last name"
                 />
                 <error
+                  :customClass="'text-white bg-danger mt-1 pl-1'"
                   :vuelidate="$v"
                   :validateObj="'signUpObj'"
                   :validateKey="'lastName'"
@@ -62,6 +64,7 @@
                 placeholder="Email address"
               />
               <error
+                :customClass="'text-white bg-danger mt-1 pl-1'"
                 :vuelidate="$v"
                 :validateObj="'signUpObj'"
                 :validateKey="'email'"
@@ -78,6 +81,7 @@
                 placeholder="Password"
               />
               <error
+                :customClass="'text-white bg-danger mt-1 pl-1'"
                 :vuelidate="$v"
                 :validateObj="'signUpObj'"
                 :validateKey="'password'"

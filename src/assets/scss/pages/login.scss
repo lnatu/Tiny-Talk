@@ -1,5 +1,5 @@
 .login {
-  background-image: url('./../../assets/img/bg/login-bg-5.jpg');
+  background-image: url('./../../assets/img/bg/login-bg-7.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -10,6 +10,7 @@
     background-image: url('./../../assets/img/bg/login-bg-7.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
   }
 
   &-right {
@@ -17,10 +18,15 @@
 
     height: 100%;
 
-    background: $white-color;
+    background-color: $white-color;
+    background-image: url('./../../assets/img/bg/login-bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
 
     @include mobile {
       height: 90% !important;
+
+      background-position: bottom;
 
       border-top-left-radius: 30px;
       border-top-right-radius: 30px;
@@ -41,7 +47,7 @@
     &__form {
       .form-group {
         position: relative;
-        border-bottom: 3px solid $light-color-4;
+        border-bottom: 3px solid $white-color;
         transition: border-color 0.5s;
 
         &.active {
@@ -53,6 +59,7 @@
           left: 32px;
           top: 50%;
 
+          color: $white-color;
           font-size: 17px;
           line-height: 1;
 
@@ -81,9 +88,10 @@
     padding: 1.5rem 2.5rem;
 
     font-size: 1.7rem;
-    color: $text-color;
+    color: $white-color;
 
     border: none;
+    background: transparent;
 
     &::-webkit-input-placeholder {
       color: $light-color;

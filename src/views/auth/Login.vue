@@ -24,7 +24,7 @@
             </label>
             <div class="login-form__icon">
               <svg
-                class="icon-svg icon-svg--2x"
+                class="icon-svg icon-svg--2x icon-svg--white"
                 :class="{ 'icon-svg--theme': inputActive('email') }"
               >
                 <use xlink:href="@/assets/img/icons/sprites.svg#icon-user-m" />
@@ -46,7 +46,7 @@
             </label>
             <div class="login-form__icon">
               <svg
-                class="icon-svg icon-svg--2x"
+                class="icon-svg icon-svg--2x icon-svg--white"
                 :class="{ 'icon-svg--theme': inputActive('password') }"
               >
                 <use xlink:href="@/assets/img/icons/sprites.svg#icon-lock" />
@@ -59,7 +59,10 @@
               class="form-control login-input"
             />
           </div>
-          <div v-if="GET_GLOBAL_ERROR_MESSAGE" class="text-danger">
+          <div
+            v-if="GET_GLOBAL_ERROR_MESSAGE"
+            class="text-white bg-danger mt-1 pl-1"
+          >
             {{ GET_GLOBAL_ERROR_MESSAGE }}
           </div>
           <div class="text-right">
