@@ -98,6 +98,52 @@ button:not(:disabled),
   font-size: 22px;
 }
 
+.submit-theme {
+  display: inline-flex;
+  align-items: center;
+
+  color: $white-color;
+  text-decoration: none;
+
+  &:active {
+    outline: 0;
+  }
+
+  span {
+    color: $dark-color;
+    font-size: 2rem;
+    margin-right: 15px;
+  }
+
+  &__icon {
+    background-image: $theme-gradient-down;
+    padding: 1rem 3.5rem !important;
+    border-radius: 30px;
+
+    svg {
+      transform: translate(0, 4px) rotate(45deg);
+      transition: transform 0.3s;
+    }
+  }
+
+  &:hover &__icon svg {
+    transform: translate(15px, 4px) rotate(45deg);
+  }
+}
+
+.submit-theme {
+  &.theme-2 &__icon {
+    background-image: linear-gradient(
+      to right bottom,
+      #e532c4,
+      #f12ab1,
+      #f9279f,
+      #fd2a8d,
+      #ff337c
+    );
+  }
+}
+
 .social-opt-btn {
   text-decoration: none;
   font-size: 1.5rem;
@@ -471,6 +517,15 @@ button:not(:disabled),
 /*
 *
 */
+a.no-pointer {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.no-pointer {
+  pointer-events: none;
+}
+
 .cursor-pointer {
   cursor: pointer !important;
 }

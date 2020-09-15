@@ -75,9 +75,9 @@
             {{ GET_GLOBAL_ERROR_MESSAGE }}
           </div>
           <div class="text-right">
-            <a class="login-submit mt-3" href="#" @click.prevent="loginAction">
+            <a class="login-submit submit-theme mt-3" href="#" @click.prevent="loginAction">
               <span class="text-dark">Sign in</span>
-              <div class="login-submit__icon">
+              <div class="submit-theme__icon">
                 <svg class="icon-svg icon-svg--2x icon-svg--white">
                   <use
                     xlink:href="@/assets/img/icons/sprites.svg#icon-arrow-up-right"

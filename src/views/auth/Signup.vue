@@ -101,14 +101,23 @@
               />
             </div>
             <div class="form-group flex-50 mt-2">
-              <button
-                type="button"
-                class="btn btn-submit px-2"
-                :disabled="isFormValid"
-                @click="signUpAction(signUpObj)"
-              >
-                Create account
-              </button>
+              <div class="text-right">
+                <a
+                  class="submit-theme theme-2"
+                  href="#"
+                  :class="{ 'no-pointer': isFormValid }"
+                  @click.prevent="signUpAction(signUpObj)"
+                >
+                  <span class="text-dark">Sign up</span>
+                  <div class="submit-theme__icon">
+                    <svg class="icon-svg icon-svg--2x icon-svg--white">
+                      <use
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-arrow-up-right"
+                      />
+                    </svg>
+                  </div>
+                </a>
+              </div>
             </div>
           </form>
           <p v-if="signUpInfo.error.status" class="text-danger">

@@ -63,9 +63,9 @@
   &-right {
     flex: 1;
 
-    background-image: url(./../../assets/img/bg/signup-bg-mobile.png);
+    background-image: url(./../../assets/img/bg/signup-bg.png);
     background-repeat: no-repeat;
-    background-size: 90%;
+    background-size: cover;
     background-position: center;
 
     @include mobile {
@@ -100,7 +100,7 @@
 
     padding: 5px;
 
-    background: rgba($theme-color, 0.3);
+    background: $theme-color;
     border-radius: 3px;
 
     color: $white-color;

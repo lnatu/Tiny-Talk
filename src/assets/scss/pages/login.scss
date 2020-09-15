@@ -118,39 +118,6 @@
       outline: none;
     }
   }
-
-  &-submit {
-    display: inline-flex;
-    align-items: center;
-
-    color: $white-color;
-    text-decoration: none;
-
-    &:active {
-      outline: 0;
-    }
-
-    span {
-      color: $dark-color;
-      font-size: 2rem;
-      margin-right: 15px;
-    }
-
-    &__icon {
-      background-image: $theme-gradient-down;
-      padding: 1rem 3.5rem;
-      border-radius: 30px;
-
-      svg {
-        transform: translate(0, 4px) rotate(45deg);
-        transition: transform 0.3s;
-      }
-    }
-
-    &:hover &__icon svg {
-      transform: translate(15px, 4px) rotate(45deg);
-    }
-  }
 }
 
 .err-login {
