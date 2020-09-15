@@ -11,6 +11,12 @@
   }
 }
 
+.phonebook-empty {
+  background-image: url(./../../assets/img/bg/phonebook-empty.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .pb-sidebar {
   flex: 0 0 420px;
 

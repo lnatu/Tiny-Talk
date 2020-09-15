@@ -4,9 +4,20 @@
       class="signup-left d-flex align-items-center justify-content-center position-relative"
     >
       <div class="signup-form w-75">
+        <div class="text-center mb-3" v-if="isMobile">
+          <img
+            src="@/assets/img/bg/signup-header.jpg"
+            width="100px"
+            height="100px"
+            class="rounded"
+            alt="mail icon"
+          />
+        </div>
         <div v-if="!signUpInfo.success.status">
           <div class="signup-header">
-            <h1 class="signup-title line-height-1">Sign up to Tiny Talk</h1>
+            <h1 class="signup-title text-theme line-height-1">
+              Sign up to Tiny Talk
+            </h1>
             <a
               class="social-opt-btn d-inline-flex align-items-center mt-2"
               href="#"

@@ -1,13 +1,29 @@
+@import '../base/base';
+
 .login {
-  background-image: url('./../../assets/img/bg/login-bg-7.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  background-image: linear-gradient(
+    to left bottom,
+    #72cfde,
+    #50c7f2,
+    #52bbff,
+    #7fa9ff,
+    #b790ff,
+    #c67ff9,
+    #d66aef,
+    #e750e0,
+    #d34be5,
+    #bb48eb,
+    #a048f0,
+    #7e48f5
+  );
+  //background-repeat: no-repeat;
+  //background-position: center;
+  //background-size: cover;
 
   &-left {
     flex: 0 0 50%;
 
-    background-image: url('./../../assets/img/bg/login-bg-7.jpg');
+    background-image: url('./../../assets/img/bg/login-bg-4.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -18,15 +34,20 @@
 
     height: 100%;
 
-    background-color: $white-color;
-    background-image: url('./../../assets/img/bg/login-bg.png');
+    background-image: linear-gradient(
+      to bottom,
+      #ffffff,
+      #fdfefd,
+      #fcfcfc,
+      #fafbfa,
+      #f9f9f9
+    );
+    //background-image: url('./../../assets/img/bg/bg-mobile-1.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 
     @include mobile {
       height: 90% !important;
-
-      background-position: bottom;
 
       border-top-left-radius: 30px;
       border-top-right-radius: 30px;
@@ -47,7 +68,7 @@
     &__form {
       .form-group {
         position: relative;
-        border-bottom: 3px solid $white-color;
+        border-bottom: 3px solid transparent;
         transition: border-color 0.5s;
 
         &.active {
@@ -59,7 +80,7 @@
           left: 32px;
           top: 50%;
 
-          color: $white-color;
+          color: $dark-color;
           font-size: 17px;
           line-height: 1;
 
@@ -88,14 +109,10 @@
     padding: 1.5rem 2.5rem;
 
     font-size: 1.7rem;
-    color: $white-color;
+    color: $dark-color;
 
     border: none;
-    background: transparent;
-
-    &::-webkit-input-placeholder {
-      color: $light-color;
-    }
+    background: none;
 
     &:focus {
       outline: none;
@@ -134,4 +151,8 @@
       transform: translate(15px, 4px) rotate(45deg);
     }
   }
+}
+
+.err-login {
+  border-radius: 3px;
 }

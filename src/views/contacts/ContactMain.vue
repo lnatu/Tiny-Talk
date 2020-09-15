@@ -4,6 +4,7 @@
     <transition name="slide-right">
       <phone-book-detail v-if="GET_ONE_CONTACT" />
     </transition>
+    <div class="phonebook-empty flex-1" v-if="!GET_ONE_CONTACT && !isMobile"></div>
   </div>
 </template>
 

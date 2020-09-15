@@ -4,7 +4,21 @@
 .signup {
   &-outer {
     @include mobile {
-      background-image: url(./../../assets/img/bg/login-bg-8.jpg);
+      background-image: linear-gradient(
+        to left bottom,
+        #ff3434,
+        #ff1754,
+        #ff0073,
+        #ff0392,
+        #f427b1,
+        #e830c1,
+        #d83bd0,
+        #c546de,
+        #b745e4,
+        #a745ea,
+        #9446ef,
+        #7e48f5
+      );
       background-repeat: no-repeat;
       background-size: cover;
     }
@@ -15,8 +29,16 @@
 
     height: 100%;
 
-    background-color: $white-color;
-    background-image: url(./../../assets/img/bg/signup-bg.png);
+    //background-color: #F9F9F9;
+    //background-image: url(./../../assets/img/bg/signup-bg.png);
+    background-image: linear-gradient(
+      to bottom,
+      #ffffff,
+      #fdfefd,
+      #fcfcfc,
+      #fafbfa,
+      #f9f9f9
+    );
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -25,9 +47,6 @@
       flex: 1;
 
       height: 90%;
-
-      background-size: 100% 85%;
-      background-position: bottom;
 
       border-top-left-radius: 30px;
       border-top-right-radius: 30px;
@@ -44,9 +63,10 @@
   &-right {
     flex: 1;
 
-    background-image: url(./../../assets/img/bg/login-bg-8.jpg);
+    background-image: url(./../../assets/img/bg/signup-bg-mobile.png);
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 90%;
+    background-position: center;
 
     @include mobile {
       display: none;
@@ -80,7 +100,8 @@
 
     padding: 5px;
 
-    background: rgba($theme-color, .3);
+    background: rgba($theme-color, 0.3);
+    border-radius: 3px;
 
     color: $white-color;
     font-size: 1.5rem;

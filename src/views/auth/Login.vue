@@ -3,6 +3,15 @@
     <div class="login-left h-100" v-if="!isMobile"></div>
     <div class="login-right mt-auto d-flex align-items-center">
       <div class="login-form w-100">
+        <div class="text-center mb-3" v-if="isMobile">
+          <img
+            src="@/assets/img/bg/login-header.jpg"
+            width="100px"
+            height="100px"
+            class="rounded"
+            alt="mail icon"
+          />
+        </div>
         <div class="text-center">
           <h1 class="mb-3 line-height-1 text-theme">Sign in to Tiny Talk</h1>
           <a
@@ -24,7 +33,7 @@
             </label>
             <div class="login-form__icon">
               <svg
-                class="icon-svg icon-svg--2x icon-svg--white"
+                class="icon-svg icon-svg--2x icon-svg--theme"
                 :class="{ 'icon-svg--theme': inputActive('email') }"
               >
                 <use xlink:href="@/assets/img/icons/sprites.svg#icon-user-m" />
@@ -46,7 +55,7 @@
             </label>
             <div class="login-form__icon">
               <svg
-                class="icon-svg icon-svg--2x icon-svg--white"
+                class="icon-svg icon-svg--2x icon-svg--theme"
                 :class="{ 'icon-svg--theme': inputActive('password') }"
               >
                 <use xlink:href="@/assets/img/icons/sprites.svg#icon-lock" />
@@ -61,13 +70,13 @@
           </div>
           <div
             v-if="GET_GLOBAL_ERROR_MESSAGE"
-            class="text-white bg-danger mt-1 pl-1"
+            class="err-login text-white bg-danger mt-1 pl-1"
           >
             {{ GET_GLOBAL_ERROR_MESSAGE }}
           </div>
           <div class="text-right">
             <a class="login-submit mt-3" href="#" @click.prevent="loginAction">
-              <span>Sign in</span>
+              <span class="text-dark">Sign in</span>
               <div class="login-submit__icon">
                 <svg class="icon-svg icon-svg--2x icon-svg--white">
                   <use
