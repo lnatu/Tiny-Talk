@@ -64,7 +64,7 @@
 
   &.active svg,
   &:hover svg {
-    fill: $white-color;
+    fill: $white-color !important;
   }
 }
 

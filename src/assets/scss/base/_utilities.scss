@@ -489,6 +489,10 @@ button:not(:disabled),
     fill: $text-color !important;
   }
 
+  &--light {
+    fill: $light-color !important;
+  }
+
   &--success {
     fill: $success-color !important;
   }

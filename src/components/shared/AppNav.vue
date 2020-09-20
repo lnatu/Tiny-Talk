@@ -17,7 +17,7 @@
         <router-link
           class="navigation-link"
           active-class="active"
-          to="/a"
+          :to="{ name: 'Calls' }"
           exact
         >
           <svg class="navigation-item__icon">
