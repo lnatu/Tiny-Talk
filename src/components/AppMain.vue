@@ -1,6 +1,6 @@
 <template>
   <transition name="slide-right">
-    <main class="main" v-if="GET_CONVERSATION_MOBILE">
+    <main class="main">
       <chat-main />
     </main>
   </transition>

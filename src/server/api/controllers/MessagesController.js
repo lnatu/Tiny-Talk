@@ -16,6 +16,8 @@ exports.createMessage = catchError(async (req, res, next) => {
     return next(new AppError("You're not belong to this conversation", 400));
   }
 
+  console.log(req.body);
+
   req.body.sender = req.user.id;
   const message = await MessageModel.create(req.body);
 

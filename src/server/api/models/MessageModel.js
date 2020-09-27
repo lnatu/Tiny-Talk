@@ -29,10 +29,10 @@ const messageSchema = new mongoose.Schema({
   ],
   type: {
     type: String,
-    default: 'message',
+    default: 'text',
     enum: {
-      values: ['message', 'reply', 'forward'],
-      message: 'Message type is either: message, reply or forward'
+      values: ['text', 'file'],
+      message: 'Message type is either: text or file'
     }
   },
   createdAt: {

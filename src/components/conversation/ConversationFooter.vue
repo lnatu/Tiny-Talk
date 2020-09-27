@@ -13,12 +13,13 @@
               </svg>
             </a>
             <div class="media-popup">
-              <a class="media-popup__item" href="#">
+              <label for="addFile" class="media-popup__item" href="#">
                 <svg class="media-popup__icon">
                   <use xlink:href="@/assets/img/icons/sprites.svg#icon-files" />
                 </svg>
                 <span class="ml-1">Files</span>
-              </a>
+              </label>
+              <input type="file" id="addFile" v-show="false" />
               <a class="media-popup__item" href="#">
                 <svg class="media-popup__icon">
                   <use xlink:href="@/assets/img/icons/sprites.svg#icon-mic" />
@@ -86,13 +87,76 @@
         </svg>
       </a>
     </transition>
+    <div id="imagesPreview">
+      <div
+        class="img-preview w-100 hide-scrollbar"
+        ref="imagesPreview"
+        @mousedown="touchElement($event)"
+        @mouseup="touchElementLose()"
+        @mouseleave="touchEl = false"
+        @mousemove="touchElementMove($event)"
+      >
+        <div class="img-preview__box">
+          <img src="@/assets/img/users/default-avatar.jpg" alt="default" />
+        </div>
+        <div class="img-preview__box">
+          <img src="@/assets/img/users/girl-2.png" alt="default" />
+        </div>
+        <div class="img-preview__box">
+          <img src="@/assets/img/users/default-avatar.jpg" alt="default" />
+        </div>
+        <div class="img-preview__box">
+          <img src="@/assets/img/users/girl-2.png" alt="default" />
+        </div>
+        <div class="img-preview__box">
+          <img src="@/assets/img/users/default-avatar.jpg" alt="default" />
+        </div>
+        <div class="img-preview__box">
+          <img src="@/assets/img/users/girl-2.png" alt="default" />
+        </div>
+        <div class="img-preview__box">
+          <img src="@/assets/img/users/default-avatar.jpg" alt="default" />
+        </div>
+        <div class="img-preview__box">
+          <img src="@/assets/img/users/girl-2.png" alt="default" />
+        </div>
+        <div class="img-preview__box">
+          <img src="@/assets/img/users/default-avatar.jpg" alt="default" />
+        </div>
+        <div class="img-preview__box">
+          <img src="@/assets/img/users/girl-2.png" alt="default" />
+        </div>
+        <div class="img-preview__box">
+          <img src="@/assets/img/users/default-avatar.jpg" alt="default" />
+        </div>
+        <div class="img-preview__box">
+          <img src="@/assets/img/users/girl-2.png" alt="default" />
+        </div>
+        <div class="img-preview__box">
+          <img src="@/assets/img/users/default-avatar.jpg" alt="default" />
+        </div>
+        <div class="img-preview__box">
+          <img src="@/assets/img/users/girl-2.png" alt="default" />
+        </div>
+        <div class="img-preview__box">
+          <img src="@/assets/img/users/default-avatar.jpg" alt="default" />
+        </div>
+        <div class="img-preview__box">
+          <img src="@/assets/img/users/girl-2.png" alt="default" />
+        </div>
+      </div>
+      <div class="img-preview__close bg-danger">
+        <svg class="icon-svg icon-svg--2x icon-svg--white">
+          <use xlink:href="@/assets/img/icons/sprites.svg#icon-x" />
+        </svg>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import VEmojiPicker from 'v-emoji-picker';
-import mixin from '@/mixins/global';
 
 export default {
   name: 'ConversationFooter',
@@ -111,10 +175,15 @@ export default {
   data() {
     return {
       message: '',
-      showEmoji: false
+      showEmoji: false,
+      touchEl: false,
+      touchStartX: 0,
+      touchScrollLeft: 0,
+      touchPrevScrollLeft: 0,
+      velX: 0,
+      momentumId: ''
     };
   },
-  mixins: [mixin],
   methods: {
     ...mapMutations([
       'SWAP_CONVERSATION_INDEX',
@@ -176,6 +245,42 @@ export default {
     },
     selectEmoji(emoji) {
       this.message += emoji.data;
+    },
+    touchElement(e) {
+      this.touchEl = true;
+      const element = this.$refs.imagesPreview;
+      this.touchStartX = e.pageX - element.offsetLeft;
+      this.touchScrollLeft = element.scrollLeft;
+    },
+    touchElementLose() {
+      this.touchEl = false;
+      this.beginMomentumTracking();
+    },
+    touchElementMove(e) {
+      if (!this.touchEl) {
+        return;
+      }
+      e.preventDefault();
+      const element = this.$refs.imagesPreview;
+      const x = e.pageX - element.offsetLeft;
+      const walk = (x - this.touchStartX) * 3;
+      this.touchPrevScrollLeft = element.scrollLeft;
+      element.scrollLeft = this.touchScrollLeft - walk;
+      this.velX = element.scrollLeft - this.touchPrevScrollLeft;
+    },
+    beginMomentumTracking() {
+      this.cancelMomentumTracking();
+      this.momentumId = requestAnimationFrame(this.momentumLoop);
+    },
+    cancelMomentumTracking() {
+      cancelAnimationFrame(this.momentumId);
+    },
+    momentumLoop() {
+      this.$refs.imagesPreview.scrollLeft += this.velX;
+      this.velX *= 0.95;
+      if (Math.abs(this.velX) > 0.5) {
+        this.momentumId = requestAnimationFrame(this.momentumLoop);
+      }
     }
   }
 };

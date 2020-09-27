@@ -81,11 +81,7 @@
       <!--          </svg>-->
       <!--        </a>-->
       <!--      </li>-->
-      <li
-        class="media-nav__item"
-        v-if="isMobile"
-        @click="SET_CONVERSATION_MOBILE(false)"
-      >
+      <li class="media-nav__item" v-if="isMobile">
         <a class="media-nav__link" href="#">
           <svg class="media-nav__icon">
             <use xlink:href="@/assets/img/icons/sprites.svg#icon-close" />
