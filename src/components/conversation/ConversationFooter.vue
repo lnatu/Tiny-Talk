@@ -19,7 +19,13 @@
                 </svg>
                 <span class="ml-1">Files</span>
               </label>
-              <input type="file" id="addFile" v-show="false" />
+              <input
+                type="file"
+                multiple
+                id="addFile"
+                v-show="false"
+                @change="previewUploadedImages($event)"
+              />
               <a class="media-popup__item" href="#">
                 <svg class="media-popup__icon">
                   <use xlink:href="@/assets/img/icons/sprites.svg#icon-mic" />
@@ -87,70 +93,31 @@
         </svg>
       </a>
     </transition>
-    <div id="imagesPreview">
-      <div
-        class="img-preview w-100 hide-scrollbar"
-        ref="imagesPreview"
-        @mousedown="touchElement($event)"
-        @mouseup="touchElementLose()"
-        @mouseleave="touchEl = false"
-        @mousemove="touchElementMove($event)"
-      >
-        <div class="img-preview__box">
-          <img src="@/assets/img/users/default-avatar.jpg" alt="default" />
+    <transition name="slide-up">
+      <div id="imagesPreview" v-if="imageFiles.length > 0">
+        <div
+          class="img-preview w-100 hide-scrollbar"
+          ref="imagesPreview"
+          @mousedown="touchElement($event)"
+          @mouseup="touchElementLose()"
+          @mouseleave="touchEl = false"
+          @mousemove="touchElementMove($event)"
+        >
+          <div
+            class="img-preview__box"
+            v-for="(fileSrc, i) in imageFiles"
+            :key="i"
+          >
+            <img :src="fileSrc" alt="default" />
+          </div>
         </div>
-        <div class="img-preview__box">
-          <img src="@/assets/img/users/girl-2.png" alt="default" />
-        </div>
-        <div class="img-preview__box">
-          <img src="@/assets/img/users/default-avatar.jpg" alt="default" />
-        </div>
-        <div class="img-preview__box">
-          <img src="@/assets/img/users/girl-2.png" alt="default" />
-        </div>
-        <div class="img-preview__box">
-          <img src="@/assets/img/users/default-avatar.jpg" alt="default" />
-        </div>
-        <div class="img-preview__box">
-          <img src="@/assets/img/users/girl-2.png" alt="default" />
-        </div>
-        <div class="img-preview__box">
-          <img src="@/assets/img/users/default-avatar.jpg" alt="default" />
-        </div>
-        <div class="img-preview__box">
-          <img src="@/assets/img/users/girl-2.png" alt="default" />
-        </div>
-        <div class="img-preview__box">
-          <img src="@/assets/img/users/default-avatar.jpg" alt="default" />
-        </div>
-        <div class="img-preview__box">
-          <img src="@/assets/img/users/girl-2.png" alt="default" />
-        </div>
-        <div class="img-preview__box">
-          <img src="@/assets/img/users/default-avatar.jpg" alt="default" />
-        </div>
-        <div class="img-preview__box">
-          <img src="@/assets/img/users/girl-2.png" alt="default" />
-        </div>
-        <div class="img-preview__box">
-          <img src="@/assets/img/users/default-avatar.jpg" alt="default" />
-        </div>
-        <div class="img-preview__box">
-          <img src="@/assets/img/users/girl-2.png" alt="default" />
-        </div>
-        <div class="img-preview__box">
-          <img src="@/assets/img/users/default-avatar.jpg" alt="default" />
-        </div>
-        <div class="img-preview__box">
-          <img src="@/assets/img/users/girl-2.png" alt="default" />
+        <div class="img-preview__close bg-danger">
+          <svg class="icon-svg icon-svg--2x icon-svg--white">
+            <use xlink:href="@/assets/img/icons/sprites.svg#icon-x" />
+          </svg>
         </div>
       </div>
-      <div class="img-preview__close bg-danger">
-        <svg class="icon-svg icon-svg--2x icon-svg--white">
-          <use xlink:href="@/assets/img/icons/sprites.svg#icon-x" />
-        </svg>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -181,7 +148,8 @@ export default {
       touchScrollLeft: 0,
       touchPrevScrollLeft: 0,
       velX: 0,
-      momentumId: ''
+      momentumId: '',
+      imageFiles: []
     };
   },
   methods: {
@@ -281,6 +249,54 @@ export default {
       if (Math.abs(this.velX) > 0.5) {
         this.momentumId = requestAnimationFrame(this.momentumLoop);
       }
+    },
+    /* eslint-disable*/
+    previewUploadedImages(e, holder) {
+      const input = e.target;
+      if (!input.files) {
+        return;
+      }
+
+      let filesSize = input.files.length;
+      for (let i = 0; i < filesSize; i++) {
+        let reader = new FileReader();
+        reader.onload = event => {
+          console.log(this.resizeImage(event.target.result, input.files[i]));
+          this.imageFiles.push(event.target.result);
+        };
+        reader.readAsDataURL(input.files[i]);
+      }
+    },
+    resizeImage(fileSrc, file) {
+      const img = document.createElement('img');
+      img.src = fileSrc;
+
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+
+      const MAX_WIDTH = 200;
+      const MAX_HEIGHT = 200;
+      let width = img.width;
+      let height = img.height;
+
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
+
+      return canvas.toDataURL(file.type);
     }
   }
 };
