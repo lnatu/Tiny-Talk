@@ -111,7 +111,7 @@
             <img :src="fileSrc" alt="default" />
           </div>
         </div>
-        <div class="img-preview__close bg-danger">
+        <div class="img-preview__close bg-danger" @click="imageFiles = []">
           <svg class="icon-svg icon-svg--2x icon-svg--white">
             <use xlink:href="@/assets/img/icons/sprites.svg#icon-x" />
           </svg>
@@ -261,7 +261,6 @@ export default {
       for (let i = 0; i < filesSize; i++) {
         let reader = new FileReader();
         reader.onload = event => {
-          console.log(this.resizeImage(event.target.result, input.files[i]));
           this.imageFiles.push(event.target.result);
         };
         reader.readAsDataURL(input.files[i]);
@@ -272,7 +271,7 @@ export default {
       img.src = fileSrc;
 
       const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+      let ctx = canvas.getContext('2d');
       ctx.drawImage(img, 0, 0);
 
       const MAX_WIDTH = 200;
@@ -294,6 +293,7 @@ export default {
 
       canvas.width = width;
       canvas.height = height;
+      ctx = canvas.getContext('2d');
       ctx.drawImage(img, 0, 0, width, height);
 
       return canvas.toDataURL(file.type);
