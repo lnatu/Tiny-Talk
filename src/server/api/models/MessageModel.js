@@ -16,11 +16,7 @@ const messageSchema = new mongoose.Schema({
     trim: true,
     required: [true, 'message text cant be empty']
   },
-  file: {
-    data: Buffer,
-    contentType: String,
-    fileName: String
-  },
+  file: [String],
   seenBy: [
     {
       type: mongoose.Schema.ObjectId,
@@ -31,7 +27,7 @@ const messageSchema = new mongoose.Schema({
     type: String,
     default: 'text',
     enum: {
-      values: ['text', 'file'],
+      values: ['text', 'file', 'text n file'],
       message: 'Message type is either: text or file'
     }
   },

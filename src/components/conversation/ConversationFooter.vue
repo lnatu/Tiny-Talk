@@ -23,6 +23,7 @@
                 type="file"
                 multiple
                 id="addFile"
+                ref="messImages"
                 v-show="false"
                 @change="previewUploadedImages($event)"
               />
@@ -177,10 +178,17 @@ export default {
       });
 
       try {
-        const res = await this.sendMessage({
-          conversation: _thisConversation._id,
-          message: this.message
-        });
+        const fd = new FormData();
+        fd.append('images', this.$refs.messImages.files);
+        fd.append('conversation', _thisConversation._id);
+        fd.append('message', this.message);
+
+        // const res = await this.sendMessage({
+        //   conversation: _thisConversation._id,
+        //   message: this.message
+        // });
+
+        const res = await this.sendMessage(fd);
 
         const { conversation, message } = res.data.data;
 
