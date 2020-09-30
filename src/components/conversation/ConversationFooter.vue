@@ -179,14 +179,13 @@ export default {
 
       try {
         const fd = new FormData();
-        fd.append('images', this.$refs.messImages.files);
+
+        const filesSize = this.$refs.messImages.files.length;
+        for (let i = 0; i < filesSize; i++) {
+          fd.append('images', this.$refs.messImages.files[i]);
+        }
         fd.append('conversation', _thisConversation._id);
         fd.append('message', this.message);
-
-        // const res = await this.sendMessage({
-        //   conversation: _thisConversation._id,
-        //   message: this.message
-        // });
 
         const res = await this.sendMessage(fd);
 

@@ -1,5 +1,6 @@
 const multer = require('multer');
 const sharp = require('sharp');
+const { v4: uuidv4 } = require('uuid');
 const ConversationModel = require('./../models/ConversationModel');
 const MessageModel = require('./../models/MessageModel');
 const APIFeatures = require('./../../utils/apiFeatures');
@@ -21,44 +22,25 @@ const upload = multer({
   fileFilter
 });
 
-const uploadFiles = upload.array('images', 10);
-
-exports.uploadImages = (req, res, next) => {
-  uploadFiles(req, res, err => {
-    if (err instanceof multer.MulterError) {
-      // A Multer error occurred when uploading.
-      if (err.code === 'LIMIT_UNEXPECTED_FILE') {
-        console.log('Too many images exceeding the allowed limit');
-      }
-    } else if (err) {
-      // handle other errors
-      console.log('errors');
-    }
-
-    // Everything is ok.
-    next();
-  });
-};
+exports.uploadFiles = upload.array('images', 10);
 
 exports.resizeImage = async (req, res, next) => {
   if (!req.files) {
     return next();
   }
 
-  console.log(req.body.images);
-
-  req.body.images = [];
+  req.body.files = [];
 
   await Promise.all(
-    req.files.map(async (file, i) => {
-      const fileName = `mess-${i}-${Date.now()}.png`;
+    req.files.map(async file => {
+      const fileName = `${uuidv4()}-mess-${Date.now()}.png`;
 
       await sharp(file.buffer)
         .resize(500, null)
         .toFormat('png')
         .toFile(`src/assets/img/messages/${fileName}`);
 
-      req.body.images.push(fileName);
+      req.body.files.push(fileName);
     })
   );
 
@@ -76,8 +58,6 @@ exports.createMessage = catchError(async (req, res, next) => {
   if (!check) {
     return next(new AppError("You're not belong to this conversation", 400));
   }
-
-  console.log(req.body);
 
   req.body.sender = req.user.id;
   const message = await MessageModel.create(req.body);

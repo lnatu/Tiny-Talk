@@ -764,6 +764,21 @@
                 <span>
                   {{ message.message }}
                 </span>
+                <div class="message-media" v-if="message.files.length > 0">
+                  <div class="message-media__wrapper">
+                    <a
+                      class="message-media__popup"
+                      href="#"
+                      v-for="file in message.files"
+                      :key="file"
+                    >
+                      <img
+                        :src="require(`@/assets/img/messages/${file}`)"
+                        alt="file"
+                      />
+                    </a>
+                  </div>
+                </div>
               </div>
               <div class="message-options">
                 <div class="message-avatar">
@@ -837,6 +852,21 @@
                 <span>
                   {{ message.message }}
                 </span>
+                <div class="message-media" v-if="message.files.length > 0">
+                  <div class="message-media__wrapper">
+                    <a
+                      class="message-media__popup"
+                      href="#"
+                      v-for="file in message.files"
+                      :key="file"
+                    >
+                      <img
+                        :src="require(`@/assets/img/messages/${file}`)"
+                        alt="file"
+                      />
+                    </a>
+                  </div>
+                </div>
               </div>
               <div class="message-options">
                 <div class="message-avatar">

@@ -11,7 +11,7 @@ router
   .route('/')
   .get(MessagesController.getConversationMessages)
   .post(
-    MessagesController.uploadImages,
+    MessagesController.uploadFiles,
     MessagesController.resizeImage,
     MessagesController.createMessage,
     ConversationsController.updateConversationDate

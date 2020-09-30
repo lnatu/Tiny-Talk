@@ -16,7 +16,7 @@ const messageSchema = new mongoose.Schema({
     trim: true,
     required: [true, 'message text cant be empty']
   },
-  file: [String],
+  files: [String],
   seenBy: [
     {
       type: mongoose.Schema.ObjectId,
