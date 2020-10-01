@@ -764,7 +764,10 @@
                 <span>
                   {{ message.message }}
                 </span>
-                <div class="message-media" v-if="message.files.length > 0">
+                <div
+                  class="message-media"
+                  v-if="message.files && message.files.length > 0"
+                >
                   <div class="message-media__wrapper">
                     <a
                       class="message-media__popup"
@@ -852,7 +855,10 @@
                 <span>
                   {{ message.message }}
                 </span>
-                <div class="message-media" v-if="message.files.length > 0">
+                <div
+                  class="message-media"
+                  v-if="message.files && message.files.length > 0"
+                >
                   <div class="message-media__wrapper">
                     <a
                       class="message-media__popup"

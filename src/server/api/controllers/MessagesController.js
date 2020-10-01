@@ -30,17 +30,17 @@ exports.resizeImage = async (req, res, next) => {
   }
 
   req.body.files = [];
-
   await Promise.all(
     req.files.map(async file => {
       const fileName = `${uuidv4()}-mess-${Date.now()}.png`;
 
-      await sharp(file.buffer)
+      const a = await sharp(file.buffer)
         .resize(500, null)
         .toFormat('png')
         .toFile(`src/assets/img/messages/${fileName}`);
 
       req.body.files.push(fileName);
+      return a;
     })
   );
 
