@@ -1,5 +1,6 @@
 @import './../abstract/variables';
 @import './../abstract/mixins';
+@import './../mixins/mobile';
 
 .navigation {
   @include flex-center(column);
@@ -11,6 +12,11 @@
   padding: 20px 0;
 
   background: $theme-color;
+
+  @include mobile {
+    flex-direction: row;
+    height: 70px;
+  }
 
   .logo__icon {
     width: 35px;
@@ -35,10 +41,19 @@
     flex: 1;
 
     list-style: none;
+
+    @include mobile {
+      flex-direction: row;
+      justify-content: space-around;
+    }
   }
 
   &-item + &-item {
     margin-top: 40px;
+
+    @include mobile {
+      margin-top: 0;
+    }
   }
 
   &-item {

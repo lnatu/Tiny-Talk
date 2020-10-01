@@ -17,6 +17,10 @@ exports.StorageHelper = class StorageHelper {
   getAsJson(key) {
     return JSON.parse(localStorage.getItem(key));
   }
+
+  remove(key) {
+    localStorage.removeItem(key);
+  }
 };
 
 exports.playSound = () => {

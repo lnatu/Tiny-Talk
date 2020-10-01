@@ -1,9 +1,16 @@
 @import './../../abstract/variables';
 @import './../../abstract/mixins';
 @import './../../base/utilities';
+@import './../../mixins/mobile';
 
 .profile-setting {
   flex: 1;
+
+  &-body {
+    @include mobile {
+      height: auto;
+    }
+  }
 }
 
 .privacy-item + .privacy-item {

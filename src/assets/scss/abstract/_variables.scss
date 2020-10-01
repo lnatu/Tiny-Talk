@@ -1,15 +1,16 @@
 // COLORS
-$theme-color: #665dfe;
+$theme-color: #7e48f5;
 $text-color: #495057;
 $text-light-color: #495057;
 $danger-color: #ff337c;
-$dark-color: #050505;
+$dark-color: #0b0b11;
 $success-color: #44a675;
 $primary-color: #4385f5;
 $primary-color-2: #4d95f5;
 $bg-light-color: #f5f6fa;
 $bg-light-color-2: #f8f9fa;
 $border-light-color: #e5e9f2;
+$border-light-color-2: #d7d9f3;
 $inactive-color: #aea9fe;
 $message-text-color: #8296b0;
 
@@ -22,6 +23,15 @@ $light-color-5: #b2b5bd;
 $light-color-6: #b8bfc6;
 $light-color-7: #e4e6eb;
 
+// GRADIENT
+$theme-gradient-down: linear-gradient(
+  to bottom,
+  #3294ff,
+  #3389ff,
+  #3f7cff,
+  #516eff,
+  #665dfe
+);
 // SIZING
 $full-screen-height: 100vh;
 $navigation-width: 70px;

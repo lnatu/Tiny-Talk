@@ -1,5 +1,6 @@
 @import './../abstract/variables';
 @import './../abstract/mixins';
+@import './../mixins/mobile';
 
 .chats {
   display: flex;
@@ -20,7 +21,7 @@
     width: 100%;
     height: 70px;
 
-    padding: 0 40px;
+    padding: 0 20px;
 
     border-bottom: 1px solid $border-light-color;
   }
@@ -35,6 +36,10 @@
 
     &::-webkit-scrollbar {
       display: none;
+    }
+
+    @include mobile {
+      height: calc(100% - 150px);
     }
   }
 
@@ -96,7 +101,7 @@
   &-nav {
     display: flex;
 
-    &__item + &__item {
+    &__item ~ &__item {
       margin-left: 15px;
     }
 
@@ -112,8 +117,105 @@
   }
 }
 
+.media-sub-nav {
+  width: 150px;
+
+  position: absolute;
+  right: 0;
+  bottom: -5px;
+
+  background: $white-color;
+  border-radius: 5px;
+  border: 1px solid $border-light-color;
+  font-size: 13px;
+
+  transform: translateY(100%);
+
+  z-index: 999;
+
+  @include mobile {
+    right: 30px;
+  }
+
+  a {
+    padding: 10px;
+    color: $light-color;
+
+    &:hover {
+      background: $bg-light-color;
+    }
+
+    span {
+      margin-left: 10px;
+    }
+  }
+}
+
 .conversation-footer {
   height: 80px;
 
   border-top: 1px solid $border-light-color;
+
+  #imagesPreview {
+    width: 100%;
+    background: $white-color;
+
+    border-top: 1px solid $border-light-color;
+
+    //box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+
+    padding: 20px 10px;
+
+    transform: translateY(-100%);
+
+    position: absolute;
+    top: -1px;
+    left: 0;
+    z-index: 1010;
+
+    .img-preview {
+      display: flex;
+
+      cursor: grab;
+      overflow-x: auto;
+
+      will-change: transform;
+      user-select: none;
+    }
+
+    .img-preview__box {
+      flex: 0 0 100px;
+      height: 100px;
+
+      padding: 0 5px;
+
+      img {
+        display: block;
+
+        border-radius: 5px;
+
+        pointer-events: none;
+
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .img-preview__close {
+      width: 25px;
+      height: 25px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+      cursor: pointer;
+
+      position: absolute;
+      top: -13px;
+      left: 50%;
+    }
+  }
 }

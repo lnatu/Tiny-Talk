@@ -1,3 +1,5 @@
+@import '../mixins/_mobile.scss';
+
 button {
   outline: none;
 }
@@ -149,6 +151,10 @@ button {
 
   padding: 0 15px;
 
+  @include mobile {
+    border-top: 1px solid $border-light-color;
+  }
+
   p {
     color: $light-color-5;
     font-size: 1.3rem;
@@ -167,12 +173,21 @@ button {
   border-radius: 5px;
   border: 1px solid $border-light-color;
 
+  @include mobile {
+    overflow: hidden;
+    background: $white-color;
+  }
+
   &-header {
     padding: 15px;
 
     border-bottom: 1px solid $border-light-color;
 
     background: $bg-light-color-2;
+
+    @include mobile {
+      background: $white-color;
+    }
   }
 
   &-title {
@@ -196,6 +211,10 @@ button {
     border-top: 1px solid $border-light-color;
 
     background: $bg-light-color-2;
+
+    @include mobile {
+      background: $white-color;
+    }
   }
 }
 
@@ -241,7 +260,7 @@ button {
 
   border-radius: 50%;
 
-  font-size: .9rem;
+  font-size: 0.9rem;
   font-weight: 700;
   line-height: 1;
   background: $danger-color;

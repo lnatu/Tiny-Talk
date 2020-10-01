@@ -81,19 +81,21 @@ export default {
       );
     },
     lastMessageSent() {
-      if (this.messages.length === 0) {
+      const totalMessages = this.messages.length;
+
+      if (totalMessages === 0) {
         return false;
       }
 
-      const totalMessages = this.messages.length;
       return this.messages[totalMessages - 1];
     }
   },
   mixins: [mixin],
   methods: {
-    ...mapMutations(['FIND_CONVERSATION']),
+    ...mapMutations(['FIND_CONVERSATION', 'SET_CONVERSATION_MOBILE']),
     startChat() {
       this.FIND_CONVERSATION({ index: this.index });
+      this.SET_CONVERSATION_MOBILE(true);
     }
   }
 };

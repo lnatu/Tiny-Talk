@@ -4,7 +4,6 @@ const APIFeatures = require('./../../utils/apiFeatures');
 const catchError = require('./../../utils/catchError');
 
 exports.getMyConversations = catchError(async (req, res, next) => {
-  console.log(req.params);
   const features = new APIFeatures(
     ConversationModel.find({
       participants: {

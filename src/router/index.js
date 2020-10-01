@@ -18,6 +18,18 @@ const routes = [
     component: () => import('@/views/auth/ActivateAccount.vue')
   },
   {
+    path: '/contacts',
+    name: 'Contacts',
+    component: () => import('@/views/contacts/ContactMain.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/calls',
+    name: 'Calls',
+    component: () => import('@/views/calls/CallsMain.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/auth/Login.vue')

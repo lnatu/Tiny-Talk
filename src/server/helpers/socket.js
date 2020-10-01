@@ -101,7 +101,6 @@ exports.sendMessage = (io, socket, clients, eventName) => {
 exports.typingOn = (io, socket, clients, eventName) => {
   socket.on(eventName, clientData => {
     const { id } = socket.request.user;
-    console.log(clientData)
 
     if (clients[clientData.contactId]) {
       responseToClients(

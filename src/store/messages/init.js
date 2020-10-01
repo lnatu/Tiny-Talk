@@ -12,10 +12,11 @@ const getters = {};
 const mutations = {};
 
 const actions = {
-  async sendMessage({ commit }, { conversation, message }) {
-    return await axios.post(config.api.messages.sendMessage, {
-      conversation,
-      message
+  async sendMessage({ commit }, payload) {
+    return await axios.post(config.api.messages.sendMessage, payload, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     });
   }
 };

@@ -43,5 +43,6 @@ exports.localKeys = {
   USER_KEY: 'current-user',
   NOTIFICATIONS_KEY: 'user-notifications',
   TOTAL_NOTIFICATIONS_KEY: 'total-notifications',
-  USER_CONTACT_KEY: 'user-contacts'
+  USER_CONTACT_KEY: 'user-contacts',
+  USER_CONTACT_ID_KEY: 'user-contact-id'
 };

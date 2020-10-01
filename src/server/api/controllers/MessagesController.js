@@ -1,8 +1,51 @@
+const multer = require('multer');
+const sharp = require('sharp');
+const { v4: uuidv4 } = require('uuid');
 const ConversationModel = require('./../models/ConversationModel');
 const MessageModel = require('./../models/MessageModel');
 const APIFeatures = require('./../../utils/apiFeatures');
 const AppError = require('./../../utils/appError');
 const catchError = require('./../../utils/catchError');
+
+const storage = multer.memoryStorage();
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new AppError('Please upload only images', 400), false);
+  }
+};
+
+const upload = multer({
+  storage,
+  fileFilter
+});
+
+exports.uploadFiles = upload.array('images', 10);
+
+exports.resizeImage = async (req, res, next) => {
+  if (!req.files) {
+    return next();
+  }
+
+  req.body.files = [];
+
+  await Promise.all(
+    req.files.map(async file => {
+      const fileName = `${uuidv4()}-mess-${Date.now()}.png`;
+
+      await sharp(file.buffer)
+        .resize(500, null)
+        .toFormat('png')
+        .toFile(`src/assets/img/messages/${fileName}`);
+
+      req.body.files.push(fileName);
+    })
+  );
+
+  next();
+};
 
 exports.createMessage = catchError(async (req, res, next) => {
   const check = await ConversationModel.findOne({

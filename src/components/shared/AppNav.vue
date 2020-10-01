@@ -1,6 +1,6 @@
 <template>
   <div class="navigation">
-    <a class="logo__button" href="#">
+    <a class="logo__button" href="#" v-if="!isMobile">
       <svg class="logo__icon">
         <use xlink:href="@/assets/img/icons/sprites.svg#icon-clockify"></use>
       </svg>
@@ -17,7 +17,7 @@
         <router-link
           class="navigation-link"
           active-class="active"
-          to="/a"
+          :to="{ name: 'Calls' }"
           exact
         >
           <svg class="navigation-item__icon">
@@ -29,7 +29,7 @@
         <router-link
           class="navigation-link"
           active-class="active"
-          to="/b"
+          :to="{ name: 'Contacts' }"
           exact
         >
           <svg class="navigation-item__icon">
@@ -78,6 +78,8 @@ export default {
         await this.logout();
         this.SET_LOCAL_USER('');
         localStorage.removeItem(localKeys.USER_KEY);
+        localStorage.removeItem(localKeys.USER_CONTACT_KEY);
+        localStorage.removeItem(localKeys.USER_CONTACT_ID_KEY);
         localStorage.removeItem(localKeys.NOTIFICATIONS_KEY);
         localStorage.removeItem(localKeys.CONVERSATIONS_KEY);
         localStorage.removeItem(localKeys.CONVERSATION_INDEX);

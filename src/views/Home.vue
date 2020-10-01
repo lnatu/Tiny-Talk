@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-1">
+  <div class="home d-flex flex-1">
     <app-sidebar />
     <app-main />
     <notification-modal />
@@ -28,4 +28,13 @@ export default {
 
 <style lang="scss">
 @import '@/assets/scss/init';
+
+.home {
+  height: 100%;
+
+  @include mobile {
+    order: -1;
+    height: calc(100% - 70px);
+  }
+}
 </style>

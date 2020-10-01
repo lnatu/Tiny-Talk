@@ -3,6 +3,17 @@
 
   overflow-y: hidden;
 
+  @include mobile {
+    width: 100%;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+
+    background: $white-color;
+  }
+
   &-header {
     display: flex;
     align-items: center;

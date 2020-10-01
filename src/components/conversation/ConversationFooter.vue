@@ -13,12 +13,20 @@
               </svg>
             </a>
             <div class="media-popup">
-              <a class="media-popup__item" href="#">
+              <label for="addFile" class="media-popup__item" href="#">
                 <svg class="media-popup__icon">
                   <use xlink:href="@/assets/img/icons/sprites.svg#icon-files" />
                 </svg>
                 <span class="ml-1">Files</span>
-              </a>
+              </label>
+              <input
+                type="file"
+                multiple
+                id="addFile"
+                ref="messImages"
+                v-show="false"
+                @change="previewUploadedImages($event)"
+              />
               <a class="media-popup__item" href="#">
                 <svg class="media-popup__icon">
                   <use xlink:href="@/assets/img/icons/sprites.svg#icon-mic" />
@@ -86,13 +94,37 @@
         </svg>
       </a>
     </transition>
+    <transition name="slide-up">
+      <div id="imagesPreview" v-if="imageFiles.length > 0">
+        <div
+          class="img-preview w-100 hide-scrollbar"
+          ref="imagesPreview"
+          @mousedown="touchElement($event)"
+          @mouseup="touchElementLose()"
+          @mouseleave="touchEl = false"
+          @mousemove="touchElementMove($event)"
+        >
+          <div
+            class="img-preview__box"
+            v-for="(fileSrc, i) in imageFiles"
+            :key="i"
+          >
+            <img :src="fileSrc" alt="default" />
+          </div>
+        </div>
+        <div class="img-preview__close bg-danger" @click="imageFiles = []">
+          <svg class="icon-svg icon-svg--2x icon-svg--white">
+            <use xlink:href="@/assets/img/icons/sprites.svg#icon-x" />
+          </svg>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import VEmojiPicker from 'v-emoji-picker';
-import mixin from '@/mixins/global';
 
 export default {
   name: 'ConversationFooter',
@@ -111,10 +143,16 @@ export default {
   data() {
     return {
       message: '',
-      showEmoji: false
+      showEmoji: false,
+      touchEl: false,
+      touchStartX: 0,
+      touchScrollLeft: 0,
+      touchPrevScrollLeft: 0,
+      velX: 0,
+      momentumId: '',
+      imageFiles: []
     };
   },
-  mixins: [mixin],
   methods: {
     ...mapMutations([
       'SWAP_CONVERSATION_INDEX',
@@ -140,10 +178,16 @@ export default {
       });
 
       try {
-        const res = await this.sendMessage({
-          conversation: _thisConversation._id,
-          message: this.message
-        });
+        const fd = new FormData();
+
+        const filesSize = this.$refs.messImages.files.length;
+        for (let i = 0; i < filesSize; i++) {
+          fd.append('images', this.$refs.messImages.files[i]);
+        }
+        fd.append('conversation', _thisConversation._id);
+        fd.append('message', this.message);
+
+        const res = await this.sendMessage(fd);
 
         const { conversation, message } = res.data.data;
 
@@ -176,18 +220,114 @@ export default {
     },
     selectEmoji(emoji) {
       this.message += emoji.data;
+    },
+    touchElement(e) {
+      this.touchEl = true;
+      const element = this.$refs.imagesPreview;
+      this.touchStartX = e.pageX - element.offsetLeft;
+      this.touchScrollLeft = element.scrollLeft;
+    },
+    touchElementLose() {
+      this.touchEl = false;
+      this.beginMomentumTracking();
+    },
+    touchElementMove(e) {
+      if (!this.touchEl) {
+        return;
+      }
+      e.preventDefault();
+      const element = this.$refs.imagesPreview;
+      const x = e.pageX - element.offsetLeft;
+      const walk = (x - this.touchStartX) * 3;
+      this.touchPrevScrollLeft = element.scrollLeft;
+      element.scrollLeft = this.touchScrollLeft - walk;
+      this.velX = element.scrollLeft - this.touchPrevScrollLeft;
+    },
+    beginMomentumTracking() {
+      this.cancelMomentumTracking();
+      this.momentumId = requestAnimationFrame(this.momentumLoop);
+    },
+    cancelMomentumTracking() {
+      cancelAnimationFrame(this.momentumId);
+    },
+    momentumLoop() {
+      this.$refs.imagesPreview.scrollLeft += this.velX;
+      this.velX *= 0.95;
+      if (Math.abs(this.velX) > 0.5) {
+        this.momentumId = requestAnimationFrame(this.momentumLoop);
+      }
+    },
+    /* eslint-disable*/
+    previewUploadedImages(e, holder) {
+      const input = e.target;
+      if (!input.files) {
+        return;
+      }
+
+      let filesSize = input.files.length;
+      for (let i = 0; i < filesSize; i++) {
+        let reader = new FileReader();
+        reader.onload = event => {
+          this.imageFiles.push(event.target.result);
+        };
+        reader.readAsDataURL(input.files[i]);
+      }
+    },
+    resizeImage(fileSrc, file) {
+      const img = document.createElement('img');
+      img.src = fileSrc;
+
+      const canvas = document.createElement('canvas');
+      let ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+
+      const MAX_WIDTH = 200;
+      const MAX_HEIGHT = 200;
+      let width = img.width;
+      let height = img.height;
+
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+
+      return canvas.toDataURL(file.type);
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/mixins/_mobile.scss';
+
 #EmojiPicker {
   position: absolute;
-  right: 15%;
+  right: 20px;
   top: -20px;
   z-index: 99;
 
   transform: translateY(-100%);
+
+  @include mobile {
+    width: 100%;
+    top: 0;
+    right: 0;
+  }
+
+  @media only screen and (min-width: 768px) {
+    width: auto;
+  }
 }
 </style>

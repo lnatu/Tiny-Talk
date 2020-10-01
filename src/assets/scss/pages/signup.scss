@@ -1,10 +1,58 @@
 @import './../abstract/variables';
+@import './../mixins/mobile';
 
 .signup {
+  &-outer {
+    @include mobile {
+      background-image: linear-gradient(
+        to left bottom,
+        #ff3434,
+        #ff1754,
+        #ff0073,
+        #ff0392,
+        #f427b1,
+        #e830c1,
+        #d83bd0,
+        #c546de,
+        #b745e4,
+        #a745ea,
+        #9446ef,
+        #7e48f5
+      );
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  }
+
   &-left {
     flex: 0 0 60%;
 
-    background: $white-color;
+    height: 100%;
+
+    //background-color: #F9F9F9;
+    //background-image: url(./../../assets/img/bg/signup-bg.png);
+    background-image: linear-gradient(
+      to bottom,
+      #ffffff,
+      #fdfefd,
+      #fcfcfc,
+      #fafbfa,
+      #f9f9f9
+    );
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+    @include mobile {
+      flex: 1;
+
+      height: 90%;
+
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+
+      margin-top: auto;
+    }
   }
 
   &-title {
@@ -15,9 +63,14 @@
   &-right {
     flex: 1;
 
-    background-image: url(./../../assets/img/bg/signup-bg.jpg);
+    background-image: url(./../../assets/img/bg/signup-bg.png);
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
+
+    @include mobile {
+      display: none;
+    }
   }
 }
 
@@ -36,7 +89,7 @@
 
 .other-opt {
   height: 1px;
-  background: $border-light-color;
+  //background: $border-light-color;
 
   span {
     position: absolute;
@@ -45,12 +98,13 @@
 
     transform: translate(-50%, -50%);
 
-    padding: 0 20px;
+    padding: 5px;
 
-    background: $white-color;
+    background: $theme-color;
+    border-radius: 3px;
 
-    color: $light-color;
-    font-size: 1.8rem;
+    color: $white-color;
+    font-size: 1.5rem;
     line-height: 1;
   }
 }
