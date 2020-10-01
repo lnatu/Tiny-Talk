@@ -90,7 +90,7 @@
         @click.prevent="jumpDown"
       >
         <svg class="icon-svg icon-svg--2x icon-svg--theme">
-          <use xlink:href="@/assets/img/icons/sprites.svg#icon-chevrons-down" />
+          <use xlink:href="@/assets/img/icons/sprites.svg#icon-arrow-down-2" />
         </svg>
       </a>
     </transition>
@@ -112,7 +112,7 @@
             <img :src="fileSrc" alt="default" />
           </div>
         </div>
-        <div class="img-preview__close bg-danger" @click="imageFiles = []">
+        <div class="img-preview__close bg-danger" @click="clearFiles">
           <svg class="icon-svg icon-svg--2x icon-svg--white">
             <use xlink:href="@/assets/img/icons/sprites.svg#icon-x" />
           </svg>
@@ -181,13 +181,19 @@ export default {
         const fd = new FormData();
 
         const filesSize = this.$refs.messImages.files.length;
-        for (let i = 0; i < filesSize; i++) {
-          fd.append('images', this.$refs.messImages.files[i]);
+
+        if (filesSize > 0) {
+          for (let i = 0; i < filesSize; i++) {
+            fd.append('images', this.$refs.messImages.files[i]);
+          }
         }
+
         fd.append('conversation', _thisConversation._id);
         fd.append('message', this.message);
 
         const res = await this.sendMessage(fd);
+
+        this.clearFiles();
 
         const { conversation, message } = res.data.data;
 
@@ -210,6 +216,11 @@ export default {
         console.log(err);
         console.log(err.response);
       }
+    },
+    clearFiles() {
+      this.$refs.messImages.type = '';
+      this.$refs.messImages.type = 'file';
+      this.imageFiles = [];
     },
     jumpDown() {
       const convBody = document.querySelector('.conversation-content');

@@ -207,7 +207,7 @@ const mixin = {
     scrollingDown({ target: { scrollTop } }) {
       clearTimeout(this.scrollTimer);
       this.scrollDistance++;
-      if (this.scrollDistance >= 50 && !this.GET_SHOW_JTB) {
+      if (this.scrollDistance >= 10 && !this.GET_SHOW_JTB) {
         this.SET_SHOW_JTB(true);
       }
       this.scrollTimer = setTimeout(() => {

@@ -775,10 +775,7 @@
                       v-for="file in message.files"
                       :key="file"
                     >
-                      <img
-                        :src="require(`@/assets/img/messages/${file}`)"
-                        alt="file"
-                      />
+                      <img :src="file" alt="file" />
                     </a>
                   </div>
                 </div>
@@ -866,10 +863,7 @@
                       v-for="file in message.files"
                       :key="file"
                     >
-                      <img
-                        :src="require(`@/assets/img/messages/${file}`)"
-                        alt="file"
-                      />
+                      <img :src="file" alt="file" />
                     </a>
                   </div>
                 </div>

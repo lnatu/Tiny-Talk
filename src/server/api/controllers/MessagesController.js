@@ -37,9 +37,11 @@ exports.resizeImage = async (req, res, next) => {
       const a = await sharp(file.buffer)
         .resize(500, null)
         .toFormat('png')
-        .toFile(`src/assets/img/messages/${fileName}`);
+        .toFile(`src/server/public/img/messages/${fileName}`);
 
-      req.body.files.push(fileName);
+      req.body.files.push(
+        `${req.protocol}://${req.get('host')}/img/messages/${fileName}`
+      );
       return a;
     })
   );

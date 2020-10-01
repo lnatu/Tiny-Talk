@@ -1,5 +1,6 @@
 const cors = require('cors');
 const express = require('express');
+const path = require('path');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const apiEndpoints = require('./../config/apiEndpoints');
@@ -8,7 +9,9 @@ const errorHandler = require('./../helpers/handleError');
 
 const app = express();
 
-const allowlist = ['http://localhost:8080', 'http://192.168.1.7:8080'];
+app.use(express.static(path.join(__dirname, '../public')));
+
+const allowlist = ['http://localhost:8080', 'http://192.168.1.9:8080'];
 const corsOptionsDelegate = function(req, callback) {
   let corsOptions;
   if (allowlist.indexOf(req.header('Origin')) !== -1) {
