@@ -70,9 +70,11 @@ a.btn {
   cursor: not-allowed;
 }
 
+a.disabled,
 a.btn.disabled,
 fieldset:disabled a.btn {
   pointer-events: none;
+  opacity: .3;
 }
 
 button:not(:disabled),
@@ -573,7 +575,7 @@ a.no-pointer {
   position: absolute;
   left: 50%;
   top: -10px;
-  z-index: 99;
+  z-index: 2020;
 
   animation-duration: 2s;
   animation-iteration-count: infinite;

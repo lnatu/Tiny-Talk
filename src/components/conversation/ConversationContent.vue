@@ -761,7 +761,7 @@
           <div class="message" v-if="message.sender._id !== GET_LOCAL_USER._id">
             <div class="message-wrapper">
               <div class="message-content bg-light">
-                <span>
+                <span class="message-text" v-if="message.message">
                   {{ message.message }}
                 </span>
                 <div
@@ -849,7 +849,7 @@
           <div class="message self" v-else>
             <div class="message-wrapper">
               <div class="message-content bg-theme text-white">
-                <span>
+                <span class="message-text" v-if="message.message">
                   {{ message.message }}
                 </span>
                 <div

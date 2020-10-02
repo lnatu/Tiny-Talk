@@ -6,6 +6,7 @@ const MessageModel = require('./../models/MessageModel');
 const APIFeatures = require('./../../utils/apiFeatures');
 const AppError = require('./../../utils/appError');
 const catchError = require('./../../utils/catchError');
+const storageUtil = require('./../../utils/storage');
 
 const storage = multer.memoryStorage();
 
@@ -28,6 +29,8 @@ exports.resizeImage = async (req, res, next) => {
   if (!req.files) {
     return next();
   }
+
+  await new storageUtil().mkdirIfNotExists('img/messages');
 
   req.body.files = [];
   await Promise.all(

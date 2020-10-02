@@ -105,9 +105,11 @@
   position: relative;
 }
 
-.message-media {
+.message-text + .message-media {
   margin-top: 10px;
+}
 
+.message-media {
   &__wrapper {
     display: flex;
     flex-wrap: wrap;

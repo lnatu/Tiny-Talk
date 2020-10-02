@@ -13,8 +13,7 @@ const messageSchema = new mongoose.Schema({
   },
   message: {
     type: String,
-    trim: true,
-    required: [true, 'message text cant be empty']
+    trim: true
   },
   files: [String],
   seenBy: [

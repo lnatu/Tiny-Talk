@@ -7,41 +7,15 @@
       <div class="typing-area">
         <div class="typing-box media">
           <div class="media-options">
-            <a class="media-options__cta" href="#">
+            <a
+              class="media-options__cta"
+              href="#"
+              @click.prevent="showConversationMedia = !showConversationMedia"
+            >
               <svg class="media-options__icon">
                 <use xlink:href="@/assets/img/icons/sprites.svg#icon-add" />
               </svg>
             </a>
-            <div class="media-popup">
-              <label for="addFile" class="media-popup__item" href="#">
-                <svg class="media-popup__icon">
-                  <use xlink:href="@/assets/img/icons/sprites.svg#icon-files" />
-                </svg>
-                <span class="ml-1">Files</span>
-              </label>
-              <input
-                type="file"
-                multiple
-                id="addFile"
-                ref="messImages"
-                v-show="false"
-                @change="previewUploadedImages($event)"
-              />
-              <a class="media-popup__item" href="#">
-                <svg class="media-popup__icon">
-                  <use xlink:href="@/assets/img/icons/sprites.svg#icon-mic" />
-                </svg>
-                <span class="ml-1">Audio</span>
-              </a>
-              <a class="media-popup__item" href="#">
-                <svg class="media-popup__icon">
-                  <use
-                    xlink:href="@/assets/img/icons/sprites.svg#icon-piechart"
-                  />
-                </svg>
-                <span class="ml-1">Poll</span>
-              </a>
-            </div>
           </div>
         </div>
         <div class="typing-box prepare-message">
@@ -53,6 +27,7 @@
             name="self-message"
             rows="5"
             placeholder="Your message..."
+            @keydown.enter.exact="sendMyMessage"
             @input="
               updateTyping({
                 conversationId: GET_ONE_CONVERSATION._id,
@@ -72,6 +47,7 @@
         <div class="typing-box cta">
           <a
             class="cta-send d-flex align-items-center justify-content-center"
+            :class="{ disabled: canSend }"
             href="#"
             @click.prevent="sendMyMessage"
           >
@@ -93,6 +69,28 @@
           <use xlink:href="@/assets/img/icons/sprites.svg#icon-arrow-down-2" />
         </svg>
       </a>
+    </transition>
+    <transition name="slide-up">
+      <div class="conversation-media__selector" v-show="showConversationMedia">
+        <input
+          type="file"
+          multiple
+          id="addFile"
+          ref="messImages"
+          v-show="false"
+          @change="previewUploadedImages($event)"
+        />
+        <label for="addFile" class="conversation-media__item">
+          <svg class="icon-svg icon-svg--3x icon-svg--theme">
+            <use xlink:href="@/assets/img/icons/sprites.svg#icon-files" />
+          </svg>
+        </label>
+        <div class="conversation-media__item">
+          <svg class="icon-svg icon-svg--3x icon-svg--theme">
+            <use xlink:href="@/assets/img/icons/sprites.svg#icon-paperclip" />
+          </svg>
+        </div>
+      </div>
     </transition>
     <transition name="slide-up">
       <div id="imagesPreview" v-if="imageFiles.length > 0">
@@ -138,12 +136,16 @@ export default {
     VEmojiPicker
   },
   computed: {
-    ...mapGetters(['GET_ONE_CONVERSATION', 'GET_LOCAL_USER', 'GET_SHOW_JTB'])
+    ...mapGetters(['GET_ONE_CONVERSATION', 'GET_LOCAL_USER', 'GET_SHOW_JTB']),
+    canSend() {
+      return !this.message.trim().length > 0 && !this.imageFiles.length > 0;
+    }
   },
   data() {
     return {
       message: '',
       showEmoji: false,
+      showConversationMedia: false,
       touchEl: false,
       touchStartX: 0,
       touchScrollLeft: 0,
@@ -161,6 +163,10 @@ export default {
     ]),
     ...mapActions(['sendMessage']),
     async sendMyMessage() {
+      if (this.canSend) {
+        return;
+      }
+
       const _thisConversation = this.GET_ONE_CONVERSATION;
       const _thisUser = this.GET_LOCAL_USER;
       const contact = _thisConversation.participants.find(
@@ -179,7 +185,6 @@ export default {
 
       try {
         const fd = new FormData();
-
         const filesSize = this.$refs.messImages.files.length;
 
         if (filesSize > 0) {
@@ -283,6 +288,8 @@ export default {
         };
         reader.readAsDataURL(input.files[i]);
       }
+
+      this.showConversationMedia = false;
     },
     resizeImage(fileSrc, file) {
       const img = document.createElement('img');
