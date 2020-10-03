@@ -760,24 +760,24 @@
         >
           <div class="message" v-if="message.sender._id !== GET_LOCAL_USER._id">
             <div class="message-wrapper">
-              <div class="message-content bg-light">
-                <span class="message-text" v-if="message.message">
+              <div class="message-content bg-light" v-if="message.message">
+                <span class="message-text">
                   {{ message.message }}
                 </span>
-                <div
-                  class="message-media"
-                  v-if="message.files && message.files.length > 0"
-                >
-                  <div class="message-media__wrapper">
-                    <a
-                      class="message-media__popup"
-                      href="#"
-                      v-for="file in message.files"
-                      :key="file"
-                    >
-                      <img :src="file" alt="file" />
-                    </a>
-                  </div>
+              </div>
+              <div
+                class="message-media"
+                v-if="message.files && message.files.length > 0"
+              >
+                <div class="message-media__wrapper">
+                  <a
+                    class="message-media__popup"
+                    href="#"
+                    v-for="file in message.files"
+                    :key="file"
+                  >
+                    <img :src="file" alt="file" />
+                  </a>
                 </div>
               </div>
               <div class="message-options">
@@ -848,24 +848,27 @@
           </div>
           <div class="message self" v-else>
             <div class="message-wrapper">
-              <div class="message-content bg-theme text-white">
-                <span class="message-text" v-if="message.message">
+              <div
+                class="message-content bg-theme text-white"
+                v-if="message.message"
+              >
+                <span class="message-text">
                   {{ message.message }}
                 </span>
-                <div
-                  class="message-media"
-                  v-if="message.files && message.files.length > 0"
-                >
-                  <div class="message-media__wrapper">
-                    <a
-                      class="message-media__popup"
-                      href="#"
-                      v-for="file in message.files"
-                      :key="file"
-                    >
-                      <img :src="file" alt="file" />
-                    </a>
-                  </div>
+              </div>
+              <div
+                class="message-media"
+                v-if="message.files && message.files.length > 0"
+              >
+                <div class="message-media__wrapper">
+                  <a
+                    class="message-media__popup"
+                    href="#"
+                    v-for="file in message.files"
+                    :key="file"
+                  >
+                    <img :src="file" alt="file" />
+                  </a>
                 </div>
               </div>
               <div class="message-options">
