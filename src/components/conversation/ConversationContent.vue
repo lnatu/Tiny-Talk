@@ -781,8 +781,9 @@
                   >
                     <img
                       :src="file"
-                      alt="file"
                       :class="{ 'h-auto': message.files.length === 1 }"
+                      :alt="file"
+                      @click="pictureSwipe(message.files)"
                     />
                   </a>
                 </div>
@@ -879,8 +880,9 @@
                   >
                     <img
                       :src="file"
-                      alt="file"
                       :class="{ 'h-auto': message.files.length === 1 }"
+                      :alt="file"
+                      @click="pictureSwipe(message.files)"
                     />
                   </a>
                 </div>
@@ -975,11 +977,16 @@
     >
       <h1>Say hi</h1>
     </div>
+    <picture-swipe
+      v-if="pictureSwipeData.length > 0"
+      :pictures="pictureSwipeData"
+    />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import PictureSwipe from '@/components/common/PictureSwipe';
 import mixin from '@/mixins/global';
 
 export default {
@@ -989,6 +996,9 @@ export default {
       type: Object,
       required: true
     }
+  },
+  components: {
+    PictureSwipe
   },
   computed: {
     ...mapGetters([
@@ -1043,9 +1053,17 @@ export default {
       });
     }
   },
+  data() {
+    return {
+      pictureSwipeData: []
+    };
+  },
   mixins: [mixin],
   methods: {
-    ...mapActions(['getConversationMessages'])
+    ...mapActions(['getConversationMessages']),
+    pictureSwipe(pictures) {
+      this.pictureSwipeData = pictures;
+    }
   },
   mounted() {
     // this.scrollTo(
