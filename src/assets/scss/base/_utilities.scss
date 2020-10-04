@@ -1,3 +1,7 @@
+.h-auto {
+  height: auto!important;
+}
+
 .h-max {
   height: $full-screen-height;
 }
@@ -204,7 +208,7 @@ button:not(:disabled),
 }
 
 .flex-1 {
-  flex: 1;
+  flex: 1!important;
 }
 
 .flex-column {
@@ -502,6 +506,11 @@ button:not(:disabled),
   &--danger {
     fill: $danger-color !important;
   }
+}
+
+.icon-3x {
+  width: 30px;
+  height: 30px;
 }
 
 /* Borders */

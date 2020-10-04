@@ -75,6 +75,7 @@
         <input
           type="file"
           multiple
+          accept="image/*"
           id="addFile"
           ref="messImages"
           v-show="false"
@@ -89,6 +90,13 @@
           <svg class="icon-svg icon-svg--3x icon-svg--theme">
             <use xlink:href="@/assets/img/icons/sprites.svg#icon-paperclip" />
           </svg>
+        </div>
+        <div class="conversation-media__item">
+          <img
+            class="icon-3x"
+            src="@/assets/img/icons/gif.svg"
+            alt="gif icon"
+          />
         </div>
       </div>
     </transition>

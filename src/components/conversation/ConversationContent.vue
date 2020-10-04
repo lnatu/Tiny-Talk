@@ -775,8 +775,15 @@
                     href="#"
                     v-for="file in message.files"
                     :key="file"
+                    :class="{
+                      'flex-1 h-auto': message.files.length === 1
+                    }"
                   >
-                    <img :src="file" alt="file" />
+                    <img
+                      :src="file"
+                      alt="file"
+                      :class="{ 'h-auto': message.files.length === 1 }"
+                    />
                   </a>
                 </div>
               </div>
@@ -866,8 +873,15 @@
                     href="#"
                     v-for="file in message.files"
                     :key="file"
+                    :class="{
+                      'flex-1 h-auto': message.files.length === 1
+                    }"
                   >
-                    <img :src="file" alt="file" />
+                    <img
+                      :src="file"
+                      alt="file"
+                      :class="{ 'h-auto': message.files.length === 1 }"
+                    />
                   </a>
                 </div>
               </div>

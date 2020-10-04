@@ -30,7 +30,7 @@
           </div>
           <div v-else>
             <p v-if="lastMessageSent">
-              {{ lastMessageSent.message }}
+              {{ lastMessageSent }}
             </p>
             <p v-else>Say hi</p>
           </div>
@@ -87,7 +87,10 @@ export default {
         return false;
       }
 
-      return this.messages[totalMessages - 1];
+      const lastMessage = this.messages[totalMessages - 1];
+      return !lastMessage.message && lastMessage.files.length > 0
+        ? '[photos]'
+        : lastMessage.message;
     }
   },
   mixins: [mixin],

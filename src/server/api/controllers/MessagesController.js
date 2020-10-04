@@ -23,7 +23,7 @@ const upload = multer({
   fileFilter
 });
 
-exports.uploadFiles = upload.array('images', 10);
+exports.uploadFiles = upload.array('images', 50);
 
 exports.resizeImage = async (req, res, next) => {
   if (!req.files) {
