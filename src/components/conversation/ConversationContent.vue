@@ -767,23 +767,23 @@
               </div>
               <div
                 class="message-media"
-                v-if="message.files && message.files.length > 0"
+                v-if="message.images && message.images.length > 0"
               >
                 <div class="message-media__wrapper">
                   <a
                     class="message-media__popup"
                     href="#"
-                    v-for="file in message.files"
+                    v-for="file in message.images"
                     :key="file"
                     :class="{
-                      'flex-1 h-auto': message.files.length === 1
+                      'flex-1 h-auto': message.images.length === 1
                     }"
                   >
                     <img
                       :src="file"
-                      :class="{ 'h-auto': message.files.length === 1 }"
+                      :class="{ 'h-auto': message.images.length === 1 }"
                       :alt="file"
-                      @click="pictureSwipe(message.files)"
+                      @click="pictureSwipe(message.images)"
                     />
                   </a>
                 </div>
@@ -866,23 +866,23 @@
               </div>
               <div
                 class="message-media"
-                v-if="message.files && message.files.length > 0"
+                v-if="message.images && message.images.length > 0"
               >
                 <div class="message-media__wrapper">
                   <a
                     class="message-media__popup"
                     href="#"
-                    v-for="file in message.files"
+                    v-for="file in message.images"
                     :key="file"
                     :class="{
-                      'flex-1 h-auto': message.files.length === 1
+                      'flex-1 h-auto': message.images.length === 1
                     }"
                   >
                     <img
                       :src="file"
-                      :class="{ 'h-auto': message.files.length === 1 }"
+                      :class="{ 'h-auto': message.images.length === 1 }"
                       :alt="file"
-                      @click="pictureSwipe(message.files)"
+                      @click="pictureSwipe(message.images)"
                     />
                   </a>
                 </div>

@@ -15,7 +15,7 @@ const messageSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  files: [String],
+  images: [String],
   seenBy: [
     {
       type: mongoose.Schema.ObjectId,

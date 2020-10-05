@@ -88,7 +88,7 @@ export default {
       }
 
       const lastMessage = this.messages[totalMessages - 1];
-      return !lastMessage.message && lastMessage.files.length > 0
+      return !lastMessage.message && lastMessage.images.length > 0
         ? '[photos]'
         : lastMessage.message;
     }

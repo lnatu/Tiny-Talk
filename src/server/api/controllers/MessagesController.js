@@ -1,4 +1,6 @@
+const util = require('util');
 const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
 const sharp = require('sharp');
 const { v4: uuidv4 } = require('uuid');
 const ConversationModel = require('./../models/ConversationModel');
@@ -9,6 +11,18 @@ const catchError = require('./../../utils/catchError');
 const storageUtil = require('./../../utils/storage');
 
 const storage = multer.memoryStorage();
+
+const filesStorage = new GridFsStorage({
+  url: 'mongodb://localhost:27017/tiny-talk',
+  options: { useNewUrlParser: true, useUnifiedTopology: true },
+  file: (req, file) => {
+    req.fileUploaded = file.originalname;
+    return {
+      bucketName: 'messageFiles',
+      filename: `${file.originalname}`
+    };
+  }
+});
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image')) {
@@ -23,7 +37,11 @@ const upload = multer({
   fileFilter
 });
 
+const filesUpload = multer({ storage: filesStorage }).single('file');
+
 exports.uploadFiles = upload.array('images', 50);
+
+exports.filesHandle = util.promisify(filesUpload);
 
 exports.resizeImage = async (req, res, next) => {
   if (!req.files) {
@@ -32,7 +50,7 @@ exports.resizeImage = async (req, res, next) => {
 
   await new storageUtil().mkdirIfNotExists('img/messages');
 
-  req.body.files = [];
+  req.body.images = [];
   await Promise.all(
     req.files.map(async file => {
       const fileName = `${uuidv4()}-mess-${Date.now()}.png`;
@@ -42,7 +60,7 @@ exports.resizeImage = async (req, res, next) => {
         .toFormat('png')
         .toFile(`src/server/public/img/messages/${fileName}`);
 
-      req.body.files.push(
+      req.body.images.push(
         `${req.protocol}://${req.get('host')}/img/messages/${fileName}`
       );
       return a;
@@ -65,6 +83,7 @@ exports.createMessage = catchError(async (req, res, next) => {
   }
 
   req.body.sender = req.user.id;
+  console.log(req.fileUploaded);
   const message = await MessageModel.create(req.body);
 
   await message

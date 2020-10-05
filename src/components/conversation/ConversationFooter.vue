@@ -81,16 +81,23 @@
           v-show="false"
           @change="previewUploadedImages($event)"
         />
+        <input
+          type="file"
+          multiple
+          id="chooseFile"
+          ref="messFiles"
+          v-show="false"
+        />
         <label for="addFile" class="conversation-media__item">
           <svg class="icon-svg icon-svg--3x icon-svg--theme">
             <use xlink:href="@/assets/img/icons/sprites.svg#icon-files" />
           </svg>
         </label>
-        <div class="conversation-media__item">
+        <label for="chooseFile" class="conversation-media__item">
           <svg class="icon-svg icon-svg--3x icon-svg--theme">
             <use xlink:href="@/assets/img/icons/sprites.svg#icon-paperclip" />
           </svg>
-        </div>
+        </label>
         <div class="conversation-media__item">
           <img
             class="icon-3x"
@@ -195,12 +202,15 @@ export default {
         const fd = new FormData();
         const filesSize = this.$refs.messImages.files.length;
 
+        console.log(this.$refs.messFiles.files[0]);
+
         if (filesSize > 0) {
           for (let i = 0; i < filesSize; i++) {
             fd.append('images', this.$refs.messImages.files[i]);
           }
         }
 
+        fd.append('file', this.$refs.messFiles.files[0]);
         fd.append('conversation', _thisConversation._id);
         fd.append('message', this.message);
 
