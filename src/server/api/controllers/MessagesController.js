@@ -1,4 +1,5 @@
 const util = require('util');
+const mongoose = require('mongoose');
 const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 const sharp = require('sharp');
@@ -16,10 +17,11 @@ const filesStorage = new GridFsStorage({
   url: 'mongodb://localhost:27017/tiny-talk',
   options: { useNewUrlParser: true, useUnifiedTopology: true },
   file: (req, file) => {
-    req.fileUploaded = file.originalname;
+    const filename = `${uuidv4()}_${file.originalname}`;
+    req.fileUploaded = filename;
     return {
       bucketName: 'messageFiles',
-      filename: `${file.originalname}`
+      filename
     };
   }
 });
@@ -83,7 +85,47 @@ exports.createMessage = catchError(async (req, res, next) => {
   }
 
   req.body.sender = req.user.id;
-  console.log(req.fileUploaded);
+  const gfs = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+    chunkSizeBytes: 1024,
+    bucketName: 'messageFiles'
+  });
+
+  const messageFilesChunks = mongoose.connection.db.collection(
+    'messageFiles.chunks'
+  );
+
+  gfs.find({ filename: req.fileUploaded }).toArray((err, files) => {
+    messageFilesChunks
+      .find({ files_id: files[0]._id })
+      .sort({ n: 1 })
+      .toArray(function(err, chunks) {
+        if (err) {
+          console.log('err');
+          // return next();
+        }
+        if (!chunks || chunks.length === 0) {
+          //No data found
+          console.log('!chunks');
+          // return next();
+        }
+
+        let fileData = [];
+        for (let i = 0; i < chunks.length; i++) {
+          //This is in Binary JSON or BSON format, which is stored
+          //in fileData array in base64 endocoded string format
+
+          fileData.push(chunks[i].data.toString('base64'));
+        }
+
+        //Display the chunks using the data URI format
+        let finalFile =
+          'data:' + files[0].contentType + ';base64,' + fileData.join('');
+
+        //render view
+        console.log(finalFile);
+      });
+  });
+
   const message = await MessageModel.create(req.body);
 
   await message
