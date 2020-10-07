@@ -90,41 +90,30 @@ exports.createMessage = catchError(async (req, res, next) => {
     bucketName: 'messageFiles'
   });
 
+  const fileData = [];
   const messageFilesChunks = mongoose.connection.db.collection(
     'messageFiles.chunks'
   );
 
-  gfs.find({ filename: req.fileUploaded }).toArray((err, files) => {
-    messageFilesChunks
-      .find({ files_id: files[0]._id })
-      .sort({ n: 1 })
-      .toArray(function(err, chunks) {
-        if (err) {
-          console.log('err');
-          // return next();
-        }
-        if (!chunks || chunks.length === 0) {
-          //No data found
-          console.log('!chunks');
-          // return next();
-        }
+  const files = await gfs.find({ filename: req.fileUploaded }).toArray();
+  const chunks = await messageFilesChunks
+    .find({ files_id: files[0]._id })
+    .sort({ n: 1 })
+    .toArray();
 
-        let fileData = [];
-        for (let i = 0; i < chunks.length; i++) {
-          //This is in Binary JSON or BSON format, which is stored
-          //in fileData array in base64 endocoded string format
+  req.body.files = [chunks[0]._id];
+  // console.log(chunks);
 
-          fileData.push(chunks[i].data.toString('base64'));
-        }
+  if (chunks || chunks.length > 0) {
+    for (let i = 0; i < chunks.length; i++) {
+      //This is in Binary JSON or BSON format, which is stored
+      //in fileData array in base64 endocoded string format
 
-        //Display the chunks using the data URI format
-        let finalFile =
-          'data:' + files[0].contentType + ';base64,' + fileData.join('');
-
-        //render view
-        console.log(finalFile);
-      });
-  });
+      fileData.push(chunks[i].data.toString('base64'));
+    }
+  }
+  const finalFile =
+    'data:' + files[0].contentType + ';base64,' + fileData.join('');
 
   const message = await MessageModel.create(req.body);
 
