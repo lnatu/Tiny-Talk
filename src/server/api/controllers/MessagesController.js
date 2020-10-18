@@ -1,7 +1,6 @@
-const util = require('util');
-const mongoose = require('mongoose');
 const multer = require('multer');
-const GridFsStorage = require('multer-gridfs-storage');
+const path = require('path');
+const gridFSStorage = require('multer-gridfs-storage');
 const sharp = require('sharp');
 const { v4: uuidv4 } = require('uuid');
 const ConversationModel = require('./../models/ConversationModel');
@@ -12,19 +11,6 @@ const catchError = require('./../../utils/catchError');
 const storageUtil = require('./../../utils/storage');
 
 const storage = multer.memoryStorage();
-
-const filesStorage = new GridFsStorage({
-  url: 'mongodb://localhost:27017/tiny-talk',
-  options: { useNewUrlParser: true, useUnifiedTopology: true },
-  file: (req, file) => {
-    const filename = `${uuidv4()}_${file.originalname}`;
-    req.fileUploaded = filename;
-    return {
-      bucketName: 'messageFiles',
-      filename
-    };
-  }
-});
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image')) {
@@ -39,11 +25,7 @@ const upload = multer({
   fileFilter
 });
 
-const filesUpload = multer({ storage: filesStorage }).single('file');
-
 exports.uploadFiles = upload.array('images', 50);
-
-exports.filesHandle = util.promisify(filesUpload);
 
 exports.resizeImage = async (req, res, next) => {
   if (!req.files) {
@@ -72,6 +54,24 @@ exports.resizeImage = async (req, res, next) => {
   next();
 };
 
+const testStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '../../public/img/files'));
+  },
+  filename: (req, file, cb) => {
+    const uniqueName = `${uuidv4()}.${file.originalname.split('.').pop()}`;
+    req.body.files = [
+      {
+        name: file.originalname,
+        url: `${req.protocol}://${req.get('host')}/img/files/${uniqueName}`
+      }
+    ];
+    cb(null, uniqueName);
+  }
+});
+const testUploads = multer({ storage: testStorage });
+exports.testUpload = testUploads.single('file');
+
 exports.createMessage = catchError(async (req, res, next) => {
   const check = await ConversationModel.findOne({
     participants: {
@@ -85,36 +85,6 @@ exports.createMessage = catchError(async (req, res, next) => {
   }
 
   req.body.sender = req.user.id;
-  const gfs = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
-    chunkSizeBytes: 1024,
-    bucketName: 'messageFiles'
-  });
-
-  const fileData = [];
-  const messageFilesChunks = mongoose.connection.db.collection(
-    'messageFiles.chunks'
-  );
-
-  const files = await gfs.find({ filename: req.fileUploaded }).toArray();
-  const chunks = await messageFilesChunks
-    .find({ files_id: files[0]._id })
-    .sort({ n: 1 })
-    .toArray();
-
-  req.body.files = [chunks[0]._id];
-  // console.log(chunks);
-
-  if (chunks || chunks.length > 0) {
-    for (let i = 0; i < chunks.length; i++) {
-      //This is in Binary JSON or BSON format, which is stored
-      //in fileData array in base64 endocoded string format
-
-      fileData.push(chunks[i].data.toString('base64'));
-    }
-  }
-  const finalFile =
-    'data:' + files[0].contentType + ';base64,' + fileData.join('');
-
   const message = await MessageModel.create(req.body);
 
   await message

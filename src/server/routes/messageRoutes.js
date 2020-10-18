@@ -13,7 +13,7 @@ router
   .post(
     // MessagesController.uploadFiles,
     // MessagesController.resizeImage,
-    MessagesController.filesHandle,
+    MessagesController.testUpload,
     MessagesController.createMessage,
     ConversationsController.updateConversationDate
   );

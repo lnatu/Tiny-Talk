@@ -16,12 +16,7 @@ const messageSchema = new mongoose.Schema({
     trim: true
   },
   images: [String],
-  files: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: 'messageFiles.chunks'
-    }
-  ],
+  files: [{}],
   seenBy: [
     {
       type: mongoose.Schema.ObjectId,
@@ -56,9 +51,8 @@ messageSchema.pre(/^find/, function(next) {
   this.populate({
     path: 'sender',
     select: 'firstName lastName fullName avatar gender'
-  }).populate({
-    path: 'files'
   });
+
   next();
 });
 

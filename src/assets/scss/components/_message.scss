@@ -151,17 +151,23 @@
 
 .document {
   display: flex;
+  align-items: flex-start;
 
   &__left {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    width: 40px;
-    height: 40px;
+    flex: 0 0 30px;
+    height: 30px;
 
     border-radius: 50%;
-    background: $theme-color;
+    border: 2px solid $white-color;
+    //background: $primary-color;
+
+    &--1 {
+      border-color: $theme-color;
+    }
   }
 
   &__right {
@@ -169,7 +175,7 @@
   }
 
   &__icon {
-    @include svg-icon(20px, #fff);
+    @include svg-icon(18px, #fff);
   }
 
   &__name {

@@ -749,6 +749,7 @@
           </div>
         </div>
       </div> -->
+
       <div v-for="(item, i) in groupMessages" :key="i">
         <div class="message-when">
           <p>{{ isToday(item.date) ? 'Today' : item.date }}</p>
@@ -764,6 +765,32 @@
                 <span class="message-text">
                   {{ message.message }}
                 </span>
+                <div class="document mt-1" v-if="message.files.length > 0">
+                  <div class="document__left document__left--1">
+                    <svg class="document__icon icon-svg--theme">
+                      <use
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-file-text"
+                      />
+                    </svg>
+                  </div>
+                  <div class="document__right">
+                    <h6 class="document__name">
+                      <a
+                        :href="message.files[0].url"
+                        download
+                        :title="message.files[0].name"
+                      >
+                        {{ message.files[0].name }}
+                      </a>
+                    </h6>
+                    <div class="document-info mt-sm">
+                      <span class="document-info__text">79.2 KB</span>
+                      <span class="document-info__text ml-1">
+                        {{ getFileExt(message.files[0].name) }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div
                 class="message-media"
@@ -863,6 +890,32 @@
                 <span class="message-text">
                   {{ message.message }}
                 </span>
+                <div class="document mt-1" v-if="message.files.length > 0">
+                  <div class="document__left">
+                    <svg class="document__icon">
+                      <use
+                        xlink:href="@/assets/img/icons/sprites.svg#icon-file-text"
+                      />
+                    </svg>
+                  </div>
+                  <div class="document__right">
+                    <h6 class="document__name">
+                      <a
+                        :href="message.files[0].url"
+                        download
+                        :title="message.files[0].name"
+                      >
+                        {{ message.files[0].name }}
+                      </a>
+                    </h6>
+                    <div class="document-info mt-sm">
+                      <span class="document-info__text">79.2 KB</span>
+                      <span class="document-info__text ml-1">
+                        {{ getFileExt(message.files[0].name) }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div
                 class="message-media"
@@ -1063,6 +1116,28 @@ export default {
     ...mapActions(['getConversationMessages']),
     pictureSwipe(pictures) {
       this.pictureSwipeData = pictures;
+    },
+    getFileExt(filename) {
+      return filename.split('.').pop();
+    },
+    showFileIcon(fileExt) {
+      let icon = '';
+      switch (fileExt) {
+        case 'pdf':
+          icon = 'icon-file-pdf';
+          break;
+        case 'xlxs':
+          icon = 'icon-file-excel';
+          break;
+        default:
+          icon = 'icon-file-text';
+      }
+
+      return icon;
+    },
+    getFileIcon(a) {
+      const test = this.showFileIcon(a);
+      return require(`@/assets/img/icons/sprites.svg#${test}`);
     }
   },
   mounted() {
