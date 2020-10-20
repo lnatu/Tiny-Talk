@@ -62,6 +62,7 @@ const testStorage = multer.diskStorage({
     const uniqueName = `${uuidv4()}.${file.originalname.split('.').pop()}`;
     req.body.files = [
       {
+        id: `http://localhost:8080/api/v1/files/downloadFile?fileId=${uniqueName}`,
         name: file.originalname,
         url: `${req.protocol}://${req.get('host')}/img/files/${uniqueName}`
       }

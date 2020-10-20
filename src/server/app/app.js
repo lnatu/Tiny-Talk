@@ -36,9 +36,11 @@ if (process.env.NODE_ENV === 'development') {
 
 // App routes
 const userRoutes = require('./../routes/userRoutes');
+const fileRoutes = require('./../routes/fileRoutes');
 const conversationRoutes = require('./../routes/conversationRoutes');
 
 app.use(apiEndpoints.conversations, conversationRoutes);
+app.use(apiEndpoints.files, fileRoutes);
 app.use(apiEndpoints.users, userRoutes);
 
 app.all('*', (req, res, next) => {

@@ -776,9 +776,10 @@
                   <div class="document__right">
                     <h6 class="document__name">
                       <a
-                        :href="message.files[0].url"
-                        download
+                        href="#"
                         :title="message.files[0].name"
+                        download
+                        @click="downloadFile(message.files[0].id)"
                       >
                         {{ message.files[0].name }}
                       </a>
@@ -901,9 +902,9 @@
                   <div class="document__right">
                     <h6 class="document__name">
                       <a
-                        :href="message.files[0].url"
-                        download
+                        :href="message.files[0].id"
                         :title="message.files[0].name"
+                        :download="message.files[0].name"
                       >
                         {{ message.files[0].name }}
                       </a>
@@ -1038,9 +1039,12 @@
 </template>
 
 <script>
+/* eslint-disable */
 import { mapGetters, mapActions } from 'vuex';
 import PictureSwipe from '@/components/common/PictureSwipe';
 import mixin from '@/mixins/global';
+import axios from 'axios';
+import config from '@/config';
 
 export default {
   name: 'ConversationContent',
@@ -1135,9 +1139,16 @@ export default {
 
       return icon;
     },
-    getFileIcon(a) {
-      const test = this.showFileIcon(a);
-      return require(`@/assets/img/icons/sprites.svg#${test}`);
+    async downloadFile(fileId, event) {
+      /* eslint-disable */
+      event.target.href = `localhost:8080${config.api.files.downloadFile}?fileId=${fileId}`;
+      event.target.click();
+      const response = await axios.get(config.api.files.downloadFile, {
+        params: {
+          fileId
+        }
+      });
+      console.log(response);
     }
   },
   mounted() {

@@ -17,6 +17,9 @@ exports.api = {
     getMyConversations: `${version}users/conversations`,
     getConversationMessages: `${version}conversations/%id%/messages`
   },
+  files: {
+    downloadFile: `${version}files/downloadFile`
+  },
   messages: {
     sendMessage: `${version}users/messages`
   },
